@@ -36,37 +36,36 @@ contract( 'Voting:', accounts => {
 
       // REGISTER NEW USER
       it('Allows to register and unregister a new user', async () => {
+            const name = web3.fromUtf8('Jennifer');
             // register
-            await instance.registerVoter(web3.fromUtf8('Jennifer'), {from: user});
-            const [tokens, record, name] = await instance.voterDetails(user);
-            assert.equal(web3.toUtf8(name), 'Jennifer', 'The user name has been set');
+            await instance.registerVoter(name, {from: user});
+            const [tokens, record, voterAddress] = await instance.voterDetails(name);
+            assert.equal(voterAddress, user, 'The user address has been set');
             assert.equal(tokens, 0, 'The user nb of tokens has been set');
             assert.deepEqual(record.toString(), '0,0,0', 'The user voting record has been set');
             // unregister
-            await instance.unregisterVoter(user);
-            const details = await instance.voterDetails(user);
+            await instance.unregisterVoter(name);
+            const details = await instance.voterDetails(name);
             assert.equal(details[0].toNumber(), '', 'The user token has been unset');
             assert.equal(details[1], '', 'The user voting record has been unset');
-            assert.equal(web3.toUtf8(details[2]), '', 'The user name has been unset');
+            assert.equal(details[2], 0x00, 'The user name has been unset');
       });
 
       // BUY TOKENS
       it( 'Allows to buy tokens', async () => {
-            let e = await buy({from: user, value: 1 * pricePerToken});
+            const name = web3.fromUtf8('Jennifer');
+            let e = await buy(name, {from: user, value: 1 * pricePerToken});
             assertRevert(e, 'cannot buy if user not registered');
-
             // register
-            await instance.registerVoter(web3.fromUtf8('Jennifer'), {from: user});
-
-            e = await buy({from: user, value: (totalSupply + 1) * pricePerToken});
+            await instance.registerVoter(name, {from: user});
+            e = await buy(name, {from: user, value: (totalSupply + 1) * pricePerToken});
             assertRevert(e, 'cannot buy if value exceeds the total supply of tokens');
-
             // buys 1/8
-            await buy({from: user, value: (totalSupply / 8) * pricePerToken});
+            await buy(name, {from: user, value: (totalSupply / 8) * pricePerToken});
             // buys another 1/8
-            await buy({from: user, value: (totalSupply / 8) * pricePerToken});
+            await buy(name, {from: user, value: (totalSupply / 8) * pricePerToken});
             // now get user account
-            const [tokens] = await instance.voterDetails(user);
+            const [tokens] = await instance.voterDetails(name);
             // 1/8 + 1/8 = 1/4
             assert.equal(tokens, totalSupply / 4, 'updates the user quantity of tokens');
 
@@ -74,12 +73,28 @@ contract( 'Voting:', accounts => {
             // tokens left: 1 - 1/4
             assert.equal(tokensAvailable.toNumber(), 3 * totalSupply / 4, 'updates the number of tokens available for purchase');
 
-            const tokensBought = await instance.buyTokens.call({from: user, value: 10 * pricePerToken});
+            const tokensBought = await instance.buyTokens.call(name, {from: user, value: 10 * pricePerToken});
             assert.equal(tokensBought.toNumber(), 10, 'returns nb of tokens bought if transaction was successful');
 
             // unregister user
-            await instance.unregisterVoter(user);
+            await instance.unregisterVoter(name);
       });
+
+      // [TEMP]: LOGIN
+      // it('Allows a existing user to login', async () => {
+      //       const name = web3.fromUtf8('Jennifer');
+      //       // first register the user
+      //       await instance.registerVoter(name, {from: user});
+      //       // then buy some tokens
+      //       await instance.buyTokens(name, {from: user, value: 2 * pricePerToken});
+      //       // then vote for candidate
+      //       await voteForCandidate(cf.candidates[1], name);
+      //       // then login
+      //       const [tokens, record, address] = await instance.login(name);
+      //       assert.equal(tokens.toNumber(), 2 , 'Returns the number of tokens this user has');
+      //       assert.deepEqual(record.toString(), '0,1,0' , 'Returns the voting record this user has')
+      //       assert.deepEqual(address, user , 'Returns the address this user has')
+      // });
 
       // IS CANDIDATE VALID
       it( 'Gets the candidate index in array of valid candidates:', async () => {
@@ -94,31 +109,32 @@ contract( 'Voting:', accounts => {
       // VOTE FOR A CANDIDATE
       it( 'Allows to vote for a candidate', async () => {
             let votes, e;
+            const name = web3.fromUtf8('Jennifer');
             // one candidate
             const candidate = cf.candidates[1];
             // require user is registered
-            e = await voteForCandidate(candidate, {from: user});
+            e = await voteForCandidate(candidate, name);
             assertRevert(e, 'reverts if is not registered');
             // register
-            await instance.registerVoter(web3.fromUtf8('Jennifer'), {from: user});
+            await instance.registerVoter(name, {from: user});
             // require user has enough funds
-            e = await voteForCandidate(candidate, {from: user});
+            e = await voteForCandidate(candidate, name);
             assertRevert(e, 'reverts if user does not have enough funds to vote');
             // get some funds
-            await instance.buyTokens({from: user, value: 2 * pricePerToken});
+            await instance.buyTokens(name, {from: user, value: 2 * pricePerToken});
             // require a valid candidate
-            e = await voteForCandidate('Unknown', {from: user});
+            e = await voteForCandidate('Unknown', name);
             assertRevert(e, 'reverts if it is not a valid candidate');
             // user voting
-            await voteForCandidate(candidate, {from: user});
+            await voteForCandidate(candidate, name);
             votes = await instance.votesReceived(candidate);
             assert.equal(votes.toNumber(), 1, 'Vote count is incremented');
             // user account
-            const [tokens, record] = await instance.voterDetails(user);
+            const [tokens, record] = await instance.voterDetails(name);
             assert.equal(tokens.toNumber(), 2 - 1 , 'Decrement the nb of tokens available for this user');
             assert.deepEqual(record.toString(), '0,1,0' , 'Keeps track of whom the user voted for')
             // unregister
-            await instance.unregisterVoter(user);
+            await instance.unregisterVoter(name);
       });
 
       it( 'Allow access to the total nb of votes for a candidate', async () => {
