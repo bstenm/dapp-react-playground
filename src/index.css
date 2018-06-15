@@ -1,0 +1,31 @@
+body {
+  font-family: "Lato", "Roboto", sans-serif;
+}
+
+label {
+  display: inline-block;
+  width: 100px;
+}
+
+input {
+  width: 500px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+button {
+  font-size: 16px;
+  padding: 5px;
+}
+
+.black {
+  color: black;
+}
+
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
+}
