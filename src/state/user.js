@@ -22,10 +22,15 @@ export default {
             }
       },
       effects: {
-            async login (name, roostState) {
+            async login (name, {candidates}) {
                   try {
-                        const address = await VotingService.login(name);
-                        this.updateUserDetails({tokens: 0, name, address, votingRecord: {}});
+                        const {tokens, record, address} = await VotingService.login(name);
+                        const votingRecord = candidates.reduce((r, v, k) => {
+                              r[v.name] = record[k];
+                              return r;
+                        }, {});
+                        console.log('>>>>', votingRecord);
+                        this.updateUserDetails({tokens, votingRecord, name,address});
                   } catch (e) {
                         console.error(e.message);
                         dispatch.alert.message('Could not register the new user');

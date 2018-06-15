@@ -1,6 +1,7 @@
 
 import Web3 from 'web3';
 import contract from 'truffle-contract';
+import difference from 'lodash/difference';
 import votingArtifacts from '../build/contracts/Voting.json';
 
 const Voting = contract(votingArtifacts);
@@ -13,8 +14,25 @@ export default {
       login: async name => {
             const nameInBytes = web3.fromUtf8(name);
             const  contractInstance = await Voting.deployed();
-            await contractInstance.registerVoter(nameInBytes, {from: accounts[1], gas: 150000});
-            return accounts[1];
+            // first check if already registered
+            let [tokens, record, address] =  await contractInstance.voterDetails(name);
+            // [TODO]: why throws error when address is set?
+            try {
+                  if (! web3.toUtf8(address)) {
+                        const addresses = await contractInstance.getVoterAddresses();
+                        const availables = difference(accounts, addresses);
+                        const available = availables[0];
+                        await contractInstance.registerVoter(nameInBytes, {from: available, gas: 150000});
+                        return {tokens: 0, name, address: accounts[1], record: {}};
+                  }
+            } catch(e) {
+                  return {
+                          tokens: tokens.toNumber()
+                        , name
+                        , address
+                        , record: record.map(e => e.toNumber())
+                  }
+            }
       },
 
       // [TEMP]
