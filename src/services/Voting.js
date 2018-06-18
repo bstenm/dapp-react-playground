@@ -48,7 +48,6 @@ const totalVotesFor = async name => {
 
 const voteFor = async (candidate, {name, address}) => {
       const  contractInstance = await Voting.deployed();
-      console.log('>>>> 111111', candidate, name, address);
       await contractInstance.voteForCandidate(
             web3.fromUtf8(candidate),
             web3.fromUtf8(name),

@@ -29,7 +29,6 @@ export default {
                   try {
                         dispatch.requesting.start();
                         let updated = [...candidates];
-                        console.log('>>>>', candidate, name, address);
                         await VotingService.voteFor(candidate, {name, address});
                         const vote = await VotingService.totalVotesFor(candidate);
                         updated.unshift({name: candidate, vote});
