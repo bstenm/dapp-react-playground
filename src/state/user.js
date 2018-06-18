@@ -29,23 +29,12 @@ export default {
                               r[v.name] = record[k];
                               return r;
                         }, {});
-                        console.log('>>>>', votingRecord);
-                        this.updateUserDetails({tokens, votingRecord, name,address});
+                        this.updateUserDetails({tokens, votingRecord, name, address});
                   } catch (e) {
                         console.error(e.message);
                         dispatch.alert.message('Could not register the new user');
                   }
             },
-
-            // [TEMP]:
-            // async getDetails (name, roostState) {
-            //       try {
-            //             this.updateUserDetails({name, id, tokens, votingRecord});
-            //       } catch(e) {
-            //             console.error(e.message);
-            //             dispatch.alert.message('Could not retrieve the user account');
-            //       }
-            // },
 
             async buyTokens (nb, {user: {name, address}}) {
                   try {

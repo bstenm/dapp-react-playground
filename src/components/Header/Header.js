@@ -50,10 +50,7 @@ export const Component = ({buyTokens, login, userAccount}) => (
                                     Account
                               </NavItem>
                         </OverlayTrigger>
-                        <SignIn
-                              login={login}
-                              show={! userAccount.name}
-                        />
+                        <SignIn login={login} show={! userAccount.name}/>
                   </Nav>
             </Navbar.Collapse>
       </Navbar>

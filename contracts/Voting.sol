@@ -25,6 +25,7 @@ contract Voting {
       }
 
       function registerVoter(bytes32 name) public {
+            voterInfo[name].name = name;
             voterInfo[name].voterAddress = msg.sender;
             voterInfo[name].tokensAvailable = 0;
             // initialises voting record array
@@ -37,11 +38,12 @@ contract Voting {
             return voterAddresses;
       }
 
-      function voterDetails(bytes32 name) view public returns (uint,uint[], address) {
+      function voterDetails(bytes32 name) view public returns (uint,uint[], address, bytes32) {
             return (
                   voterInfo[name].tokensAvailable,
                   voterInfo[name].votingRecord,
-                  voterInfo[name].voterAddress
+                  voterInfo[name].voterAddress,
+                  voterInfo[name].name
             );
       }
 

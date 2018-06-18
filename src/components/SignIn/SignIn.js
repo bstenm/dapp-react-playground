@@ -4,7 +4,7 @@ import {Modal} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Form, FormControl, Button  } from 'react-bootstrap';
 
-export const Component = ({show, value, onChange, onSubmit}) => (
+export const Component = ({show, value, onChange, onLogin}) => (
       <div className="SignIn" >
             <Modal show={show}>
                   <Modal.Body>
@@ -16,7 +16,7 @@ export const Component = ({show, value, onChange, onSubmit}) => (
                                     placeholder="Your name"
                                     style={{marginRight:"5px"}}
                               />
-                              <Button onClick={onSubmit}>Login</Button>
+                              <Button onClick={onLogin}>Login</Button>
                         </Form>
                   </Modal.Body>
             </Modal>
@@ -26,8 +26,8 @@ export const Component = ({show, value, onChange, onSubmit}) => (
 Component.propTypes = {
       show: PropTypes.bool,
       value: PropTypes.string,
-      onChange: PropTypes.func.isRequired,
-      onSubmit: PropTypes.func.isRequired
+      onLogin: PropTypes.func.isRequired,
+      onChange: PropTypes.func.isRequired
 };
 
 export default Component;

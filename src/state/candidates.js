@@ -25,13 +25,14 @@ export default {
                   }
             },
 
-            async addVote (name, {candidates, requesting, user}) {
+            async addVote (candidate, {candidates, requesting, user: {name, address}}) {
                   try {
                         dispatch.requesting.start();
                         let updated = [...candidates];
-                        await VotingService.voteFor(name, {name: user.name, address: user.address});
-                        const vote = await VotingService.totalVotesFor(name);
-                        updated.unshift({name, vote});
+                        console.log('>>>>', candidate, name, address);
+                        await VotingService.voteFor(candidate, {name, address});
+                        const vote = await VotingService.totalVotesFor(candidate);
+                        updated.unshift({name: candidate, vote});
                         this.updateList(uniqBy(updated, 'name'));
                   } catch (e) {
                         console.error(e.message);

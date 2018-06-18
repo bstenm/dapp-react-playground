@@ -5,15 +5,23 @@ export class SignInContainer extends React.Component {
 
       state = {name: ''}
 
+      login = () => {
+            this.props.login(this.state.name);
+      }
+
+      onChange = (e) => {
+            this.setState({name: e.target.value})
+      }
+
       render() {
             const {name} = this.state;
-            const {show, login} = this.props;
+            const {show} = this.props;
             return (
                   <Component
                         show={show}
                         value={name}
-                        onSubmit={() => login(name)}
-                        onChange={e => this.setState({name: e.target.value})}
+                        onLogin={this.login}
+                        onChange={this.onChange}
                   />
             );
       }
