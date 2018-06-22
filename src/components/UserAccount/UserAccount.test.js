@@ -9,6 +9,7 @@ describe('(Component) UserAccount', () => {
             props = {
                   account: {
                         tokens: 10,
+                        name: 'Jennifer',
                         votingRecord: {
                               Hilary: -10,
                               Jill: 100,
@@ -21,6 +22,10 @@ describe('(Component) UserAccount', () => {
 
       test( 'Displays a UserAccount', () => {
             expect(wrapper.find('.UserAccount').length).toEqual(1);
+      });
+
+      test('Displays the user\' s name', () => {
+            expect(wrapper.find('div').at(0).text()).toContain('Jennifer');
       });
 
       test('Displays the user\' quantity of tokens left', () => {

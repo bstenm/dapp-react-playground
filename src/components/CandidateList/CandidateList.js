@@ -37,7 +37,8 @@ CandidateList.propTypes = {
       candidates: PropTypes.arrayOf(
             PropTypes.shape({
                   vote: PropTypes.string,
-                  name: PropTypes.string
+                  name: PropTypes.string,
+                  requesting: PropTypes.bool
             }),
       ),
       voteFor: PropTypes.func.isRequired

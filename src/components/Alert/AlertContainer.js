@@ -4,12 +4,15 @@ import Component from './Alert';
 
 export class AlertContainer extends React.Component {
 
+      onClose = () => {
+            this.props.message('')
+      }
+
       render() {
-            const {alert, message} = this.props;
             return (
                   <Component
-                        alert={alert}
-                        handleClose={() => message('')}
+                        alert={this.props.alert}
+                        handleClose={this.onClose}
                   />
             );
       }

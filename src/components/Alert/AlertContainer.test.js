@@ -19,8 +19,8 @@ describe( '(Container) Alert', () => {
             expect(wrapper.find(Component).length).toEqual(1);
       });
 
-      // prop: msg
-      test('Passes msg to component', () => {
+      // prop: alert
+      test('Passes alert to component', () => {
             expect(wrapper.find(Component).props().alert).toEqual('some message');
       });
 

@@ -9,9 +9,9 @@ describe('(Component) CandidateList', () => {
       beforeEach(() => {
             props = {
                   candidates: [
+                        {name: 'Nick', vote: '0'},
                         {name: 'Jason', vote: '3'},
                         {name: 'Joanna', vote: '49'},
-                        {name: 'Nick', vote: '0'}
                   ],
                   requesting: false,
                   voteFor: jest.fn()
@@ -23,7 +23,7 @@ describe('(Component) CandidateList', () => {
             expect( wrapper.find( '.CandidateList' ).length ).toEqual( 1 );
       });
 
-      test('Displays one table row for each candidate', () => {
+      test('Displays one table row for each candidate alphabetically', () => {
             // one for the headers
             expect(wrapper.find('tr').length).toEqual(4);
             expect(wrapper.find('tr').at(1).find('td').at(0).text()).toEqual('Jason');

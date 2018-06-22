@@ -1,3 +1,4 @@
+import ms from '../config/messages';
 import {dispatch} from '@rematch/core';
 import VotingService from '../services/Voting';
 
@@ -29,10 +30,10 @@ export default {
                               r[v.name] = record[k];
                               return r;
                         }, {});
-                        this.updateUserDetails({tokens, votingRecord, name, address});
+                        dispatch.user.updateUserDetails({tokens, votingRecord, name, address});
                   } catch (e) {
                         console.error(e.message);
-                        dispatch.alert.message('Could not register the new user');
+                        dispatch.alert.message(ms.retrieveVotesFailure);
                   }
             },
 
@@ -42,7 +43,7 @@ export default {
                         this.updateTokenCount(nb);
                   } catch(e) {
                         console.error(e.message);
-                        dispatch.alert.message('Could not transfer the tokens to your  account');
+                        dispatch.alert.message(ms.buyTokensFailure);
                   }
             }
       }

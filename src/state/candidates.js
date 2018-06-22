@@ -1,3 +1,4 @@
+import ms from '../config/messages';
 import cf from '../config';
 import uniqBy from 'lodash/uniqBy';
 import {dispatch} from '@rematch/core';
@@ -15,13 +16,13 @@ export default {
                   try {
                         const updated = [];
                         await Promise.all (candidates.map( async ({name}) => {
-                              const vote = await VotingService.totalVotesFor(name)
-                              updated.push({name, vote})
+                              const vote = await VotingService.totalVotesFor(name);
+                              updated.push({name, vote});
                         }));
                         this.updateList(updated);
                   } catch(e) {
                         console.error(e.message);
-                        dispatch.alert.message('Could not retrieve the vote data')
+                        dispatch.alert.message(ms.retrieveVotesFailure);
                   }
             },
 
@@ -35,7 +36,7 @@ export default {
                         this.updateList(uniqBy(updated, 'name'));
                   } catch (e) {
                         console.error(e.message);
-                        dispatch.alert.message('Please make sure you have enough funds to vote');
+                        dispatch.alert.message(ms.notEnoughFunds);
                   } finally {
                         dispatch.requesting.stop();
                   }

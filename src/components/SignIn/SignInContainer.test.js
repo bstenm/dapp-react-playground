@@ -19,8 +19,8 @@ describe( '(Container) SignIn', () => {
             expect(wrapper.find(Component).length).toEqual(1);
       });
 
-      // prop: user
-      test('Passes show to component to set modal to open or close', () => {
+      // prop: show
+      test('Passes show prop to component to set modal to open or close', () => {
             expect(wrapper.find(Component).props().show).toEqual(true);
       });
 
@@ -37,10 +37,10 @@ describe( '(Container) SignIn', () => {
             expect(wrapper.state().name).toEqual('Jen');
       });
 
-      // prop: onSubmit
-      test( 'Passes onSubmit cb to component to login user', () => {
+      // prop: onLogin
+      test( 'Passes onLogin cb to component to login user', () => {
             wrapper.setState({name: 'Jennifer'});
-            wrapper.find(Component).props().onSubmit();
+            wrapper.find(Component).props().onLogin();
             expect(props.login.mock.calls.length).toEqual(1);
             expect(props.login.mock.calls[0][0]).toEqual('Jennifer');
       });

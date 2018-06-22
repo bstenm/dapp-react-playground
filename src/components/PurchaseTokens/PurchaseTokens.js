@@ -5,7 +5,7 @@ import { Form, FormControl, Button  } from 'react-bootstrap';
 
 
 export const Component = ({value, onChange, onSubmit}) => (
-      <div style={{width:"150px"}}>
+      <div className="PurchaseTokens" style={{width:"150px"}}>
             <Form inline>
                   <FormControl
                         type="number"

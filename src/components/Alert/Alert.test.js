@@ -30,7 +30,7 @@ describe('(Component) Alert', () => {
 
       // prop: alert
       test('Displays the message passed as props', () => {
-            expect(wrapper.find(Modal.Body).childAt(0).text()).toEqual('some message');
+            expect(wrapper.find(Modal.Header).find('span').text()).toEqual('some message');
       });
 
       // prop: handleClose

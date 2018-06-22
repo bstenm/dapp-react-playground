@@ -10,13 +10,13 @@ describe('(Component) SignIn', () => {
       beforeEach(() => {
             props = {
                   show: true,
-                  onSubmit: jest.fn(),
+                  onLogin: jest.fn(),
                   onChange: jest.fn()
             };
             wrapper = shallow(<Component {...props} />);
       });
 
-      test( 'Displays a SignIn', () => {
+      test( 'Displays a SignIn component', () => {
             expect(wrapper.find('.SignIn').length).toEqual(1);
       });
 
@@ -37,8 +37,8 @@ describe('(Component) SignIn', () => {
 
       test('Calls submit prop on button click', () => {
             wrapper.find(Button).props().onClick();
-            expect(props.onSubmit.mock.calls.length).toEqual(1);
-            expect(props.onSubmit.mock.calls[0][0] ).toEqual();
+            expect(props.onLogin.mock.calls.length).toEqual(1);
+            expect(props.onLogin.mock.calls[0][0] ).toEqual();
       });
 });
 

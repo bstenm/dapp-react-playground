@@ -38,7 +38,8 @@ describe( '(Component) Header', () => {
             expect(popOver.find(PurchaseTokens).length).toEqual(1);
       });
 
-      test('Passes the cb to buy token to the PurchaseTokens component', () => {
+      // prop: onSubmit
+      test('Passes the cb to buy tokens to the PurchaseTokens component', () => {
             const {overlay} = wrapper.find(OverlayTrigger).at(0).props();
             const popOver = shallow(overlay);
             popOver.find(PurchaseTokens).props().onSubmit(10);
@@ -51,7 +52,7 @@ describe( '(Component) Header', () => {
             const popOver = shallow(overlay);
             expect(popOver.instance() instanceof Popover).toBe(true);
             expect(popOver.find(UserAccount).length).toEqual(1);
-            expect(popOver.find(UserAccount).props().acount).toEqual(props.account);
+            expect(popOver.find(UserAccount).props().account).toEqual(props.userAccount);
       });
 
       test('Displays a SignIn component', () => {

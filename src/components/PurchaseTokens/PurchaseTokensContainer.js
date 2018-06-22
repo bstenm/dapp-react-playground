@@ -6,8 +6,7 @@ export class PurchaseTokensContainer extends React.Component {
       state = {value: ''}
 
       onSubmit = () => {
-            const {value} = this.state;
-            this.props.onSubmit(value);
+            this.props.onSubmit(this.state.value);
       }
 
       onChange = (e) => {
@@ -15,10 +14,9 @@ export class PurchaseTokensContainer extends React.Component {
       }
 
       render() {
-            const {value} = this.state;
             return (
                   <Component
-                        value={value}
+                        value={this.state.value}
                         onSubmit={this.onSubmit}
                         onChange={this.onChange}
                    />

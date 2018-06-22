@@ -18,6 +18,6 @@ export class HeaderContainer extends React.Component {
 
 export default connect(
       ({user}) => ({user}),
-      ({user: {buyTokens, getDetails, login}}) => ({buyTokens, getDetails, login})
+      ({user: {buyTokens, login}}) => ({buyTokens, login})
 )(HeaderContainer);
 

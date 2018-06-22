@@ -11,18 +11,13 @@ describe( '(Container) Header', () => {
             props = {
                   user: {name: 'Joanna', tokens: 10},
                   login: jest.fn(),
-                  buyTokens: jest.fn(),
-                  getDetails: jest.fn()
+                  buyTokens: jest.fn()
             };
             wrapper = shallow( <HeaderContainer {...props} />);
       });
 
       test( 'Displays a Header component', () => {
             expect( wrapper.find(Component).length ).toEqual(1);
-      });
-
-      test('Gets the user details on initialisation', () => {
-            expect(props.getDetails.mock.calls.length).toEqual(1);
       });
 
       // prop: buyTokens
