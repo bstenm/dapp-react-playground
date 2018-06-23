@@ -13,8 +13,9 @@ describe( '(Component) Header', () => {
       beforeEach(() => {
             props = {
                   login: jest.fn(),
+                  logout: jest.fn(),
                   buyTokens: jest.fn(),
-                  userAccount: {tokens: 10, votingRecord: {Jill: 100}}
+                  userAccount: {tokens: 10, name: 'Jennifer', votingRecord: {Jill: 100}}
             };
             wrapper = shallow(<Component {...props} />);
       });
@@ -60,10 +61,10 @@ describe( '(Component) Header', () => {
       });
 
       // prop: show
-      test('Passes show prop to component to show sign in if nu ser name set', () => {
-            expect(wrapper.find(SignIn).props().show).toEqual(true);
-            wrapper.setProps({userAccount: {name: 'Jennifer'}});
+     test('Passes show prop to component to show sign in if nu ser name set', () => {
             expect(wrapper.find(SignIn).props().show).toEqual(false);
+            wrapper.setProps({userAccount: {}});
+            expect(wrapper.find(SignIn).props().show).toEqual(true);
       });
 
       // prop: login
@@ -71,6 +72,19 @@ describe( '(Component) Header', () => {
             wrapper.find(SignIn).props().login('Jennifer');
             expect(props.login.mock.calls.length).toEqual(1);
             expect(props.login.mock.calls[0][0]).toEqual('Jennifer');
+      });
+
+      test('Displays a Button to log out the user', () => {
+            const button = wrapper.find(NavItem).filterWhere(e => e.childAt(0).text() === 'Logout');
+            expect(button.length).toEqual(1);
+            button.props().onClick();
+            expect(props.logout.mock.calls.length).toEqual(1);
+      });
+
+      test('Does not display the logout button if user not logged in', () => {
+            wrapper.setProps({userAccount: {}});
+            const button = wrapper.find(NavItem).filterWhere(e => e.childAt(0).text() === 'Logout');
+            expect(button.length).toEqual(0);
       });
 });
 

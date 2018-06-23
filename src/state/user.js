@@ -14,12 +14,16 @@ export default {
                   return {...state, tokens};
             },
 
-            addVoteToRecord(state, payload) {
+            addVoteToRecord (state, payload) {
                   const {name, vote} = payload;
                   const {votingRecord} = state;
                   const nbOfVotes = votingRecord[name] || 0;
                   const newRecord = {...votingRecord, [name]: vote + nbOfVotes};
                   return {...state, votingRecord: newRecord};
+            },
+
+            logout () {
+                  return {};
             }
       },
       effects: {

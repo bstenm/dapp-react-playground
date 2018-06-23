@@ -18,9 +18,9 @@ const purchaseTokensPopover = onSubmit => (
       <Popover id="popover-trigger-click-root-close">
             <PurchaseTokens onSubmit={onSubmit} />
       </Popover>
-    );
+);
 
-export const Component = ({buyTokens, login, userAccount}) => (
+export const Component = ({buyTokens, login, logout, userAccount}) => (
       <Navbar inverse collapseOnSelect className="Header">
             <Navbar.Header>
                   <Navbar.Brand>
@@ -37,7 +37,7 @@ export const Component = ({buyTokens, login, userAccount}) => (
                               trigger="click"
                               placement="bottom"
                               overlay={purchaseTokensPopover(buyTokens)}>
-                              <NavItem eventKey={2} href="#">
+                              <NavItem href="#">
                                     Purchase Corr Tokens
                               </NavItem>
                         </OverlayTrigger>
@@ -46,10 +46,15 @@ export const Component = ({buyTokens, login, userAccount}) => (
                               trigger="click"
                               placement="bottom"
                               overlay={accountPopover(userAccount)}>
-                              <NavItem eventKey={2} href="#">
+                              <NavItem href="#">
                                     Account
                               </NavItem>
                         </OverlayTrigger>
+                        {userAccount.name &&
+                        <NavItem onClick={logout} href="#">
+                              Logout
+                         </NavItem>
+                        }
                         <SignIn login={login} show={! userAccount.name}/>
                   </Nav>
             </Navbar.Collapse>

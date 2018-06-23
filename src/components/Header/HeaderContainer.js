@@ -5,10 +5,11 @@ import Component from './Header';
 export class HeaderContainer extends React.Component {
 
       render() {
-            const {buyTokens, user, login} = this.props;
+            const {buyTokens, user, login, logout} = this.props;
             return (
                   <Component
                         login={login}
+                        logout={logout}
                         buyTokens={buyTokens}
                         userAccount={user}
                   />
@@ -18,6 +19,6 @@ export class HeaderContainer extends React.Component {
 
 export default connect(
       ({user}) => ({user}),
-      ({user: {buyTokens, login}}) => ({buyTokens, login})
+      ({user: {buyTokens, login, logout}}) => ({buyTokens, login, logout})
 )(HeaderContainer);
 

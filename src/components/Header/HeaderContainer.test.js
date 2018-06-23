@@ -11,6 +11,7 @@ describe( '(Container) Header', () => {
             props = {
                   user: {name: 'Joanna', tokens: 10},
                   login: jest.fn(),
+                  logout: jest.fn(),
                   buyTokens: jest.fn()
             };
             wrapper = shallow( <HeaderContainer {...props} />);
@@ -37,6 +38,12 @@ describe( '(Container) Header', () => {
             wrapper.find(Component).props().login('Jennifer');
             expect(props.login.mock.calls.length).toEqual(1);
             expect(props.login.mock.calls[0][0]).toEqual('Jennifer');
+      });
+
+      // prop: logout
+      test('Passes logout cb to component', () => {
+            wrapper.find(Component).props().logout();
+            expect(props.logout.mock.calls.length).toEqual(1);
       });
 });
 
