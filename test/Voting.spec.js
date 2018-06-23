@@ -68,39 +68,20 @@ contract( 'Voting:', accounts => {
             const [tokens] = await instance.voterDetails(name);
             // 1/8 + 1/8 = 1/4
             assert.equal(tokens, totalSupply / 4, 'updates the user quantity of tokens');
-
-            const tokensAvailable = await instance.tokensAvailable();
             // tokens left: 1 - 1/4
+            const tokensAvailable = await instance.tokensAvailable();
             assert.equal(tokensAvailable.toNumber(), 3 * totalSupply / 4, 'updates the number of tokens available for purchase');
-
+            // returns nb of tokens bought
             const tokensBought = await instance.buyTokens.call(name, {from: user, value: 10 * pricePerToken});
             assert.equal(tokensBought.toNumber(), 10, 'returns nb of tokens bought if transaction was successful');
-
             // unregister user
             await instance.unregisterVoter(name);
       });
-
-      // [TEMP]: LOGIN
-      // it('Allows a existing user to login', async () => {
-      //       const name = web3.fromUtf8('Jennifer');
-      //       // first register the user
-      //       await instance.registerVoter(name, {from: user});
-      //       // then buy some tokens
-      //       await instance.buyTokens(name, {from: user, value: 2 * pricePerToken});
-      //       // then vote for candidate
-      //       await voteForCandidate(cf.candidates[1], name);
-      //       // then login
-      //       const [tokens, record, address] = await instance.login(name);
-      //       assert.equal(tokens.toNumber(), 2 , 'Returns the number of tokens this user has');
-      //       assert.deepEqual(record.toString(), '0,1,0' , 'Returns the voting record this user has')
-      //       assert.deepEqual(address, user , 'Returns the address this user has')
-      // });
 
       // IS CANDIDATE VALID
       it( 'Gets the candidate index in array of valid candidates:', async () => {
             let result = await instance.indexOfCandidate.call(cf.candidates[1]);
             assert.equal(result.toNumber(), 1, 'Returns index if candidate valid');
-
             result = await instance.indexOfCandidate.call('Unknown');
             //[TD]: result,toNumber() returning wacky value ?
             // assert.equal(result.toNumber(), -1, 'Returns -1 if candidate invalid');
@@ -141,11 +122,10 @@ contract( 'Voting:', accounts => {
             const candidate = cf.candidates[0];
             await voteForCandidate(candidate, {from: user});
             await voteForCandidate(candidate, {from: user});
-            let votes = await instance.votesReceived(candidate);
-            let totalVotes = await totalVotesFor(candidate);
-
+            const votes = await instance.votesReceived(candidate);
+            const totalVotes = await totalVotesFor(candidate);
             assert.equal(votes.toNumber(), totalVotes.toNumber());
-
+            // not a vlid candidate
             const e = await totalVotesFor('Unknown');
             assertRevert(e, 'reverts if it is not a valid candidate');
       });
