@@ -1,5 +1,7 @@
 pragma solidity ^0.4.18;
 
+import  './CorrToken.sol';
+
 contract Voting {
 
       struct Voter {
@@ -17,11 +19,13 @@ contract Voting {
 
       bytes32[] public candidateList;
       address[] public voterAddresses;
+       CorrToken public tokenContract;
 
-      function Voting(uint _tokens, uint _pricePerToken, bytes32[] _candidateNames ) public {
+      function Voting(CorrToken _tokenContract, uint _tokens, uint _pricePerToken, bytes32[] _candidateNames ) public {
             tokenPrice = _pricePerToken;
             candidateList = _candidateNames;
             tokensAvailable = _tokens;
+            tokenContract = _tokenContract;
       }
 
       function registerVoter(bytes32 name) public {
@@ -73,11 +77,13 @@ contract Voting {
             // require valid candidate
             require(index != uint(-1));
             // require user has enough tokens
-            require(voterInfo[name].tokensAvailable >= 1);
+            require(tokenContract.balanceOf(msg.sender) >= 1);
             // increment vote count for this candidate
             votesReceived[candidate] += 1;
             // decrement the nb of tkoen available by this user
-            voterInfo[name].tokensAvailable -= 1;
+            tokenContract.transferFrom(msg.sender, this, 1);
+            ///////////////////////
+            // voterInfo[name].tokensAvailable -= 1;
             // update the user voting record
             voterInfo[name].votingRecord[index] += 1;
       }
