@@ -4,10 +4,10 @@ var CorrToken = artifacts.require("./CorrToken.sol");
 var CorrTokenSale = artifacts.require("./CorrTokenSale.sol");
 
 module.exports = function (deployer) {
-      deployer.deploy(CorrToken, 1000000).then(() => {
-            deployer.deploy(Voting, CorrToken.address, config.token.supply, web3.toWei(config.token.price, 'ether'), config.candidates);
-            return deployer.deploy(CorrTokenSale, CorrToken.address, 1000000000);
-      });
+      deployer
+      .deploy(CorrToken, 1000000)
+      .then(() => deployer.deploy(CorrTokenSale, CorrToken.address, 1000000000))
+      .then(() => deployer.deploy(Voting, CorrToken.address, config.candidates));
 };
 
 // module.exports = function (deployer) {

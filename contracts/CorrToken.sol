@@ -21,9 +21,14 @@ contract CorrToken {
             uint256 _value
       );
 
+      event Instanciation (
+            address indexed _owner
+      );
+
       function CorrToken (uint256 _initialSupply) public {
             balanceOf[msg.sender] = _initialSupply;
             totalSupply = _initialSupply;
+            Instanciation(msg.sender);
       }
 
       function transfer(address _to, uint256 _value) public returns (bool success) {

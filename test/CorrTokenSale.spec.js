@@ -5,6 +5,7 @@ const CorrTokenSale = artifacts.require('./CorrTokenSale.sol');
 const { tryCatchWrapper, assertRevert } = helpers;
 
 contract( 'CorrTokenSale', accounts => {
+      let buy, endSale;
       let tokenInstance;
       let buyTokensRevert;
       let tokenSaleInstance;
@@ -18,6 +19,7 @@ contract( 'CorrTokenSale', accounts => {
             tokenSaleInstance = await CorrTokenSale.deployed();
             // wrap in try catch block fn we want to test "revert" for
             buy = tryCatchWrapper(tokenSaleInstance.buy);
+            endSale = tryCatchWrapper(tokenSaleInstance.endSale);
             // transfer some tokens to the token sale contract
             await tokenInstance.transfer(tokenSaleInstance.address, tokenAvailable, {from: admin});
       });
@@ -60,5 +62,21 @@ contract( 'CorrTokenSale', accounts => {
             assert.equal(receipt.logs[0].event, 'Sale', 'the event is a "Sale"event');
             assert.equal(receipt.logs[0].args._buyer, buyer, 'logs the buyer address');
             assert.equal(receipt.logs[0].args._value.toNumber(), value, 'logs the value transfered');
+      });
+
+      it('Ends the token sale', async () => {
+            let e;
+            e = await endSale({from: accounts[1]});
+            assertRevert(e, 'Requires the caller to be the admin');
+            // no fund left in the token sale contract
+            e = await endSale({from: accounts[0]});
+            const balance1 = await tokenInstance.balanceOf(tokenSaleInstance.address);
+            assert.equal(balance1.toNumber(), 0, 'the token sale contract has no fund left');
+            // 1000000 - 10 (tokens bought in previous test) = 999990
+            const balance2 = await tokenInstance.balanceOf(admin);
+            assert.equal(balance2.toNumber(), 999990, 'all fund left in the token sale contract has been transfered to admin')
+            // token price reset means sale contract successfully destroyed
+            const price = await tokenSaleInstance.tokenPrice();
+            assert.equal(price.toNumber(), 0, 'token price has been reset when sale contract was destroyed');
       });
 });

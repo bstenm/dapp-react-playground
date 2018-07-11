@@ -1,5 +1,6 @@
 import ms from '../config/messages';
 import cf from '../config';
+import Log from '../services/Log';
 import uniqBy from 'lodash/uniqBy';
 import {dispatch} from '@rematch/core';
 import VotingService from '../services/Voting';
@@ -21,7 +22,7 @@ export default {
                         }));
                         this.updateList(updated);
                   } catch(e) {
-                        console.error(e.message);
+                        Log.error(e.message);
                         dispatch.alert.message(ms.retrieveVotesFailure);
                   }
             },
@@ -35,7 +36,7 @@ export default {
                         updated.unshift({name: candidate, vote});
                         this.updateList(uniqBy(updated, 'name'));
                   } catch (e) {
-                        console.error(e.message);
+                        Log.error(e.message);
                         dispatch.alert.message(ms.notEnoughFunds);
                   } finally {
                         dispatch.requesting.stop();

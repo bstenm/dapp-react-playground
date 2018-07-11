@@ -6,7 +6,6 @@ contract Voting {
 
       struct Voter {
             address voterAddress;
-            uint tokensAvailable;
             uint[] votingRecord;
             bytes32 name;
       }
@@ -14,24 +13,19 @@ contract Voting {
       mapping(bytes32 => uint) public votesReceived;
       mapping(bytes32 => Voter) public voterInfo;
 
-      uint public tokensAvailable;
-      uint public tokenPrice;
 
       bytes32[] public candidateList;
       address[] public voterAddresses;
        CorrToken public tokenContract;
 
-      function Voting(CorrToken _tokenContract, uint _tokens, uint _pricePerToken, bytes32[] _candidateNames ) public {
-            tokenPrice = _pricePerToken;
+      function Voting(CorrToken _tokenContract, bytes32[] _candidateNames ) public {
             candidateList = _candidateNames;
-            tokensAvailable = _tokens;
             tokenContract = _tokenContract;
       }
 
       function registerVoter(bytes32 name) public {
             voterInfo[name].name = name;
             voterInfo[name].voterAddress = msg.sender;
-            voterInfo[name].tokensAvailable = 0;
             // initialises voting record array
             voterInfo[name].votingRecord = [0, 0, 0];
             // to be used for ganache only: keep track of addresses in use
@@ -42,9 +36,8 @@ contract Voting {
             return voterAddresses;
       }
 
-      function voterDetails(bytes32 name) view public returns (uint,uint[], address, bytes32) {
+      function voterDetails(bytes32 name) view public returns (uint[], address, bytes32) {
             return (
-                  voterInfo[name].tokensAvailable,
                   voterInfo[name].votingRecord,
                   voterInfo[name].voterAddress,
                   voterInfo[name].name
@@ -55,16 +48,17 @@ contract Voting {
             delete voterInfo[name];
       }
 
-      function buyTokens(bytes32 name) payable public returns (uint) {
-            uint tokensToBuy = msg.value/tokenPrice;
-            // require value not over nb of tokens available
-            require(tokensToBuy <= tokensAvailable);
-            // require user has a address set (registered)
-            require(voterInfo[name].voterAddress != 0x00);
-            voterInfo[name].tokensAvailable += tokensToBuy;
-            tokensAvailable -= tokensToBuy;
-            return tokensToBuy;
-      }
+      ///////////////////////////////////////////////////
+      // function buyTokens(bytes32 name) payable public returns (uint) {
+      //       uint tokensToBuy = msg.value/tokenPrice;
+      //       // require value not over nb of tokens available
+      //       require(tokensToBuy <= tokensAvailable);
+      //       // require user has a address set (registered)
+      //       require(voterInfo[name].voterAddress != 0x00);
+      //       voterInfo[name].tokensAvailable += tokensToBuy;
+      //       tokensAvailable -= tokensToBuy;
+      //       return tokensToBuy;
+      // }
 
       function totalVotesFor(bytes32 candidate) view public returns (uint) {
             uint index = indexOfCandidate(candidate);
@@ -82,8 +76,6 @@ contract Voting {
             votesReceived[candidate] += 1;
             // decrement the nb of tkoen available by this user
             tokenContract.transferFrom(msg.sender, this, 1);
-            ///////////////////////
-            // voterInfo[name].tokensAvailable -= 1;
             // update the user voting record
             voterInfo[name].votingRecord[index] += 1;
       }

@@ -1,11 +1,11 @@
 pragma solidity ^0.4.0;
 
-interface Regulator {
-    function checkValue(uint amount) public returns (bool);
-    function loan() public returns (bool);
-}
+// interface Regulator {
+//     function checkValue(uint amount) public returns (bool);
+//     function loan() public returns (bool);
+// }
 
-contract Bank is Regulator {
+contract Bank {
       uint private value;
       address private owner;
 

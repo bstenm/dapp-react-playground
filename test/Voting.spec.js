@@ -88,7 +88,7 @@ contract( 'Voting:', accounts => {
       });
 
       // VOTE FOR A CANDIDATE
-      it( 'Allows to vote for a candidate', async () => {
+      xit( 'Allows to vote for a candidate', async () => {
             let votes, e;
             const name = web3.fromUtf8('Jennifer');
             // one candidate

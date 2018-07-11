@@ -1,4 +1,8 @@
 import ms from '../config/messages';
+import Log from '../services/Log';
+import web3 from '../services/Web3';
+import {token} from '../config/index';
+import Contracts from '../services/ContractsInstances';
 import {dispatch} from '@rematch/core';
 import VotingService from '../services/Voting';
 
@@ -10,7 +14,7 @@ export default {
             },
 
             updateTokenCount (state, payload) {
-                  const tokens = state.tokens + parseInt(payload, 10);
+                  const tokens = (state.tokens || 0) + parseInt(payload, 10);
                   return {...state, tokens};
             },
 
@@ -36,17 +40,25 @@ export default {
                         }, {});
                         dispatch.user.updateUserDetails({tokens, votingRecord, name, address});
                   } catch (e) {
-                        console.error(e.message);
-                        dispatch.alert.message(ms.retrieveVotesFailure);
+                        Log.error(e.message);
+                        dispatch.alert.message(ms.noMoreRegistrationAllowed);
                   }
             },
 
-            async buyTokens (nb, {user: {name, address}}) {
+            async buyTokens (val, {user: {name, address, tokens}}) {
                   try {
-                        await VotingService.buyTokens(nb, {name, address});
-                        this.updateTokenCount(nb);
+                        const nb = parseInt(val, 10) + (tokens || 0);
+                        const ctToken = await Contracts.Token.deployed();
+                        const ctVoting = await Contracts.Voting.deployed();
+                        const ctTokenSale = await Contracts.TokenSale.deployed();
+                        // value of tokens in wei
+                        const value = web3.toWei('0.000000001', 'ether') * val;
+                        await ctTokenSale.buy(val, {from: address, value});
+                        // allow voting contract to transfer tokens on user behalf
+                        await ctToken.approve(ctVoting.address, nb, {from: address});
+                        this.updateTokenCount(val);
                   } catch(e) {
-                        console.error(e.message);
+                        Log.error(e.message);
                         dispatch.alert.message(ms.buyTokensFailure);
                   }
             }

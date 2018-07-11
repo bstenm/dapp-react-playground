@@ -35,4 +35,11 @@ contract CorrTokenSale {
             // Trigger sale event
             Sale(msg.sender, msg.value);
       }
+
+      function endSale() public  {
+            require(msg.sender == admin);
+            require(tokenContract.transfer(admin, tokenContract.balanceOf(this)));
+            // [TODO]: why throws an error when running tests ?
+            selfdestruct(admin);
+      }
 }
