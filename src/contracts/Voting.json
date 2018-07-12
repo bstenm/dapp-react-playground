@@ -6604,8 +6604,14 @@
       "links": {},
       "address": "0xc60968c1742597fa87451e9235c91c7b9ed42881",
       "transactionHash": "0xb1950444e9b3dd9e60c40af53a288c2ee5fca264c88ba7e254a1da8ae715d4b3"
+    },
+    "1531407366329": {
+      "events": {},
+      "links": {},
+      "address": "0xe3b7d257528eda32d1e38018662ea2a62fc69f63",
+      "transactionHash": "0x8f75c478a8bdd72af32714d5a5b85bbfd8b2b2a3e1314f20ced19076bc46327d"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-07-11T16:41:41.398Z"
+  "updatedAt": "2018-07-12T14:56:36.869Z"
 }

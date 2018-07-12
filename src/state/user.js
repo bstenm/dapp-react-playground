@@ -12,7 +12,6 @@ export default {
       state: {},
       reducers: {
             updateUserDetails (state, payload) {
-                  debugger;
                   return {...state, ...payload };
             },
 
@@ -36,18 +35,16 @@ export default {
       effects: {
             async register (name) {
                   try {
-                        const nameInBytes = web3.fromUtf8(name);
+                        const {updateUserDetails} = dispatch.user;
                         const ctVoting = await Contracts.Voting.deployed();
                         const addresses = await ctVoting.getVoterAddresses();
-                        const availables = difference(accounts, addresses);
+                        const availableAddresses = difference(accounts, addresses);
                         // 1 because first index (0) is for admin
-                        const from = availables[1];
-                        if (! from) {
-                              throw new Error(ms.noMoreRegistrationAllowed);
-                        }
-                        debugger;
-                        await ctVoting.registerVoter(nameInBytes, {from, gas: 150000});
-                        return from;
+                        const address = availableAddresses[1];
+                        if (! address) { throw new Error(ms.noMoreRegistrationAllowed) } // THROW
+                        const nameInHex = web3.fromUtf8(name);
+                        await ctVoting.registerVoter(nameInHex, {from: address, gas: 150000});
+                        updateUserDetails({tokens: 0, votingRecord: {}, name, address});
                   } catch (e) {
                         Log.error(e.message);
                         dispatch.alert.message(e.message);
@@ -56,20 +53,15 @@ export default {
 
             async login (name, {candidates}) {
                   try {
+                        const {updateUserDetails} = dispatch.user;
                         const  ctToken = await Contracts.Token.deployed();
                         const  ctVoting = await Contracts.Voting.deployed();
                         let [record, address, user] =  await ctVoting.voterDetails(name);
                         const registered = web3.toUtf8(user) === name;
-                        record = registered ? record.map(e => e.toNumber()) : {};
-                        address = registered ? address : (await dispatch.user.register(name));
-                        //////////////////////////////////////
-                        const tokens = registered ? (await ctToken.balanceOf(address)).toNumber() : 0;
-                        const votingRecord = candidates.reduce((r, v, k) => {
-                              r[v.name] = record[k];
-                              return r;
-                        }, {});
-                        debugger;
-                        dispatch.user.updateUserDetails({tokens, votingRecord, name, address});
+                        if (! registered) { return this.register(name); } // EXIT
+                        const tokens = (await ctToken.balanceOf(address)).toNumber();
+                        record = candidates.reduce((r, v, k) => { r[v.name] = record[k].toNumber(); return r }, {});
+                        updateUserDetails({tokens, votingRecord: record, name, address});
                   } catch (e) {
                         Log.error(e.message);
                         dispatch.alert.message(ms.noMoreRegistrationAllowed);
@@ -86,8 +78,11 @@ export default {
                         const value = web3.toWei('0.000000001', 'ether') * val;
                         debugger;
                         await ctTokenSale.buy(val, {from: address, value});
+                        debugger;
                         // allow voting contract to transfer tokens on user behalf
                         await ctToken.approve(ctVoting.address, nb, {from: address});
+                        const a = val;
+                        debugger;
                         this.updateTokenCount(val);
                   } catch(e) {
                         Log.error(e.message);
