@@ -1,9 +1,11 @@
 import ms from '../config/messages';
 import cf from '../config';
 import Log from '../services/Log';
+import web3 from '../services/Web3';
 import uniqBy from 'lodash/uniqBy';
 import {dispatch} from '@rematch/core';
-import VotingService from '../services/Voting';
+import Contracts from '../services/ContractsInstances';
+
 
 export default {
       state: cf.candidates.map(e => ({name: e, vote: '0'})),
@@ -16,9 +18,10 @@ export default {
             async getVotes (payload, {candidates}) {
                   try {
                         const updated = [];
+                        const  ctVoting = await Contracts.Voting.deployed();
                         await Promise.all (candidates.map( async ({name}) => {
-                              const vote = await VotingService.totalVotesFor(name);
-                              updated.push({name, vote});
+                              const vote = await ctVoting.totalVotesFor(name);
+                              updated.push({name, vote: vote.toString()});
                         }));
                         this.updateList(updated);
                   } catch(e) {
@@ -31,9 +34,14 @@ export default {
                   try {
                         dispatch.requesting.start();
                         let updated = [...candidates];
-                        await VotingService.voteFor(candidate, {name, address});
-                        const vote = await VotingService.totalVotesFor(candidate);
-                        updated.unshift({name: candidate, vote});
+                        const ctVoting = await Contracts.Voting.deployed();
+                        await ctVoting.voteForCandidate(
+                              web3.fromUtf8(candidate),
+                              web3.fromUtf8(name),
+                              {from: address, gas: 200000}
+                        );
+                        const vote = await ctVoting.totalVotesFor(candidate);
+                        updated.unshift({name: candidate, vote: vote.toString()});
                         this.updateList(uniqBy(updated, 'name'));
                   } catch (e) {
                         Log.error(e.message);

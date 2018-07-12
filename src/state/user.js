@@ -4,7 +4,6 @@ import web3 from '../services/Web3';
 import Contracts from '../services/ContractsInstances';
 import {dispatch} from '@rematch/core';
 import difference from 'lodash/difference';
-import VotingService from '../services/Voting';
 
 const {accounts} = web3.eth;
 
@@ -76,13 +75,9 @@ export default {
                         const ctTokenSale = await Contracts.TokenSale.deployed();
                         // value of tokens in wei
                         const value = web3.toWei('0.000000001', 'ether') * val;
-                        debugger;
                         await ctTokenSale.buy(val, {from: address, value});
-                        debugger;
                         // allow voting contract to transfer tokens on user behalf
                         await ctToken.approve(ctVoting.address, nb, {from: address});
-                        const a = val;
-                        debugger;
                         this.updateTokenCount(val);
                   } catch(e) {
                         Log.error(e.message);

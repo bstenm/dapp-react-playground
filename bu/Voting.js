@@ -49,7 +49,6 @@ const totalVotesFor = async name => {
 
 const voteFor = async (candidate, {name, address}) => {
       const  tokenInst = await Token.deployed();
-      const balance = await tokenInst.balanceOf(address);
       const ctVoting = await Voting.deployed();
       await ctVoting.voteForCandidate(
             web3.fromUtf8(candidate),

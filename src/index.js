@@ -9,7 +9,7 @@ import Contracts from './services/ContractsInstances';
 import {BrowserRouter} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
-//[TEMPORARY]: Provisioning the token sale contract
+//[TEMPORARY]: Provisioning the token sale contract here for now
 let  ctToken;
 Contracts.Token
 .deployed()
