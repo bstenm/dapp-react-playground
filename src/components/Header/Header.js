@@ -23,9 +23,9 @@ const purchaseTokensPopover = onSubmit => (
 export const Component = ({buyTokens, login, logout, userAccount}) => (
       <Navbar inverse collapseOnSelect className="Header">
             <Navbar.Header>
-                  <Navbar.Brand>
+                  <Navbar.Brand >
                         <Link to="/">
-                              <Glyphicon glyph="link" />
+                              <Glyphicon glyph="link" title="Dapp Playground"/>
                         </Link>
                   </Navbar.Brand>
                   <Navbar.Toggle />

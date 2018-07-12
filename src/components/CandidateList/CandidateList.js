@@ -1,9 +1,12 @@
 import './CandidateList.css';
 import React from 'react';
+import {Link} from 'react-router-dom';
 import sortBy from 'lodash/sortBy';
 import {Table} from 'react-bootstrap';
+import {routes} from '../../config';
 import PropTypes from 'prop-types';
 import {Glyphicon} from 'react-bootstrap';
+
 
 export const CandidateList = ({candidates, voteFor, requesting}) => (
       <div className="CandidateList" >
@@ -25,6 +28,11 @@ export const CandidateList = ({candidates, voteFor, requesting}) => (
                                     <Glyphicon glyph="plus" onClick={() => voteFor(e.name)}/>:
                                     <img src="./loading.gif" alt="processing"/>
                                     }
+                              </td>
+                              <td>
+                                    <Link to={routes.candidateInfo(e.name)}>
+                                          Add info
+                                    </Link>
                               </td>
                         </tr>
                         ))}

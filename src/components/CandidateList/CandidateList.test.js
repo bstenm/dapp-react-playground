@@ -1,7 +1,10 @@
+import {Link} from 'react-router-dom';
 import React from 'react';
+import {routes} from '../../config';
 import {shallow} from 'enzyme';
 import {Glyphicon} from 'react-bootstrap';
 import Component from './CandidateList';
+
 
 describe('(Component) CandidateList', () => {
       let wrapper, props;
@@ -30,6 +33,12 @@ describe('(Component) CandidateList', () => {
             expect(wrapper.find('tr').at(1).find('td').at(1).text()).toEqual('3');
             expect(wrapper.find('tr').at(3).find('td').at(0).text()).toEqual('Nick');
             expect(wrapper.find('tr').at(3).find('td').at(1).text()).toEqual("0");
+      });
+
+      test('Displays a Link to add new fact for each candidate', () => {
+            expect(wrapper.find(Link).length).toEqual(3);
+            expect(wrapper.find(Link).at(0).props().to).toEqual(routes.candidateInfo('Jason'));
+            expect(wrapper.find(Link).at(1).props().to).toEqual(routes.candidateInfo('Joanna'));
       });
 
       test('Allows user to add vote for each candidate', () => {

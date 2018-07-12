@@ -5,4 +5,10 @@ const token = {
 
 const candidates =  ['Hilary','Trump', 'Jill'];
 
-module.exports = {token, candidates};
+const routes = {
+      home: "/",
+      voting: "/",
+      candidateInfo: candidate => `/info/${candidate}`
+}
+
+module.exports = {token, candidates, routes};
