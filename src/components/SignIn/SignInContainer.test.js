@@ -44,5 +44,11 @@ describe( '(Container) SignIn', () => {
             expect(props.login.mock.calls.length).toEqual(1);
             expect(props.login.mock.calls[0][0]).toEqual('Jennifer');
       });
+
+      test( 'Resets the input field to empty string on submit', () => {
+            wrapper.setState({name: 'Jennifer'});
+            wrapper.find(Component).props().onLogin();
+            expect(wrapper.state().name).toEqual('');
+      });
 });
 

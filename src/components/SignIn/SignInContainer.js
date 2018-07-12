@@ -7,6 +7,7 @@ export class SignInContainer extends React.Component {
 
       login = () => {
             this.props.login(this.state.name);
+            this.setState({name: ''});
       }
 
       onChange = (e) => {
