@@ -7,7 +7,7 @@ export class PurchaseTokensContainer extends React.Component {
 
       onSubmit = () => {
             this.props.onSubmit(this.state.value);
-            // this.setState({value: ''});
+            this.setState({value: ''});
       }
 
       onChange = (e) => {
