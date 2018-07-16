@@ -1,4 +1,5 @@
-import './CandidateList.css';
+// import './CandidateList.css';
+import styles from './CandidateList.css';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import sortBy from 'lodash/sortBy';
@@ -9,7 +10,7 @@ import {Glyphicon} from 'react-bootstrap';
 
 
 export const CandidateList = ({candidates, voteFor, requesting}) => (
-      <div className="CandidateList" >
+      <div className={styles.CandidateList} >
             <Table>
                   <thead>
                         <tr>

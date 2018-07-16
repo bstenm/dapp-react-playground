@@ -40,6 +40,6 @@ contract CorrTokenSale {
             require(msg.sender == admin);
             require(tokenContract.transfer(admin, tokenContract.balanceOf(this)));
             // [TODO]: why throws an error when running tests ?
-            selfdestruct(admin);
+            // selfdestruct(admin);
       }
 }

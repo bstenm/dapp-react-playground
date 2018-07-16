@@ -48,18 +48,6 @@ contract Voting {
             delete voterInfo[name];
       }
 
-      ///////////////////////////////////////////////////
-      // function buyTokens(bytes32 name) payable public returns (uint) {
-      //       uint tokensToBuy = msg.value/tokenPrice;
-      //       // require value not over nb of tokens available
-      //       require(tokensToBuy <= tokensAvailable);
-      //       // require user has a address set (registered)
-      //       require(voterInfo[name].voterAddress != 0x00);
-      //       voterInfo[name].tokensAvailable += tokensToBuy;
-      //       tokensAvailable -= tokensToBuy;
-      //       return tokensToBuy;
-      // }
-
       function totalVotesFor(bytes32 candidate) view public returns (uint) {
             uint index = indexOfCandidate(candidate);
             require(index != uint(-1));
@@ -70,14 +58,16 @@ contract Voting {
             uint index = indexOfCandidate(candidate);
             // require valid candidate
             require(index != uint(-1));
+            // require user is registered
+            require(voterInfo[name].name == name);
             // require user has enough tokens
             require(tokenContract.balanceOf(msg.sender) >= 1);
             // increment vote count for this candidate
             votesReceived[candidate] += 1;
-            // decrement the nb of tkoen available by this user
-            tokenContract.transferFrom(msg.sender, this, 1);
             // update the user voting record
             voterInfo[name].votingRecord[index] += 1;
+            // transfer one token from user to this contract
+            tokenContract.transferFrom(msg.sender, this, 1);
       }
 
       function indexOfCandidate( bytes32 candidate) view public returns (uint) {
