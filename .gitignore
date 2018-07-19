@@ -17,6 +17,7 @@ src/build
 .env.test.local
 .env.production.local
 credential
+/src/contracts
 
 npm-debug.log*
 yarn-debug.log*

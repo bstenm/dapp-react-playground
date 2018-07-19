@@ -7,7 +7,6 @@ import tokenSaleArtifacts from '../contracts/CorrTokenSale.json';
 const Token = contract(tokenArtifacts);
 const Voting = contract(votingArtifacts);
 const TokenSale = contract(tokenSaleArtifacts);
-const {accounts} = web3.eth;
 Token.setProvider(web3.currentProvider);
 Voting.setProvider(web3.currentProvider);
 TokenSale.setProvider(web3.currentProvider);

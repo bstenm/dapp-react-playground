@@ -8,7 +8,8 @@ import difference from 'lodash/difference';
 const {accounts} = web3.eth;
 
 export default {
-      state: {},
+      // [TEMP]
+      state: {name: 'Jenni ', address: '0x8f42eacc134ae583c4958048f1a099e66651c30d'},
       reducers: {
             updateUserDetails (state, payload) {
                   return {...state, ...payload };
