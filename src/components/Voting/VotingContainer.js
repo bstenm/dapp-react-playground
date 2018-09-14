@@ -34,12 +34,7 @@ export class VotingContainer extends React.Component {
       }
 };
 
-export default connect(({
-      user,
-      requesting,
-      candidates
-}) => ({
-      user,
-      requesting,
-      candidates
-}) )(VotingContainer);
+export default connect(
+      ({ user, requesting, candidates }) =>
+      ({ user, requesting, candidates })
+)(VotingContainer);

@@ -13,7 +13,6 @@ contract Voting {
       mapping(bytes32 => uint) public votesReceived;
       mapping(bytes32 => Voter) public voterInfo;
 
-
       bytes32[] public candidateList;
       address[] public voterAddresses;
        CorrToken public tokenContract;

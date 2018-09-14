@@ -7,12 +7,13 @@ import {Glyphicon} from 'react-bootstrap';
 
 export const Component = ({account: {tokens, name, votingRecord}}) => (
       <div className="UserAccount" >
-            <div><Glyphicon glyph="user"/>{name}</div>
-            <div><Glyphicon glyph="usd"/>{tokens} tokens left</div>
+            <div className="userInfo">
+                  <div><Glyphicon glyph="user"/>{name}</div>
+                  <div><Glyphicon glyph="usd"/>{tokens} tokens left</div>
+            </div>
             {! isEmpty(votingRecord) &&
-            <div>
-                  <hr/>
-                  <h4>Your votes</h4>
+            <div className="votingRecord">
+                  <h5>Voting record</h5>
                   <table>
                         <tbody>
                               {Object.keys(votingRecord).map(k => (

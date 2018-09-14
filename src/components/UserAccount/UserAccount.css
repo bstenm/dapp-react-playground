@@ -2,3 +2,26 @@
       width: 150px;
 }
 
+.UserAccount h5 {
+      color: purple;
+}
+
+.UserAccount .userInfo .glyphicon {
+      padding-right: 5px;
+      position: relative;
+      top: 2px;
+      color: #333;
+}
+
+.UserAccount .userInfo>div {
+      margin-bottom: 5px;
+}
+
+.UserAccount .votingRecord  {
+      margin-top: 5px;
+      border-top: 1px solid #ccc;
+}
+
+.UserAccount .votingRecord table {
+      margin-left: 5px;
+}

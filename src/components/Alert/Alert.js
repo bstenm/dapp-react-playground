@@ -7,9 +7,9 @@ export const Component = ({alert, handleClose}) => (
       <div className="Alert" >
             <Modal show={!! alert} onHide={handleClose}>
                   <Modal.Header closeButton>
-                        <Glyphicon glyph="warning-sign"/>
+                        <Glyphicon glyph="warning-sign" className="purple"/>
                         &nbsp;&nbsp;
-                        <span className="red bold">
+                        <span className="bold purple">
                               {alert}
                         </span>
                   </Modal.Header>

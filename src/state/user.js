@@ -1,3 +1,4 @@
+import cf from '../config';
 import ms from '../config/messages';
 import Log from '../services/Log';
 import web3 from '../services/Web3';
@@ -8,8 +9,7 @@ import difference from 'lodash/difference';
 const {accounts} = web3.eth;
 
 export default {
-      // [TEMP]
-      state: {name: 'Jenni ', address: '0x8f42eacc134ae583c4958048f1a099e66651c30d'},
+      state: {},
       reducers: {
             updateUserDetails (state, payload) {
                   return {...state, ...payload };
@@ -51,7 +51,7 @@ export default {
                   }
             },
 
-            async login (name, {candidates}) {
+            async login (name) {
                   try {
                         const {updateUserDetails} = dispatch.user;
                         const  ctToken = await Contracts.Token.deployed();
@@ -60,7 +60,10 @@ export default {
                         const registered = web3.toUtf8(user) === name;
                         if (! registered) { return this.register(name); } // EXIT
                         const tokens = (await ctToken.balanceOf(address)).toNumber();
-                        record = candidates.reduce((r, v, k) => { r[v.name] = record[k].toNumber(); return r }, {});
+                        record = cf.candidates.reduce((r, v, k) => {
+                              r[v] = record[k].toNumber();
+                              return r;
+                        }, {});
                         updateUserDetails({tokens, votingRecord: record, name, address});
                   } catch (e) {
                         Log.error(e.message);
