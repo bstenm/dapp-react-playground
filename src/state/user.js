@@ -78,7 +78,7 @@ export default {
                         const ctVoting = await Contracts.Voting.deployed();
                         const ctTokenSale = await Contracts.TokenSale.deployed();
                         // value of tokens in wei
-                        const value = web3.toWei('0.000000001', 'ether') * val;
+                        const value = web3.toWei('1', 'ether') * val;
                         await ctTokenSale.buy(val, {from: address, value});
                         // allow voting contract to transfer tokens on user behalf
                         await ctToken.approve(ctVoting.address, nb, {from: address});
