@@ -1,5 +1,5 @@
 const token = {
-      priceInEther: 1, // in ether
+      priceInEther: 1,
       supply: 1000000,
       priceInWei: 1000000000000000000
 };
