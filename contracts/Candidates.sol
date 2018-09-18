@@ -4,7 +4,7 @@ contract Candidates {
 
       struct Item {
             bytes32 description;
-            bytes32 attachment;
+            bytes attachmentHash;
       }
 
       mapping(bytes32 => Item[]) public candidateInfo;
@@ -15,13 +15,13 @@ contract Candidates {
             candidateList = _candidateNames;
       }
 
-      function addInfo (bytes32 _candidate, bytes32 _description, bytes32 _attachment) public {
+      function addInfo (bytes32 _candidate, bytes32 _description, bytes _attachmentHash) public {
             uint index = indexOfCandidate(_candidate);
             // require valid candidate
             require(index != uint(-1));
             Item memory item;
             item.description = _description;
-            item.attachment = _attachment;
+            item.attachmentHash = _attachmentHash;
             candidateInfo[_candidate].push(item);
       }
 

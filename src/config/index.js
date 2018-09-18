@@ -18,4 +18,6 @@ const attachment = {
       previewDim:  '50px'
 };
 
-module.exports = {token, candidates, routes, attachment};
+const ipfsConfig = { host: 'ipfs.infura.io', port: 5001, protocol: 'https' };
+
+module.exports = {token, candidates, routes, attachment, ipfsConfig};
