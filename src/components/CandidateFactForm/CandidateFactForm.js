@@ -1,38 +1,67 @@
+// [TODO]: Deal with preview memory leaks
 import './CandidateFactForm.css';
+import cf from '../../config';
 import React from 'react';
+import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import {Form, Field} from 'formik';
-import {FormControl} from 'react-bootstrap';
+import CustomInputComponent from '../CustomInputComponent';
+import {Button, Glyphicon, ControlLabel} from 'react-bootstrap';
 
-const CustomInputComponent = ({
-      field,
-      form: { touched, errors },
-      ...props
+const { allowedTypes, maxSize, previewDim } = cf.attachment;
+
+export const Component = ({
+      file,
+      errors,
+      values,
+      touched,
+      isSubmitting,
+      onDrop,
+      onDropRejected,
+      onDropAccepted,
 }) => (
-      <div>
-            <FormControl type="text" {...field} {...props} />
-            {touched[field.name] && errors[field.name] && (
-                  <div className="error">{errors[field.name]}</div>
-            )}
-      </div>
-);
-
-export const Component = ({values, errors, touched, isSubmitting}) => (
       <div className="CandidateFactForm" >
-            <Form>
-                  <Field type="email" name="email" placeholder="Email" component={CustomInputComponent}/>
-                  <Field type="password" name="password" placeholder="Password" component={CustomInputComponent}/>
-                  <br/>
-                 <label>
-                       <Field type="checkbox" name="newsletter" checked={values.newsletter}/>
-                       Join our newsletter
-                  </label>
-                  <Field component="select" name="plan">
-                        <option value="free">Free</option>
-                        <option value="premium">Premium</option>
-                  </Field>
-                  <button type="submit" disabled={isSubmitting}>Submit</button>
-            </Form>
+            <div className="attachment">
+                  <ControlLabel>Attachment</ControlLabel>
+                  <Dropzone
+                        accept={ allowedTypes.join( ',' ) }
+                        onDrop={onDrop}
+                        maxSize={ maxSize }
+                        className="dropzone"
+                        onDropRejected={onDropRejected}
+                        rejectClassName="unauthorized"
+                        acceptClassName="authorized"
+                        onDropAccepted={onDropAccepted}>
+                        <Glyphicon glyph="paperclip" title="Click or Drop"/>
+                  </Dropzone>
+                  { file &&
+                  <div>
+                        <img
+                              alt={file.name}
+                              src={file.preview}
+                              width={previewDim}
+                              height={previewDim}
+                        />
+                  </div>
+                  }
+            </div>
+            <div className="form">
+                  <Form>
+                        <Field
+                              type="textarea"
+                              name="description"
+                              component={CustomInputComponent}
+                              placeholder="Description"
+                        />
+                        <Button
+                              type="submit"
+                              bsStyle="primary"
+                              disabled={isSubmitting}
+                              className="pull-right">
+                              Submit
+                        </Button>
+                  </Form>
+            </div>
       </div>
 );
 

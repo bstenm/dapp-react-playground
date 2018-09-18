@@ -40,11 +40,11 @@ contract Banking {
             customerInfo[msg.sender].balance += _value;
       }
 
-      function getCustomerDetails (address customer) view public returns (uint256, uint256, address) {
+      function getCustomerDetails (address _customer) view public returns (uint256, uint256, address) {
             return (
-                  customerInfo[customer].balance,
-                  customerInfo[customer].createdAt,
-                  customerInfo[customer].myAddress
+                  customerInfo[_customer].balance,
+                  customerInfo[_customer].createdAt,
+                  customerInfo[_customer].myAddress
             );
       }
 }

@@ -47,7 +47,7 @@ export default {
                         updateUserDetails({tokens: 0, votingRecord: {}, name, address});
                   } catch (e) {
                         Log.error(e.message);
-                        dispatch.alert.message(e.message);
+                        dispatch.alert.error(e.message);
                   }
             },
 
@@ -67,7 +67,7 @@ export default {
                         updateUserDetails({tokens, votingRecord: record, name, address});
                   } catch (e) {
                         Log.error(e.message);
-                        dispatch.alert.message(ms.noMoreRegistrationAllowed);
+                        dispatch.alert.error(ms.noMoreRegistrationAllowed);
                   }
             },
 
@@ -85,7 +85,7 @@ export default {
                         this.updateTokenCount(val);
                   } catch(e) {
                         Log.error(e.message);
-                        dispatch.alert.message(ms.buyTokensFailure);
+                        dispatch.alert.error(ms.buyTokensFailure);
                   }
             }
       }

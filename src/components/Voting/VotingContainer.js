@@ -11,10 +11,10 @@ export class VotingContainer extends React.Component {
       }
 
       voteFor = name => {
-            const {requesting, user, dispatch} = this.props;
-            if (requesting) return;
+            const {loading, user, dispatch} = this.props;
+            if (loading) return;
             if (user.tokens < 1) {
-                  dispatch.alert.message(ms.notEnoughFunds);
+                  dispatch.alert.error(ms.notEnoughFunds);
                   return;
             }
             dispatch.candidates.addVote(name);
@@ -23,18 +23,18 @@ export class VotingContainer extends React.Component {
       }
 
       render() {
-            const {candidates, requesting} = this.props;
+            const {candidates, loading} = this.props;
             return (
                   <Component
                         voteFor={this.voteFor}
                         candidates={candidates}
-                        requesting={requesting}
+                        loading={loading}
                   />
             );
       }
 };
 
 export default connect(
-      ({ user, requesting, candidates }) =>
-      ({ user, requesting, candidates })
+      ({ user, loading, candidates }) =>
+      ({ user, loading, candidates })
 )(VotingContainer);

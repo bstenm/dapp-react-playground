@@ -1,40 +1,64 @@
-import * as yup from 'yup';
+import cf from '../../config';
+import ms from '../../config/messages';
 import React from 'react';
+import {Formik} from 'formik';
+import {dispatch} from '../../store';
 import Component from './CandidateFactForm';
-import {withFormik} from 'formik';
+import {switchCase} from '../../libs/switchCase';
+import validationSchema from './validationSchema';
+
+const { maxSize, allowedTypes } = cf.attachment;
 
 export class CandidateFactFormContainer extends React.Component {
 
+      state = { file: null }
+
+      initialValues = { description: '' }
+
+      onDropRejected = ([file]) => {
+            let sizeError = {}, typeError = {};
+            const { type, size } = file;
+            // if size too large
+            sizeError.case = maxSize < size;
+            sizeError.then = () => ms.fileTooLarge(maxSize);
+            // if file type not allowed
+            typeError.case = ! allowedTypes.includes( type );
+            typeError.then = () => ms.fIleTypeError(allowedTypes.join(', '));
+            const message = switchCase([ sizeError, typeError ]);
+            dispatch.alert.error(message || ms.unexpectedError );
+      }
+
+      onDropAccepted =(setFieldValue, [file]) => {
+            setFieldValue('file', file);
+            const { preview, name } = file;
+            this.setState({ file: { preview, name }});
+      }
+
+      onSubmit = ({ description, file }) => {
+            const { candidate } = this.props.match.params;
+            dispatch.candidates.addInfo({ candidate, description, file });
+      }
+
+      renderForm = ({ ...props, setFieldValue }) => (
+            <Component
+                  {...props}
+                  file={this.state.file}
+                  onDropRejected={this.onDropRejected}
+                  onDropAccepted={this.onDropAccepted.bind(this, setFieldValue)}
+            />
+      )
+
       render() {
             return (
-                  <Component {...this.props} />
+                  <Formik
+                        render={this.renderForm}
+                        onSubmit={this.onSubmit}
+                        initialValues={this.initialValues}
+                        validationSchema={validationSchema}
+                  />
             );
       }
 };
 
-export default withFormik({
-      mapPropsToValues () {
-            return {
-                  email: 'andrew@yo.io',
-                  password: '',
-                  newsletter: false,
-                  plan: 'premium'
-            }
-      },
-      handleSubmit (values, {resetForm, setErrors, setSubmitting}) {
-            console.log('>>>>', values);
-            setTimeout(() => {
-                  if (values.email === 'andrew@test.io') {
-                        setErrors({ email: 'Email already taken'});
-                  } else {
-                        resetForm();
-                  }
-                  setSubmitting(false);
-            }, 2000)
-      },
-      validationSchema: yup.object().shape({
-            email: yup.string().email('Invalid').required('Required'),
-            password: yup.string().min(9, 'Password must be 9 characters or longer').required('Required')
-      })
-})(CandidateFactFormContainer);
+export default CandidateFactFormContainer;
 

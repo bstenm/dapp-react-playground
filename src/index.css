@@ -29,3 +29,13 @@ button {
 .bold {
   font-weight: bold;
 }
+
+.input-error {
+  padding: 5px;
+  color: red;
+  font-size: 12px;
+}
+
+.input-error:before {
+  content: '*';
+}

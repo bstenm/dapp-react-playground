@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import {Glyphicon} from 'react-bootstrap';
 
 
-export const CandidateList = ({candidates, voteFor, requesting}) => (
+export const CandidateList = ({candidates, voteFor, loading}) => (
       <div className={styles.CandidateList} >
             <Table>
                   <thead>
@@ -25,7 +25,7 @@ export const CandidateList = ({candidates, voteFor, requesting}) => (
                               <td>{e.name}</td>
                               <td>{e.vote}</td>
                               <td>
-                                    {! requesting ?
+                                    {! loading ?
                                     <Glyphicon glyph="plus" onClick={() => voteFor(e.name)}/>:
                                     <img src="./loading.gif" alt="processing"/>
                                     }
@@ -47,7 +47,7 @@ CandidateList.propTypes = {
             PropTypes.shape({
                   vote: PropTypes.string,
                   name: PropTypes.string,
-                  requesting: PropTypes.bool
+                  loading: PropTypes.bool
             }),
       ),
       voteFor: PropTypes.func.isRequired

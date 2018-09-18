@@ -19,8 +19,8 @@ contract CorrTokenSale {
             tokenContract = _tokenContract;
       }
 
-      function mul(uint x, uint y) internal pure returns (uint z) {
-            require(y == 0 || (z = x * y) / y == x);
+      function mul(uint _x, uint _y) internal pure returns (uint z) {
+            require(_y == 0 || (z = _x * _y) / _y == _x);
       }
 
       function buy(uint256 _numberOfTokens) public payable {

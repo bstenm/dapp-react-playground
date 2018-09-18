@@ -1,9 +1,8 @@
-
 export default {
-      state: '',
+      state: {},
       reducers: {
-            message (state, payload) {
-                  return payload;
-            }
+            silence() { return {} },
+            error(state, message) { return { type: 'danger', message }},
+            success(state, message) { return { type: 'success', message }}
       }
-};
+}

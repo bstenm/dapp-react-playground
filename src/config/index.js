@@ -10,6 +10,12 @@ const routes = {
       home: "/",
       voting: "/",
       candidateInfo: candidate => `/info/${candidate}`
-}
+};
 
-module.exports = {token, candidates, routes};
+const attachment = {
+      allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'],
+      maxSize: 300000,
+      previewDim:  '50px'
+};
+
+module.exports = {token, candidates, routes, attachment};

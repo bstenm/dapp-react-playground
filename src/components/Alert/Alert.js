@@ -1,26 +1,15 @@
 import './Alert.css';
 import React from 'react';
+import {Alert} from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import {Modal, Glyphicon} from 'react-bootstrap';
 
-export const Component = ({alert, handleClose}) => (
+export const Component = ({ message, type }) => (
       <div className="Alert" >
-            <Modal show={!! alert} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                        <Glyphicon glyph="warning-sign" className="purple"/>
-                        &nbsp;&nbsp;
-                        <span className="bold purple">
-                              {alert}
-                        </span>
-                  </Modal.Header>
-            </Modal>
+            <Alert bsStyle={ type }>{ message }</Alert>
       </div>
 );
 
-Component.propTypes = {
-      msg: PropTypes.string,
-      handleClose: PropTypes.func.isRequired
-};
+Component.propTypes = { };
 
 export default Component;
 
