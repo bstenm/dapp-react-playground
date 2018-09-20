@@ -1,5 +1,5 @@
 // [TODO]: Deal with preview memory leaks
-import './CandidateFactForm.css';
+import './CandidateInfoForm.css';
 import cf from '../../config';
 import React from 'react';
 import Dropzone from 'react-dropzone';
@@ -20,7 +20,7 @@ export const Component = ({
       onDropRejected,
       onDropAccepted,
 }) => (
-      <div className="CandidateFactForm" >
+      <div className="CandidateInfoForm" >
             <div className="attachment">
                   <ControlLabel>Attachment</ControlLabel>
                   <Dropzone
@@ -49,6 +49,12 @@ export const Component = ({
                   <Form>
                         <Field
                               type="textarea"
+                              name="title"
+                              component={CustomInputComponent}
+                              placeholder="Title"
+                        />
+                        <Field
+                              type="textarea"
                               name="description"
                               component={CustomInputComponent}
                               placeholder="Description"
@@ -58,7 +64,7 @@ export const Component = ({
                               bsStyle="primary"
                               disabled={isSubmitting}
                               className="pull-right">
-                              Submit
+                              Upload to IPFS
                         </Button>
                   </Form>
             </div>

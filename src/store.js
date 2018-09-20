@@ -1,15 +1,13 @@
 import user from './state/user';
 import {init} from '@rematch/core';
 import alert from './state/alert';
-import candidates from './state/candidates';
 import loading from './state/loading';
-import selectorsPlugin from '@rematch/select';
-
-const select = selectorsPlugin();
+import candidates from './state/candidates';
+import selectPlugin from '@rematch/select';
 
 const store = init({
       models: {loading, candidates, user, alert},
-      plugins: [select]
+      plugins: [selectPlugin()]
 });
 
 export const dispatch = store.dispatch;

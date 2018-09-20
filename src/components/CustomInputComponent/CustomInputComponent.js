@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {capitalize} from 'lodash';
 import {FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
 
 const CustomInputComponent = ({
@@ -8,7 +9,7 @@ const CustomInputComponent = ({
       form: { handleChange, errors, touched },
 }) => (
       <FormGroup controlId={name}>
-            <ControlLabel>Description</ControlLabel>
+            <ControlLabel>{capitalize(name)}</ControlLabel>
             <FormControl
                   value={value}
                   onChange={handleChange}

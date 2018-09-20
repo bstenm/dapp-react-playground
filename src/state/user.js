@@ -3,7 +3,7 @@ import ms from '../config/messages';
 import Log from '../services/Log';
 import web3 from '../services/Web3';
 import Contracts from '../services/ContractsInstances';
-import {dispatch} from '@rematch/core';
+import {dispatch} from '../store';
 import difference from 'lodash/difference';
 
 const {accounts} = web3.eth;

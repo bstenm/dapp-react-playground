@@ -9,7 +9,8 @@ const candidates =  ['Hilary','Trump', 'Jill'];
 const routes = {
       home: "/",
       voting: "/",
-      candidateInfo: candidate => `/info/${candidate}`
+      candidateInfoList: candidate => `/info/list/${candidate}`,
+      candidateInfoForm: candidate => `/info/form/${candidate}`
 };
 
 const attachment = {

@@ -3,13 +3,13 @@ import ms from '../../config/messages';
 import React from 'react';
 import {Formik} from 'formik';
 import {dispatch} from '../../store';
-import Component from './CandidateFactForm';
+import Component from './CandidateInfoForm';
 import {switchCase} from '../../libs/switchCase';
 import validationSchema from './validationSchema';
 
 const { maxSize, allowedTypes } = cf.attachment;
 
-export class CandidateFactFormContainer extends React.Component {
+export class CandidateInfoFormContainer extends React.Component {
 
       state = { file: null }
 
@@ -34,9 +34,9 @@ export class CandidateFactFormContainer extends React.Component {
             this.setState({ file: { preview, name }});
       }
 
-      onSubmit = ({ description, file }) => {
+      onSubmit = ({ description, title, file }) => {
             const { candidate } = this.props.match.params;
-            dispatch.candidates.addInfo({ candidate, description, file });
+            dispatch.candidates.addInfo({ candidate, title, description, file });
       }
 
       renderForm = ({ ...props, setFieldValue }) => (
@@ -60,5 +60,5 @@ export class CandidateFactFormContainer extends React.Component {
       }
 };
 
-export default CandidateFactFormContainer;
+export default CandidateInfoFormContainer;
 

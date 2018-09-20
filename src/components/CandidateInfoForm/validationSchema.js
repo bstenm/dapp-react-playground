@@ -2,6 +2,11 @@ import ms from '../../config/messages';
 import * as yup from 'yup';
 
 export default yup.object({
+      title: yup
+            .string()
+            .min(5)
+            .max(60)
+            .required(ms.requiredField),
       description: yup
             .string()
             .min(20)

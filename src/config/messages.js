@@ -2,7 +2,7 @@ export default {
       notSaved: 'Could not save',
       notEnoughFunds: 'Please make sure you have enough funds to vote',
       buyTokensFailure: 'Could not transfer the tokens to your  account',
-      retrieveVotesFailure: 'Could not retrieve the vote data',
+      retrieveDataFailure: 'Could not retrieve the data requested',
       noMoreRegistrationAllowed: 'The maximum number of registration allowed has been reached',
       unexpectedError: 'An unexpected error has occured',
       requiredField: `Required`,

@@ -31,7 +31,10 @@ export const CandidateList = ({candidates, voteFor, loading}) => (
                                     }
                               </td>
                               <td>
-                                    <Link to={routes.candidateInfo(e.name)}>
+                                    <Link to={routes.candidateInfoList(e.name)}>
+                                          Show info
+                                    </Link>/
+                                    <Link to={routes.candidateInfoForm(e.name)}>
                                           Add info
                                     </Link>
                               </td>

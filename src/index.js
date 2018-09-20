@@ -5,8 +5,9 @@ import store from './store';
 import App from './components/App';
 import {admin} from './services/Web3';
 import {Provider} from 'react-redux';
+import customHistory from './history';
 import Contracts from './services/ContractsInstances';
-import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 //[TEMPORARY]: Provisioning the token sale contract here for now
@@ -21,9 +22,9 @@ Contracts.Token
 
 ReactDOM.render(
       <Provider store={ store }>
-            <BrowserRouter>
+            <Router history={customHistory}>
                   <App />
-            </BrowserRouter>
+            </Router>
       </Provider>
       , document.getElementById('root'));
 registerServiceWorker();

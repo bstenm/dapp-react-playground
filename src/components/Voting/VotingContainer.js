@@ -7,15 +7,15 @@ export class VotingContainer extends React.Component {
 
       constructor (props) {
             super(props)
-            this.props.dispatch.candidates.getVotes();
+            this.props.dispatch.candidates.fetchVotes();
       }
 
       voteFor = name => {
             const {loading, user, dispatch} = this.props;
+            const { error } = dispatch.alert;
             if (loading) return;
             if (user.tokens < 1) {
-                  dispatch.alert.error(ms.notEnoughFunds);
-                  return;
+                  return error(ms.notEnoughFunds);
             }
             dispatch.candidates.addVote(name);
             dispatch.user.updateTokenCount(-1);

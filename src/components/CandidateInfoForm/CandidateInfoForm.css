@@ -1,10 +1,10 @@
-.CandidateFactForm {
+.CandidateInfoForm {
       display: flex;
       width: 500px;
       margin: auto;
 }
 
-.CandidateFactForm .dropzone {
+.CandidateInfoForm .dropzone {
       border: 2px dashed #ccc;
       text-align: center;
       border-radius: 20%;
@@ -17,20 +17,20 @@
       font-size: 20px;
 }
 
-.CandidateFactForm .attachment img {
+.CandidateInfoForm .attachment img {
       margin-top: 10px;
 }
 
-.CandidateFactForm .dropzone.authorized {
+.CandidateInfoForm .dropzone.authorized {
       border: 1px solid green;
       color: green;
 }
 
-.CandidateFactForm .dropzone.unauthorized {
+.CandidateInfoForm .dropzone.unauthorized {
       border: 1px solid red;
       color: red;
 }
 
-.CandidateFactForm .form {
+.CandidateInfoForm .form {
       width: 100%;
 }

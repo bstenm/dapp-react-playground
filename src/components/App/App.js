@@ -5,9 +5,10 @@ import Voting from '../Voting';
 import Loader from '../Loader';
 import Header from '../Header';
 import Dimmer from '../Dimmer';
-import CandidateFact from '../CandidateFactForm';
 import ErrorBoundary from '../ErrorBoundary';
 import { Route, Switch } from 'react-router-dom';
+import CandidateInfoList from '../CandidateInfoList';
+import CandidateInfoForm from '../CandidateInfoForm';
 
 export const App = ({ loading, alert: { message, type }}) => (
       <div className="App">
@@ -24,7 +25,8 @@ export const App = ({ loading, alert: { message, type }}) => (
                         <Alert message={message} type={type}/>
                         )}
                         <Switch>
-                              <Route path="/info/:candidate" component={CandidateFact} />
+                              <Route path="/info/list/:candidate" component={CandidateInfoList} />
+                              <Route path="/info/form/:candidate" component={CandidateInfoForm} />
                               <Route path="/" component={Voting} />
                         </Switch>
                   </div>

@@ -3,7 +3,8 @@ pragma solidity ^0.4.18;
 contract Candidates {
 
       struct Item {
-            bytes32 description;
+            bytes title;
+            bytes description;
             bytes attachmentHash;
       }
 
@@ -15,14 +16,31 @@ contract Candidates {
             candidateList = _candidateNames;
       }
 
-      function addInfo (bytes32 _candidate, bytes32 _description, bytes _attachmentHash) public {
+      function addInfo (
+            bytes32 _candidate,
+            bytes _title,
+            bytes _description,
+            bytes _attachmentHash
+      ) public {
             uint index = indexOfCandidate(_candidate);
             // require valid candidate
             require(index != uint(-1));
             Item memory item;
+            item.title = _title;
             item.description = _description;
             item.attachmentHash = _attachmentHash;
             candidateInfo[_candidate].push(item);
+      }
+
+      function getInfo (bytes32 _candidate) view public returns (bytes, bytes, bytes) {
+            uint index = indexOfCandidate(_candidate);
+            // require valid candidate
+            require(index != uint(-1));
+            return (
+                  candidateInfo[_candidate][0].title,
+                  candidateInfo[_candidate][0].description,
+                  candidateInfo[_candidate][0].attachmentHash
+            );
       }
 
       function indexOfCandidate( bytes32 _candidate) view public returns (uint) {
