@@ -44,11 +44,6 @@ export default {
 
             async fetchInfo (name, { candidates }) {
                   execEffect(dispatch)(async () => {
-                        // let { info } = candidates.find(e => e.name === name);
-                        // // if we already fetched info for this candidate
-                        // if (info.length) return info; // EXIT
-                        // // if not get it from the blockchhain
-                        // console.log('>>>> FETCH frmo blockchain');
                         let i = 0, raw, data, info = [];
                         const  contract = await Contracts.Candidates.deployed();
                         // [TEMP]: until solidity functions can return nested arrays
