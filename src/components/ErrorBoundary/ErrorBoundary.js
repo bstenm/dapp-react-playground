@@ -1,8 +1,9 @@
+import './ErrorBoundary.css';
 import React from 'react';
 
 export const ErrorBoundary = () => (
       <div className="ErrorBoundary" >
-            <h2>Something went wrong.</h2>
+            <h2>An unexpected error has occured</h2>
       </div>
 );
 

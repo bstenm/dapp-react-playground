@@ -14,11 +14,25 @@ const routes = {
 };
 
 const attachment = {
-      allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'],
+      allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'application/pdf'],
       maxSize: 300000,
-      previewDim:  '50px'
+      previewDim:  '50px',
+      listingDim:  '70px'
 };
 
-const ipfsConfig = { host: 'ipfs.infura.io', port: 5001, protocol: 'https' };
+const ipfsConfig = {
+      host: 'ipfs.infura.io',
+      port: 5001,
+      protocol: 'https'
+};
 
-module.exports = {token, candidates, routes, attachment, ipfsConfig};
+const ipfsRoot = 'https://ipfs.io/ipfs/';
+
+module.exports = {
+      token,
+      candidates,
+      routes,
+      attachment,
+      ipfsConfig,
+      ipfsRoot
+};

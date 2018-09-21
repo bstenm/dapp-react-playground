@@ -10,7 +10,7 @@ import { Route, Switch } from 'react-router-dom';
 import CandidateInfoList from '../CandidateInfoList';
 import CandidateInfoForm from '../CandidateInfoForm';
 
-export const App = ({ loading, alert: { message, type }}) => (
+export const App = ({ loading, closeAlert, alert: { message, type }}) => (
       <div className="App">
             { loading && (
                   <div>
@@ -22,7 +22,11 @@ export const App = ({ loading, alert: { message, type }}) => (
             <ErrorBoundary>
                   <div className="container" >
                         { message && (
-                        <Alert message={message} type={type}/>
+                        <Alert
+                              type={type}
+                              onClose={closeAlert}
+                              message={message}
+                        />
                         )}
                         <Switch>
                               <Route path="/info/list/:candidate" component={CandidateInfoList} />

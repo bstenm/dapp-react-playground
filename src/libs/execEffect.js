@@ -1,7 +1,6 @@
 import Log from '../services/Log';
-import {dispatch} from '../store';
 
-export const execEffect = async (action, onError) => {
+export const execEffect = dispatch => async (action, onError) => {
       try {
             dispatch.loading.start();
             return await action();

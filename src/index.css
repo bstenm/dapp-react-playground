@@ -30,6 +30,10 @@ button {
   font-weight: bold;
 }
 
+.flex {
+  display: flex;
+}
+
 .input-error {
   padding: 5px;
   color: red;

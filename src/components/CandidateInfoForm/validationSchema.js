@@ -5,7 +5,7 @@ export default yup.object({
       title: yup
             .string()
             .min(5)
-            .max(60)
+            .max(120)
             .required(ms.requiredField),
       description: yup
             .string()

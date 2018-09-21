@@ -41,7 +41,9 @@ export default {
                         const availableAddresses = difference(accounts, addresses);
                         // 1 because first index (0) is for admin
                         const address = availableAddresses[1];
-                        if (! address) { throw new Error(ms.noMoreRegistrationAllowed) } // THROW
+                        if (! address) {
+                              throw new Error(ms.noMoreRegistrationAllowed); // THROW
+                        }
                         const nameInHex = web3.fromUtf8(name);
                         await ctVoting.registerVoter(nameInHex, {from: address, gas: 150000});
                         updateUserDetails({tokens: 0, votingRecord: {}, name, address});
@@ -53,12 +55,12 @@ export default {
 
             async login (name) {
                   try {
-                        const {updateUserDetails} = dispatch.user;
+                        const { updateUserDetails } = dispatch.user;
                         const  ctToken = await Contracts.Token.deployed();
                         const  ctVoting = await Contracts.Voting.deployed();
-                        let [record, address, user] =  await ctVoting.voterDetails(name);
+                        let [ record, address, user ] =  await ctVoting.voterDetails(name);
                         const registered = web3.toUtf8(user) === name;
-                        if (! registered) { return this.register(name); } // EXIT
+                        if (! registered) { return this.register(name); }  // EXIT
                         const tokens = (await ctToken.balanceOf(address)).toNumber();
                         record = cf.candidates.reduce((r, v, k) => {
                               r[v] = record[k].toNumber();

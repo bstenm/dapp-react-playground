@@ -32,14 +32,19 @@ contract Candidates {
             candidateInfo[_candidate].push(item);
       }
 
-      function getInfo (bytes32 _candidate) view public returns (bytes, bytes, bytes) {
+      function getInfo (bytes32 _candidate, uint _idx) view public returns (bytes, bytes, bytes) {
             uint index = indexOfCandidate(_candidate);
             // require valid candidate
             require(index != uint(-1));
+            Item[] memory items = candidateInfo[_candidate];
+            if (_idx >= items.length) {
+                  return;
+            }
+            Item memory item = items[_idx];
             return (
-                  candidateInfo[_candidate][0].title,
-                  candidateInfo[_candidate][0].description,
-                  candidateInfo[_candidate][0].attachmentHash
+                  item.title,
+                  item.description,
+                  item.attachmentHash
             );
       }
 

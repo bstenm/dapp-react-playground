@@ -12,9 +12,19 @@
       height: 50px;
       background: #fff;
       margin-right: 20px;
-      padding: 10px;
+      padding: 0 10px;
       color: #aaa;
-      font-size: 20px;
+      font-size: 18px;
+}
+
+.CandidateInfoForm .dropzone > div {
+      position: relative;
+      top: -5px;
+}
+
+.CandidateInfoForm .dropzone .text {
+      font-size: 12px;
+      font-weight: bold;
 }
 
 .CandidateInfoForm .attachment img {

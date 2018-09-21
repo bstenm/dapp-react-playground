@@ -32,7 +32,10 @@ export const Component = ({
                         rejectClassName="unauthorized"
                         acceptClassName="authorized"
                         onDropAccepted={onDropAccepted}>
-                        <Glyphicon glyph="paperclip" title="Click or Drop"/>
+                        <div>
+                              <span className="text">IPFS</span>
+                              <Glyphicon glyph="paperclip" title="Click or Drop"/>
+                        </div>
                   </Dropzone>
                   { file &&
                   <div>
@@ -64,7 +67,7 @@ export const Component = ({
                               bsStyle="primary"
                               disabled={isSubmitting}
                               className="pull-right">
-                              Upload to IPFS
+                              Submit
                         </Button>
                   </Form>
             </div>

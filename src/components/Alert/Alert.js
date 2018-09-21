@@ -1,11 +1,20 @@
 import './Alert.css';
 import React from 'react';
-import {Alert} from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import {Alert, Glyphicon} from 'react-bootstrap';
 
-export const Component = ({ message, type }) => (
+export const Component = ({ message, type, onClose }) => (
       <div className="Alert" >
-            <Alert bsStyle={ type }>{ message }</Alert>
+            <Alert bsStyle={ type }>
+                  <span className="pull-left">
+                        { message }
+                  </span>
+                  <Glyphicon
+                        glyph="remove"
+                        onClick={onClose}
+                        className="pull-right"
+                  />
+            </Alert>
       </div>
 );
 
