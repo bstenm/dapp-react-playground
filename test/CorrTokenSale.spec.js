@@ -1,3 +1,4 @@
+const config = require('../src/config/index');
 const helpers = require('../testHelpers');
 const CorrToken = artifacts.require('./CorrToken.sol');
 const CorrTokenSale = artifacts.require('./CorrTokenSale.sol');
@@ -11,8 +12,8 @@ contract( 'CorrTokenSale', accounts => {
       let tokenSaleInstance;
 
       const admin = accounts[0];
-      const tokenPrice = 1000000000;
-      const tokenAvailable = 750000;
+      const tokenPrice = config.token.priceInWei;
+      const tokenAvailable = config.token.available;
 
       before( async () => {
             tokenInstance = await CorrToken.deployed();
@@ -30,7 +31,7 @@ contract( 'CorrTokenSale', accounts => {
             const address2 = await tokenSaleInstance.tokenContract();
             assert.notEqual(address2, 0x0, 'has a token contract' );
             const price = await tokenSaleInstance.tokenPrice();
-            assert.equal(price, tokenPrice, 'token price is set');
+            assert.equal(price.toNumber(), tokenPrice, 'token price is set');
       });
 
       it( 'Allows token buying process:', async () => {

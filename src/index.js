@@ -5,6 +5,7 @@ import store from './store';
 import App from './components/App';
 import {admin} from './services/Web3';
 import {Provider} from 'react-redux';
+import {token} from './config';
 import customHistory from './history';
 import Contracts from './services/ContractsInstances';
 import {Router} from 'react-router-dom';
@@ -17,7 +18,7 @@ Contracts.Token
 .then( instance => ctToken = instance )
 .then(() => Contracts.TokenSale.deployed())
 .then(({address}) => {
-      ctToken.transfer(address, 750000, {from: admin});
+      ctToken.transfer(address, token.available, {from: admin});
 });
 
 ReactDOM.render(

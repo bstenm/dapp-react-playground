@@ -1,7 +1,7 @@
 const token = {
-      priceInEther: 1,
       supply: 1000000,
-      priceInWei: 1000000000000000000
+      available: 750000,
+      priceInWei: 1000000000
 };
 
 const candidates =  ['Hilary','Trump', 'Jill'];
