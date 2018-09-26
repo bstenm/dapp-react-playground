@@ -6,9 +6,8 @@ const CorrTokenSale = artifacts.require('./CorrTokenSale.sol');
 const { tryCatchWrapper, assertRevert } = helpers;
 
 contract( 'CorrTokenSale', accounts => {
-      let buy, endSale;
+      let buy, endSale, spend;
       let tokenInstance;
-      let buyTokensRevert;
       let tokenSaleInstance;
 
       const admin = accounts[0];
@@ -20,6 +19,7 @@ contract( 'CorrTokenSale', accounts => {
             tokenSaleInstance = await CorrTokenSale.deployed();
             // wrap in try catch block fn we want to test "revert" for
             buy = tryCatchWrapper(tokenSaleInstance.buy);
+            spend = tryCatchWrapper(tokenSaleInstance.spend);
             endSale = tryCatchWrapper(tokenSaleInstance.endSale);
             // transfer some tokens to the token sale contract
             await tokenInstance.transfer(tokenSaleInstance.address, tokenAvailable, {from: admin});
@@ -35,34 +35,48 @@ contract( 'CorrTokenSale', accounts => {
       });
 
       it( 'Allows token buying process:', async () => {
-            let e, receipt, anount;
+            let receipt, anount;
             const nbOfTokens = 10;
             const buyer = accounts[1];
             const value = nbOfTokens * tokenPrice;
-
-            e = await buy(nbOfTokens, {from: buyer, value: 1});
-            assertRevert(e, 'Cannot buy nb of tokens if value is under the right price');
-            e = await buy(nbOfTokens, {from: buyer, value: value + 1});
-            assertRevert(e, 'Cannot buy nb of tokens if value exceeds right price');
-
-            e = await buy(tokenAvailable + 1, {from: buyer, value: (tokenAvailable + 1) * tokenPrice});
-            assertRevert(e, 'Cannot buy if not enough tokens availlable in the sale contract');
-
+            // must have correct value
+            const e1 = await buy(nbOfTokens, {from: buyer, value: 1});
+            assertRevert(e1, 'Cannot buy nb of tokens if value is under the right price');
+            const e2 = await buy(nbOfTokens, {from: buyer, value: value + 1});
+            assertRevert(e2, 'Cannot buy nb of tokens if value exceeds right price');
+            // contract must have enough fund
+            const e3 = await buy(tokenAvailable + 1, {from: buyer, value: (tokenAvailable + 1) * tokenPrice});
+            assertRevert(e3, 'Cannot buy if not enough tokens availlable in the sale contract');
+            // receipt logs
             receipt = await buy(nbOfTokens, {from: buyer, value});
-
-            amount = await tokenInstance.balanceOf(buyer);
-            assert.equal(amount.toNumber(), nbOfTokens, 'Transfer the amount to the buyer');
-
-            amount = await tokenInstance.balanceOf(tokenSaleInstance.address);
-            assert.equal(amount.toNumber(), tokenAvailable - nbOfTokens, 'Deducts the amount from the token sale contract');
-
-            amount = await tokenSaleInstance.tokensSold();
-            assert.equal(amount.toNumber(), nbOfTokens, 'Keeps track of the tokens sold');
-
             assert.equal(receipt.logs.length, 1, 'triggers one event');
             assert.equal(receipt.logs[0].event, 'Sale', 'the event is a "Sale"event');
             assert.equal(receipt.logs[0].args._buyer, buyer, 'logs the buyer address');
             assert.equal(receipt.logs[0].args._value.toNumber(), value, 'logs the value transfered');
+            // must transfer amount from contract to buyer
+            amount = await tokenInstance.balanceOf(buyer);
+            assert.equal(amount.toNumber(), nbOfTokens, 'Transfer the amount to the buyer');
+            amount = await tokenInstance.balanceOf(tokenSaleInstance.address);
+            assert.equal(amount.toNumber(), tokenAvailable - nbOfTokens, 'Deducts the amount from the token sale contract');
+            // record numbe of tokens sold
+            amount = await tokenSaleInstance.tokensSold();
+            assert.equal(amount.toNumber(), nbOfTokens, 'Keeps track of the tokens sold');
+      });
+
+      it('Allows user to spend tokens back to the contract', async () => {
+            const nbOfTokens = 10;
+            // using account with no tokens
+            const spender = accounts[2];
+            // spender must have enough tokens
+            const e1 = await spend(nbOfTokens, {from: spender});
+            assertRevert(e1, 'Cannot spend nb of tokens if spender does not have enough funds');
+            // let's put some tokens into spender's account
+            await buy(nbOfTokens, {from: spender, value: nbOfTokens * tokenPrice});
+            // transfer the tokens from spender to token contract sale
+            const e2 = await spend(nbOfTokens - 1, {from: spender});
+            assertRevert(e2, 'Cannot spend nb of tokens if not approved');
+            // const amount = await tokenInstance.balanceOf(spender);
+            // assert.equal(amount.toNumber(), 2, 'Deducts the amount from spender');
       });
 
       it('Ends the token sale', async () => {

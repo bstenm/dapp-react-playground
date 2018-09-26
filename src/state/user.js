@@ -20,8 +20,8 @@ export default {
                   return {...state, tokens};
             },
 
-            addVoteToRecord (state, payload) {
-                  const {name, vote} = payload;
+            addVoteToRecord (state, {name, vote}) {
+                  // [TODO]: use immer
                   const {votingRecord} = state;
                   const nbOfVotes = votingRecord[name] || 0;
                   const newRecord = {...votingRecord, [name]: vote + nbOfVotes};

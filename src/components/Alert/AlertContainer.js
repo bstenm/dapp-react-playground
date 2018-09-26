@@ -5,7 +5,7 @@ import Component from './Alert';
 export class AlertContainer extends React.Component {
 
       onClose = () => {
-            this.props.message('')
+            this.props.silence();
       }
 
       render() {
@@ -20,6 +20,6 @@ export class AlertContainer extends React.Component {
 
 export default connect(
       ({alert}) => ({alert}),
-      ({alert: {message}}) => ({message})
+      ({alert: {silence}}) => ({silence})
 )(AlertContainer);
 
