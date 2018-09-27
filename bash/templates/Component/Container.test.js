@@ -12,7 +12,7 @@ describe( '(Container) [ComponentName]', () => {
             wrapper = shallow(<[ComponentName]Container {...props} />);
       });
 
-      test( 'Displays a [ComponentName] component', () => {
+      it( 'Displays a [ComponentName] component', () => {
             expect(wrapper.find(Component).length).toEqual(1);
       });
 });

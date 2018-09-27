@@ -3,15 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Alert, Glyphicon} from 'react-bootstrap';
 
-export const Component = ({ message, type, onClose }) => (
+export const Component = ({ alert: { message, type }, silence }) => (
       <div className="Alert" >
-            <Alert bsStyle={ type }>
+            <Alert bsStyle={type}>
                   <span className="pull-left">
                         { message }
                   </span>
                   <Glyphicon
                         glyph="remove"
-                        onClick={onClose}
+                        onClick={silence}
                         className="pull-right"
                   />
             </Alert>

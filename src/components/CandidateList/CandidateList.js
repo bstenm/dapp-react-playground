@@ -1,16 +1,12 @@
-// import './CandidateList.css';
-import styles from './CandidateList.css';
+import './CandidateList.css';
 import React from 'react';
-import {Link} from 'react-router-dom';
 import sortBy from 'lodash/sortBy';
 import {Table} from 'react-bootstrap';
-import {routes} from '../../config';
 import PropTypes from 'prop-types';
-import {Glyphicon} from 'react-bootstrap';
-
+import CandidateListRow from '../CandidateListRow';
 
 export const CandidateList = ({candidates, voteFor, loading}) => (
-      <div className={styles.CandidateList} >
+      <div className="CandidateList" >
             <Table>
                   <thead>
                         <tr>
@@ -20,25 +16,12 @@ export const CandidateList = ({candidates, voteFor, loading}) => (
                         </tr>
                   </thead>
                   <tbody>
-                        {sortBy(candidates, ['name']).map( e => (
-                        <tr key={e.name}>
-                              <td>{e.name}</td>
-                              <td>{e.vote}</td>
-                              <td>
-                                    {! loading ?
-                                    <Glyphicon glyph="plus" onClick={() => voteFor(e.name)}/>:
-                                    <img src="./loading.gif" alt="processing"/>
-                                    }
-                              </td>
-                              <td>
-                                    <Link to={routes.candidateInfoList(e.name)}>
-                                          Show info
-                                    </Link>/
-                                    <Link to={routes.candidateInfoForm(e.name)}>
-                                          Add info
-                                    </Link>
-                              </td>
-                        </tr>
+                        {sortBy(candidates, ['name']).map((candidate, i) => (
+                              <CandidateListRow
+                                    key={i}
+                                    loading={loading}
+                                    candidate={candidate}
+                              />
                         ))}
                   </tbody>
             </Table>

@@ -1,7 +1,7 @@
 import cf from '../config';
-import ms from '../config/messages';
 import Log from '../services/Log';
 import web3 from '../services/Web3';
+import * as ms from '../config/messages';
 import Contracts from '../services/ContractsInstances';
 import {dispatch} from '../store';
 import difference from 'lodash/difference';

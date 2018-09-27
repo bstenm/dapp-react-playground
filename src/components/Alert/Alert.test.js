@@ -1,43 +1,44 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import Component from './Alert';
-import { Modal } from 'react-bootstrap';
+import {Alert, Glyphicon} from 'react-bootstrap';
 
 describe('(Component) Alert', () => {
       let wrapper, props;
 
       beforeEach(() => {
             props = {
-                  alert: 'some message',
-                  handleClose: jest.fn()
+                  alert: {
+                        type: 'success',
+                        message: 'message1'
+                  },
+                  silence: jest.fn()
             };
             wrapper = shallow(<Component {...props} />);
       });
 
-      test( 'Displays a Alert', () => {
+      it( 'Displays a Alert', () => {
             expect(wrapper.find('.Alert').length).toEqual(1);
       });
 
-      test('Displays a Modal component', () => {
-            expect(wrapper.find(Modal).length).toEqual(1);
+      it('Shows the alert if a message is passed', () => {
+            expect(wrapper.find(Alert).props().bsStyle).toEqual('success');;
+            expect(wrapper.find(Alert).childAt(0).text()).toEqual('message1');;
+            wrapper.setProps({alert: { message: 'message2', type: 'info' }});
+            expect(wrapper.find(Alert).props().bsStyle).toEqual('info');;
+            expect(wrapper.find(Alert).childAt(0).text()).toEqual('message2');;
       });
 
-      test('Shows the alert if a message is passed', () => {
-            expect(wrapper.find(Modal).props().show).toEqual(true);;
-            wrapper.setProps({alert: ''});
-            expect(wrapper.find(Modal).props().show).toEqual(false);;
+      it('Displays a Glyphicon component', () => {
+            expect(wrapper.find(Glyphicon).length).toEqual(1);
+            expect(wrapper.find(Glyphicon).props().glyph).toEqual('remove');
       });
 
-      // prop: alert
-      test('Displays the message passed as props', () => {
-            expect(wrapper.find(Modal.Header).find('span').text()).toEqual('some message');
-      });
-
-      // prop: handleClose
-      test( 'Passes handleClose cb to Modal', () => {
-            wrapper.find(Modal).props().onHide();
-            expect(props.handleClose.mock.calls.length).toEqual(1);
-            expect(props.handleClose.mock.calls[0][0]).toEqual();
+      // prop: silence
+      it('Passes a cb prop to close the alert to the icon', () => {
+            wrapper.find(Glyphicon).props().onClick();
+            expect(props.silence.mock.calls.length).toEqual(1);
+            expect(props.silence.mock.calls[0][0]).toEqual();
       });
 });
 

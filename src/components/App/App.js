@@ -6,11 +6,11 @@ import Loader from '../Loader';
 import Header from '../Header';
 import Dimmer from '../Dimmer';
 import ErrorBoundary from '../ErrorBoundary';
-import { Route, Switch } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import CandidateInfoList from '../CandidateInfoList';
 import CandidateInfoForm from '../CandidateInfoForm';
 
-export const App = ({ loading, closeAlert, alert: { message, type }}) => (
+export const App = ({ loading }) => (
       <div className="App">
             { loading && (
                   <div>
@@ -21,13 +21,7 @@ export const App = ({ loading, closeAlert, alert: { message, type }}) => (
             <Header />
             <ErrorBoundary>
                   <div className="container" >
-                        { message && (
-                        <Alert
-                              type={type}
-                              onClose={closeAlert}
-                              message={message}
-                        />
-                        )}
+                        <Alert />
                         <Switch>
                               <Route path="/info/list/:candidate" component={CandidateInfoList} />
                               <Route path="/info/form/:candidate" component={CandidateInfoForm} />

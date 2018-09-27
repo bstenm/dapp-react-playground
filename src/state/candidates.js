@@ -1,9 +1,9 @@
-import ms from '../config/messages';
 import cf from '../config';
 import Log from '../services/Log';
 import web3 from '../services/Web3';
 import uniqBy from 'lodash/uniqBy';
 import history from '../history';
+import * as ms from '../config/messages';
 import Contracts from '../services/ContractsInstances';
 import {produce} from 'immer';
 import {execEffect} from '../libs/execEffect';

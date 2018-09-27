@@ -1,10 +1,10 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
+import {Table} from 'react-bootstrap';
 import {routes} from '../../config';
 import {shallow} from 'enzyme';
-import {Glyphicon} from 'react-bootstrap';
-import Component from './CandidateList';
-
+import CandidateList from './CandidateList';
+import CandidateListRow from '../CandidateListRow';
 
 describe('(Component) CandidateList', () => {
       let wrapper, props;
@@ -16,47 +16,33 @@ describe('(Component) CandidateList', () => {
                         {name: 'Jason', vote: '3'},
                         {name: 'Joanna', vote: '49'},
                   ],
-                  requesting: false,
+                  loading: false,
                   voteFor: jest.fn()
             };
-            wrapper = shallow( <Component { ...props } />);
+            wrapper = shallow( <CandidateList { ...props } />);
       });
 
-      test( 'Displays a CandidateList', () => {
+      it( 'Displays a CandidateList', () => {
             expect( wrapper.find( '.CandidateList' ).length ).toEqual( 1 );
       });
 
-      test('Displays one table row for each candidate alphabetically', () => {
-            // one for the headers
-            expect(wrapper.find('tr').length).toEqual(4);
-            expect(wrapper.find('tr').at(1).find('td').at(0).text()).toEqual('Jason');
-            expect(wrapper.find('tr').at(1).find('td').at(1).text()).toEqual('3');
-            expect(wrapper.find('tr').at(3).find('td').at(0).text()).toEqual('Nick');
-            expect(wrapper.find('tr').at(3).find('td').at(1).text()).toEqual("0");
+      it('Displays a Table component', () => {
+            expect(wrapper.find(Table).length).toEqual(1);
       });
 
-      test('Displays a Link to add new fact for each candidate', () => {
-            expect(wrapper.find(Link).length).toEqual(3);
-            expect(wrapper.find(Link).at(0).props().to).toEqual(routes.candidateInfo('Jason'));
-            expect(wrapper.find(Link).at(1).props().to).toEqual(routes.candidateInfo('Joanna'));
+      it('Displays a CandidateListRow component for each candidate', () => {
+            expect(wrapper.find(CandidateListRow).length).toEqual(3);
       });
 
-      test('Allows user to add vote for each candidate', () => {
-            const icon = i => wrapper.find('tr').at(i).find('td').at(2).find(Glyphicon);
-            expect(icon(1).length).toEqual(1);
-            icon(1).props().onClick();
-            expect(props.voteFor.mock.calls.length).toEqual(1);
-            expect(props.voteFor.mock.calls[0][0] ).toEqual('Jason');
-            expect(icon(2).length).toEqual(1);
-            icon(2).props().onClick();
-            expect(props.voteFor.mock.calls.length).toEqual(2);
-            expect(props.voteFor.mock.calls[1][0] ).toEqual('Joanna');
+      it('Displays the CandidateListRow components alphabetically', () => {
+            expect(wrapper.find(CandidateListRow).at(0).props().candidate.name).toEqual('Jason');
+            expect(wrapper.find(CandidateListRow).at(2).props().candidate.name).toEqual('Nick');
       });
 
-      test('Hides the voting button while requesting', () => {
-            wrapper.setProps({requesting: true});
-            const icon = wrapper.find('tr').find('td').at(2).find(Glyphicon);
-            expect(icon.length).toEqual(0);
+      it('Passesthe loading state as prop to the CandidateListRow components', () => {
+            expect(wrapper.find(CandidateListRow).at(0).props().loading).toEqual(false);
+            wrapper.setProps({ loading: true });
+            expect(wrapper.find(CandidateListRow).at(0).props().loading).toEqual(true);
       });
 });
 

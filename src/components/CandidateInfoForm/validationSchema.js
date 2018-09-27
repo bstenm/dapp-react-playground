@@ -1,4 +1,4 @@
-import ms from '../../config/messages';
+import * as ms from '../../config/messages';
 import * as yup from 'yup';
 
 export default yup.object({

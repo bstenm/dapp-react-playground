@@ -1,11 +1,11 @@
 import cf from '../../config';
-import ms from '../../config/messages';
 import React from 'react';
+import * as ms from '../../config/messages';
 import {Formik} from 'formik';
-import {dispatch} from '../../store';
-import Component from './CandidateInfoForm';
+import {connect} from 'react-redux';
 import {switchCase} from '../../libs/switchCase';
 import validationSchema from './validationSchema';
+import CandidateInfoForm from './CandidateInfoForm';
 
 const { maxSize, allowedTypes } = cf.attachment;
 
@@ -25,7 +25,7 @@ export class CandidateInfoFormContainer extends React.Component {
             typeError.case = ! allowedTypes.includes( type );
             typeError.then = () => ms.fIleTypeError(allowedTypes.join(', '));
             const message = switchCase([ sizeError, typeError ]);
-            dispatch.alert.error(message || ms.unexpectedError );
+            this.props.error(message || ms.unexpectedError );
       }
 
       onDropAccepted =(setFieldValue, [file]) => {
@@ -36,11 +36,11 @@ export class CandidateInfoFormContainer extends React.Component {
 
       onSubmit = ({ description, title, file }) => {
             const { candidate } = this.props.match.params;
-            dispatch.candidates.addInfo({ candidate, title, description, file });
+            this.props.addInfo({ candidate, title, description, file });
       }
 
       renderForm = ({ ...props, setFieldValue }) => (
-            <Component
+            <CandidateInfoForm
                   {...props}
                   file={this.state.file}
                   onDropRejected={this.onDropRejected}
@@ -60,5 +60,9 @@ export class CandidateInfoFormContainer extends React.Component {
       }
 };
 
-export default CandidateInfoFormContainer;
+export default connect(null, ({
+      alert: { error },
+      candidates: { addInfo }
+}) => ({ addInfo, error })
+)(CandidateInfoFormContainer);
 

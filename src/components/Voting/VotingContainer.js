@@ -1,5 +1,5 @@
-import ms from '../../config/messages';
 import React from 'react'
+import * as ms from '../../config/messages';
 import {connect} from 'react-redux';
 import Component from './Voting';
 
