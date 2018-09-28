@@ -4,26 +4,26 @@ import PropTypes from 'prop-types';
 import { Form, FormControl, Button  } from 'react-bootstrap';
 
 
-export const Component = ({value, onChange, onSubmit}) => (
-      <div className="PurchaseTokens" style={{width:"150px"}}>
+export const PurchaseTokens = ({value, onChange, onSubmit}) => (
+      <div className="PurchaseTokens">
             <Form inline>
                   <FormControl
                         type="number"
                         value={value}
                         onChange={onChange}
+                        className="FormControl"
                         placeholder="Amount"
-                        style={{width:"90px", marginRight:"5px"}}
                   />
                   <Button onClick={onSubmit}>Buy</Button>
             </Form>
             </div>
 );
 
-Component.propTypes = {
+PurchaseTokens.propTypes = {
       value: PropTypes.string,
       onSubmit: PropTypes.func.isRequired,
       onChange:PropTypes.func.isRequired
 };
 
-export default Component;
+export default PurchaseTokens;
 

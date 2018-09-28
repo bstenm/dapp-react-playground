@@ -20,7 +20,7 @@ const purchaseTokensPopover = onSubmit => (
       </Popover>
 );
 
-export const Component = ({buyTokens, login, logout, userAccount}) => (
+export const Component = ({buyTokens, login, logout, user}) => (
       <Navbar inverse collapseOnSelect className="Header">
             <Navbar.Header>
                   <Navbar.Brand >
@@ -45,17 +45,17 @@ export const Component = ({buyTokens, login, logout, userAccount}) => (
                               rootClose
                               trigger="click"
                               placement="bottom"
-                              overlay={accountPopover(userAccount)}>
+                              overlay={accountPopover(user)}>
                               <NavItem href="#">
                                     Account
                               </NavItem>
                         </OverlayTrigger>
-                        {userAccount.name &&
+                        {user.name &&
                         <NavItem onClick={logout} href="#">
                               Logout
                          </NavItem>
                         }
-                        <SignIn login={login} show={! userAccount.name}/>
+                        <SignIn login={login} show={! user.name}/>
                   </Nav>
             </Navbar.Collapse>
       </Navbar>
@@ -64,7 +64,7 @@ export const Component = ({buyTokens, login, logout, userAccount}) => (
 Component.propTypes = {
       login: PropTypes.func.isRequired,
       buyTokens: PropTypes.func.isRequired,
-      userAccount: PropTypes.shape({
+      user: PropTypes.shape({
             tokens: PropTypes.number,
             votingRecord: PropTypes.object,
             name: PropTypes.string

@@ -18,7 +18,7 @@ beforeEach(() => {
             expect( wrapper.find( Component ).length ).toEqual( 1 );
       });
 
-      // prop: input value
+      // prop: value
       test('Passes input value to component', () => {
             wrapper.setState({value: '32'})
             expect(wrapper.find(Component).props().value).toEqual('32');

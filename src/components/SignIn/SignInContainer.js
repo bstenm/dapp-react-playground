@@ -15,12 +15,10 @@ export class SignInContainer extends React.Component {
       }
 
       render() {
-            const {name} = this.state;
-            const {show} = this.props;
             return (
                   <Component
-                        show={show}
-                        value={name}
+                        show={this.props.show}
+                        value={this.state.name}
                         onLogin={this.login}
                         onChange={this.onChange}
                   />

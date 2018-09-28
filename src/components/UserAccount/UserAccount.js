@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {Glyphicon} from 'react-bootstrap';
 
 
-export const Component = ({account: {tokens, name, votingRecord}}) => (
+export const UserAccount = ({account: {tokens, name, votingRecord}}) => (
       <div className="UserAccount" >
             <div className="userInfo">
                   <div><Glyphicon glyph="user"/>{name}</div>
@@ -28,7 +28,7 @@ export const Component = ({account: {tokens, name, votingRecord}}) => (
       </div>
 );
 
-Component.propTypes = {
+UserAccount.propTypes = {
       account: PropTypes.shape({
             name: PropTypes.string,
             tokens: PropTypes.number,
@@ -36,5 +36,5 @@ Component.propTypes = {
       }).isRequired
 };
 
-export default Component;
+export default UserAccount;
 

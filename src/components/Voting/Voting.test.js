@@ -14,6 +14,7 @@ describe( '(Component) Voting', () => {
                         {name: 'Joanna', vote: '49'},
                         {name: 'Nick', vote: '0'}
                   ],
+                  loading: jest.fn(),
                   voteFor: jest.fn()
             };
             wrapper = shallow( <Component {...props} />);
@@ -25,6 +26,11 @@ describe( '(Component) Voting', () => {
 
       test('Displays a CandidateList component', () => {
             expect(wrapper.find(CandidateList).length).toEqual(1);
+      });
+
+      // prop: loading
+      test('Passes the loading state to CandidateList component', () => {
+            expect(wrapper.find(CandidateList).props().loading).toEqual(props.loading);
       });
 
       // prop: candidates

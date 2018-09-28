@@ -23,28 +23,30 @@ describe( '(Component) PurchaseTokens', () => {
             expect(wrapper.find(Form).length).toEqual(1);
       });
 
+      // FormControl
       test('Displays a FormControl component', () => {
             expect(wrapper.find(FormControl).length).toEqual(1);
       });
 
-      // prop: value
+      // FormControl prop: value
       test('Passes value to FormControl component', () => {
             expect(wrapper.find(FormControl).props().value).toEqual('5');
       });
 
-      // prop: onChange
-      test( 'Passes onChange cb to component', () => {
+      // FormControl prop: onChange
+      test( 'Passes onChange cb to FormControl component', () => {
             wrapper.find(FormControl).props().onChange('value');
             expect(props.onChange.mock.calls.length).toEqual(1);
             expect(props.onChange.mock.calls[0][0]).toEqual('value');
       });
 
+      // Button
       test('Displays a Button component', () => {
             expect(wrapper.find(Button).length).toEqual(1);
       });
 
-      // prop: onSubmit
-      test( 'Passes onSubmit cb to component', () => {
+      // Button prop: onSubmit
+      test( 'Passes onSubmit cb to Button component', () => {
             wrapper.find(Button).props().onClick();
             expect(props.onSubmit.mock.calls.length).toEqual(1);
       });

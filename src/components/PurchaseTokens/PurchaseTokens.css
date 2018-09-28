@@ -1,3 +1,8 @@
 .PurchaseTokens {
+      width: 150px;
+}
 
+.PurchaseTokens .FormControl {
+      width: 90px;
+      margin-right: 5px;
 }
