@@ -5,7 +5,6 @@ import {dispatch} from '@rematch/core';
 import candidates from './candidates';
 import VotingService from '../services/Voting';
 
-
 jest.mock('../services/Voting');
 
 describe('(Effects) Candidates state', () => {

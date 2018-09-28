@@ -20,9 +20,10 @@ export class CandidateInfoFormContainer extends React.Component {
             const { type, size } = file;
             // if size too large
             sizeError.case = maxSize < size;
-            sizeError.then = () => ms.fileTooLarge(maxSize);
             // if file type not allowed
             typeError.case = ! allowedTypes.includes( type );
+            // error messages
+            sizeError.then = () => ms.fileTooLarge(maxSize);
             typeError.then = () => ms.fIleTypeError(allowedTypes.join(', '));
             const message = switchCase([ sizeError, typeError ]);
             this.props.error(message || ms.unexpectedError );
