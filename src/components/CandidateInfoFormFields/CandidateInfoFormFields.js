@@ -1,9 +1,9 @@
 import './CandidateInfoFormFields.css';
 import React from 'react';
+import {Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {Form, Field} from 'formik';
 import CustomInputComponent from '../CustomInputComponent';
-import {Button, Glyphicon, ControlLabel} from 'react-bootstrap';
 
 export const CandidateInfoFormFields = ({ isSubmitting }) => (
       <div className="CandidateInfoFormFields" >
@@ -31,7 +31,9 @@ export const CandidateInfoFormFields = ({ isSubmitting }) => (
       </div>
 );
 
-CandidateInfoFormFields.propTypes = {};
+CandidateInfoFormFields.propTypes = {
+      isSubmitting: PropTypes.bool.isRequired
+};
 
 export default CandidateInfoFormFields;
 

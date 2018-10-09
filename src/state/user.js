@@ -1,15 +1,10 @@
-import cf from '../config';
-import Log from '../services/Log';
 import {buy} from '../services/TokenSaleContract';
 import * as ms from '../config/messages';
-import difference from 'lodash/difference';
 import {execEffect} from '../libs/execEffect';
 import {getUserBalance, approveProxy} from '../services/TokenContract';
 // [TOREMOVE]: won't need getVotingContractAddress when Solidity contract takes care of setting the proxy approval
 import {getUserData, getVotingContractAddress, getNewAddress, registerUser} from '../services/VotingContract';
-import Contracts from '../services/ContractsInstances';
-import web3 from '../services/Web3';
-const {accounts} = web3.eth;
+
 export default {
       state: {},
       reducers: {

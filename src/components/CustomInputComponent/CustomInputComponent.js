@@ -21,7 +21,18 @@ const CustomInputComponent = ({
       </FormGroup>
 );
 
-CustomInputComponent.propTypes = {};
+CustomInputComponent.propTypes = {
+      type: PropTypes.string.isRequired,
+      field: PropTypes.shape({
+            value: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+      }).isRequired,
+      form: PropTypes.shape({
+            errors: PropTypes.object,
+            touched: PropTypes.object,
+            handleChange: PropTypes.func.isRequired,
+      }).isRequired
+};
 
 export default CustomInputComponent;
 

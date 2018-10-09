@@ -1,4 +1,3 @@
-import cf from '../config';
 import {ipfs} from '../services/ipfs';
 
 export const uploadToIpfs = file => {

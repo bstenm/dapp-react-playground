@@ -1,4 +1,3 @@
-import cf from '../config';
 import web3 from './Web3';
 import contract from 'truffle-contract';
 import contractArtifacts from '../contracts/CorrToken.json';

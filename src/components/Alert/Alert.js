@@ -20,7 +20,13 @@ export const Component = ({ alert: { message, type }, silence }) => (
       </div>
 );
 
-Component.propTypes = { };
+Component.propTypes = {
+      alert: PropTypes.shape({
+            type: PropTypes.string.isRequired,
+            message: PropTypes.string.isRequired
+      }).isRequired,
+      silence: PropTypes.func.isRequired
+};
 
 export default Component;
 

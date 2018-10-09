@@ -26,7 +26,14 @@ export const Component = ({ candidate: { name, vote }, loading, voteFor }) => (
       </tr>
 );
 
-Component.propTypes = {};
+Component.propTypes = {
+      candidate: PropTypes.shape({
+            vote: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+      }).isRequired,
+      loading: PropTypes.bool.isRequired,
+      voteFor: PropTypes.func.isRequired,
+};
 
 export default Component;
 
