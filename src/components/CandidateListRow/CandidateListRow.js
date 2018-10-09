@@ -28,7 +28,7 @@ export const Component = ({ candidate: { name, vote }, loading, voteFor }) => (
 
 Component.propTypes = {
       candidate: PropTypes.shape({
-            vote: PropTypes.number.isRequired,
+            vote: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
       }).isRequired,
       loading: PropTypes.bool.isRequired,

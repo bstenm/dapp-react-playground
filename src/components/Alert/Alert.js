@@ -22,8 +22,8 @@ export const Component = ({ alert: { message, type }, silence }) => (
 
 Component.propTypes = {
       alert: PropTypes.shape({
-            type: PropTypes.string.isRequired,
-            message: PropTypes.string.isRequired
+            type: PropTypes.string,
+            message: PropTypes.string
       }).isRequired,
       silence: PropTypes.func.isRequired
 };

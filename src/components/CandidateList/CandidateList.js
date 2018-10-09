@@ -30,14 +30,9 @@ export const CandidateList = ({candidates, voteFor, loading}) => (
 );
 
 CandidateList.propTypes = {
-      candidates: PropTypes.arrayOf(
-            PropTypes.shape({
-                  vote: PropTypes.string,
-                  name: PropTypes.string,
-                  loading: PropTypes.bool
-            }),
-      ),
-      voteFor: PropTypes.func.isRequired
+      loading: PropTypes.bool,
+      voteFor: PropTypes.func.isRequired,
+      candidates: PropTypes.array.isRequired,
 };
 
 export default CandidateList;
