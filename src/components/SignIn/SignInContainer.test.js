@@ -37,7 +37,7 @@ describe( '(Container) SignIn', () => {
             expect(wrapper.state().name).toEqual('Jen');
       });
 
-      // prop: onLogin
+      // prop: onLogin cb
       test( 'Passes onLogin cb to component to login user', () => {
             wrapper.setState({name: 'Jennifer'});
             wrapper.find(Component).props().onLogin();
@@ -45,7 +45,7 @@ describe( '(Container) SignIn', () => {
             expect(props.login.mock.calls[0][0]).toEqual('Jennifer');
       });
 
-      // prop: onLogin
+      // prop: onLogin set state
       test( 'Resets the input field to empty string on login', () => {
             wrapper.setState({name: 'Jennifer'});
             wrapper.find(Component).props().onLogin();

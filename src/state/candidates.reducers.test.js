@@ -8,9 +8,9 @@ let initialState = [
       {name: 'Trump', vote: '0', info: []},
 ];
 
-  describe('(Reducer) updateList', () => {
+describe('(Reducer) candidates', () => {
 
-      it('Updates the data keys of the list of candidates', () => {
+      it('(updateList) Updates the data keys of the list of candidates', () => {
             const result = updateList(initialState, [
                   {name: 'Hilary', vote: '2', info: ['some info']},
                   {name: 'Trump', vote:'3'}
@@ -21,11 +21,8 @@ let initialState = [
                   {name: 'Trump', vote: '3', info: []}
             ]);
       });
-});
 
-describe('(Reducer) updateInfo', () => {
-
-      it('Updates the data keys of the list of candidates', () => {
+      it('(updateInfo) Adds the data to the info key for the candidate passed', () => {
             initialState = [
                   {name: 'Hilary', vote: '2', info: ['some info']},
                   {name: 'Jill', vote: '0', info: []},

@@ -10,8 +10,8 @@ const initialState = {
 
 describe('(Reducer) User state', () => {
 
-      it('(updateUserDetails) Updates the details of a user', () => {
-            const newState = user.reducers.updateUserDetails( initialState, {
+      it('(setUserData) Updates the details of a user', () => {
+            const newState = user.reducers.setUserData( initialState, {
                   name: 'Joanna',
                   tokens: 8,
                   votingRecord: {Jill: 1, Trump: 20}
@@ -23,8 +23,8 @@ describe('(Reducer) User state', () => {
             });
       });
 
-      it('(updateUserDetails) Adds tokens to user account', async () => {
-            const newState = user.reducers.updateUserDetails( initialState, { tokens: 17 });
+      it('(setUserData) Adds tokens to user account', async () => {
+            const newState = user.reducers.setUserData( initialState, { tokens: 17 });
             expect(newState).toEqual({
                   name: 'Joanna',
                   tokens: 17,

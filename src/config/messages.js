@@ -2,7 +2,7 @@ export const notSaved = 'Could not save';
 export const notEnoughFunds = 'Please make sure you have enough funds to vote';
 export const buyTokensFailure = 'Could not transfer the tokens to your  account';
 export const retrieveDataFailure = 'Could not retrieve the data requested';
-export const noMoreRegistrationAllowed = 'The maximum number of registration allowed has been reached';
+export const noAddressAvailable = 'The maximum number of registration allowed has been reached';
 export const unexpectedError = 'An unexpected error has occured';
 export const requiredField = 'Required';
 export const tooShort = min => `Should be at least ${min} characters long`;

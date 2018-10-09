@@ -9,8 +9,8 @@ const Token = contract(tokenArtifacts);
 const Voting = contract(votingArtifacts);
 const TokenSale = contract(tokenSaleArtifacts);
 const Candidates = contract(candidatesArtifacts);
-Token.setProvider(web3.currentProvider);
 Voting.setProvider(web3.currentProvider);
+Token.setProvider(web3.currentProvider);
 TokenSale.setProvider(web3.currentProvider);
 Candidates.setProvider(web3.currentProvider);
 
