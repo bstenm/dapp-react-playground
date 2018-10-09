@@ -7,7 +7,9 @@ import {execEffect} from '../libs/execEffect';
 import {getUserBalance, approveProxy} from '../services/TokenContract';
 // [TOREMOVE]: won't need getVotingContractAddress when Solidity contract takes care of setting the proxy approval
 import {getUserData, getVotingContractAddress, getNewAddress, registerUser} from '../services/VotingContract';
-
+import Contracts from '../services/ContractsInstances';
+import web3 from '../services/Web3';
+const {accounts} = web3.eth;
 export default {
       state: {},
       reducers: {
@@ -38,9 +40,7 @@ export default {
                   execEffect(dispatch)(async () => {
                         const {setUserData} = dispatch.user;
                         const address = await getNewAddress();
-                        if (! address) {
-                              throw new Error(ms.noAddressAvailable);
-                        }
+                        if (! address) { throw new Error(ms.noAddressAvailable) }
                         await registerUser(name, address);
                         setUserData({tokens: 0, votingRecord: {}, name, address});
                   }, e => dispatch.alert.error(e.message));
@@ -65,7 +65,6 @@ export default {
                         const votingContractAddress = await getVotingContractAddress();
                         // allow voting contract to transfer tokens on user behalf
                         await approveProxy(address, votingContractAddress, nb);
-                        this.updateTokenCount(val);
                   }, () => dispatch.alert.error(ms.buyTokensFailure));
             }
       })

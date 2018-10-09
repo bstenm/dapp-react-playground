@@ -31,10 +31,11 @@ export const registerUser = async (name, from) => {
 export const getUserData = async (name) => {
       const  {voterDetails} = await Contract.deployed();
       const [record, address, id] =  await voterDetails(name);
+      const user = web3.toUtf8(id);
+      if (! user) return {}; // * exit if not found *
       const votingRecord = cf.candidates.reduce((r, v, k) => {
             r[v] = record[k].toNumber();
             return r;
       }, {});
-      const user = web3.toUtf8(id);
       return { votingRecord, user, address };
 };

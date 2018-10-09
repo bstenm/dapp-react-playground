@@ -12,7 +12,7 @@ export class VotingContainer extends React.Component {
 
       voteFor = name => {
             const {loading, user, dispatch} = this.props;
-            const { error } = dispatch.alert;
+            const {error} = dispatch.alert;
             if (loading) return;
             if (user.tokens < 1) {
                   return error(ms.notEnoughFunds);

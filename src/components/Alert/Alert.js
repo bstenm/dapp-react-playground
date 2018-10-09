@@ -5,6 +5,7 @@ import {Alert, Glyphicon} from 'react-bootstrap';
 
 export const Component = ({ alert: { message, type }, silence }) => (
       <div className="Alert" >
+            {! message ? <div/> :
             <Alert bsStyle={type}>
                   <span className="pull-left">
                         { message }
@@ -15,6 +16,7 @@ export const Component = ({ alert: { message, type }, silence }) => (
                         className="pull-right"
                   />
             </Alert>
+            }
       </div>
 );
 

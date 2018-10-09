@@ -15,5 +15,5 @@ export const getUserBalance = async (address) => {
 
 export const approveProxy = async (from, proxy, nb) => {
       const ct = await Contract.deployed();
-      await ct.approve(proxy.address, nb, {from});
+      await ct.approve(proxy, nb, {from});
 };

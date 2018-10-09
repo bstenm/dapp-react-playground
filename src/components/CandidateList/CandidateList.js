@@ -16,13 +16,14 @@ export const CandidateList = ({candidates, voteFor, loading}) => (
                         </tr>
                   </thead>
                   <tbody>
-                        {sortBy(candidates, ['name']).map((candidate, i) => (
-                              <CandidateListRow
-                                    key={i}
-                                    loading={loading}
-                                    candidate={candidate}
-                              />
-                        ))}
+                  {sortBy(candidates, ['name']).map((candidate, i) => (
+                        <CandidateListRow
+                              key={i}
+                              loading={loading}
+                              voteFor={voteFor}
+                              candidate={candidate}
+                        />
+                  ))}
                   </tbody>
             </Table>
       </div>
