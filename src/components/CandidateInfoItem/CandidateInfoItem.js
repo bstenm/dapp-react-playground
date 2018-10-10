@@ -5,21 +5,24 @@ import PropTypes from 'prop-types';
 import {capitalize} from 'lodash';
 import {ipfsRoot, attachment} from '../../config';
 
-export const CandidateInfoItem = ({ item }) => (
+export const CandidateInfoItem = ({ item: { fileHash, title, description } }) => (
       <div className="flex CandidateInfoItem">
             <div className="attachment">
-                  <Link to={`${ipfsRoot}${item.fileHash}`} target="__blank">
+            {! fileHash ?
+                  (<div className="file-placeholder">NO DOC</div>) :
+                  (<Link to={`${ipfsRoot}${fileHash}`} target="__blank">
                         <img
                               alt="attachment"
-                              src={`${ipfsRoot}${item.fileHash}`}
+                              src={`${ipfsRoot}${fileHash}`}
                               width={attachment.listingDim}
                               height={attachment.listingDim}
                         />
-                  </Link>
+                  </Link>)
+            }
             </div>
             <div className="text">
-                  <h4>{capitalize(item.title)}</h4>
-                  <p>{item.description}</p>
+                  <h4>{capitalize(title)}</h4>
+                  <p>{description}</p>
             </div>
       </div>
 );

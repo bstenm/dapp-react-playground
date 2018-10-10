@@ -1,12 +1,12 @@
 import cf from '../config';
-import web3 from '../services/Web3';
 import uniqBy from 'lodash/uniqBy';
 import history from '../history';
 import * as ms from '../config/messages';
-import Contracts from '../services/ContractsInstances';
 import {produce} from 'immer';
 import {execEffect} from '../libs/execEffect';
 import {uploadToIpfs} from '../libs/ipfsLib';
+import {getTotalVotesFor, voteForCandidate} from '../services/VotingContract';
+import {addCandidateInfo, getCandidateInfo} from '../services/CandidateContract';
 
 export default {
       name: 'candidates',
@@ -39,31 +39,19 @@ export default {
 
       effects: dispatch => ({
 
-            async fetchInfo (name, { candidates }) {
+            async fetchInfo (name) {
                   execEffect(dispatch)(async () => {
-                        let i = 0, raw, data, info = [];
-                        const  contract = await Contracts.Candidates.deployed();
-                        // [TEMP]: until solidity functions can return nested arrays
-                        do {
-                              raw = await contract.getInfo(name, i++);
-                              data = (raw || []).map(e => web3.toUtf8(e));
-                              const [ title, description, fileHash ] = data;
-                              if (title) info.push({ title, description, fileHash });
-                              // data[0] is title
-                        } while (!! data[0]);
+                        const info = await getCandidateInfo(name);
                         this.updateInfo({ name, info });
                   }, () => dispatch.alert.error(ms.retrieveDataFailure));
             },
 
             async addInfo (payload, { user: { address }}) {
                   execEffect(dispatch)(async () => {
-                        let ipfsHash = null;
-                        const gas = 500000;
-                        const from = address;
-                        const  { addInfo } = await Contracts.Candidates.deployed();
-                        const { candidate, title, description, file } = payload;
-                        if (file) ipfsHash = await uploadToIpfs(file);
-                        await addInfo(candidate, title, description, ipfsHash, { from, gas });
+                        let fileHash = null;
+                        const {file, ...rest} = payload;
+                        if (file) fileHash = await uploadToIpfs(file);
+                        await addCandidateInfo({ ...rest, fileHash }, address);
                         history.push(cf.routes.voting);
                   }, () => dispatch.alert.error(ms.notSaved));
             },
@@ -71,10 +59,9 @@ export default {
             async fetchVotes (_, {candidates}) {
                   execEffect(dispatch)(async () => {
                         const updated = [];
-                        const  contract = await Contracts.Voting.deployed();
                         await Promise.all(candidates.map(async ({name}) => {
-                              const vote = await contract.totalVotesFor(name);
-                              updated.push({name, vote: vote.toString()});
+                              const vote = await getTotalVotesFor(name);
+                              updated.push({name, vote });
                         }));
                         this.updateList(updated);
                   }, () => dispatch.alert.error(ms.retrieveDataFailure));
@@ -82,13 +69,10 @@ export default {
 
             async addVote (candidate, {candidates, user: {name, address}}) {
                   execEffect(dispatch)(async () => {
-                        const gas = 200000;
-                        const from = address;
                         let updated = [...candidates];
-                        const contract = await Contracts.Voting.deployed();
-                        await contract.voteForCandidate(candidate, name, {from, gas});
-                        const vote = await contract.totalVotesFor(candidate);
-                        updated.unshift({name: candidate, vote: vote.toString()});
+                        await voteForCandidate(candidate, name, address);
+                        const vote = await getTotalVotesFor(candidate);
+                        updated.unshift({ name: candidate, vote: vote });
                         this.updateList(uniqBy(updated, 'name'));
                   }, () => dispatch.alert.error(ms.notEnoughFunds));
             }

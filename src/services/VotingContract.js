@@ -39,3 +39,15 @@ export const getUserData = async (name) => {
       }, {});
       return { votingRecord, user, address };
 };
+
+export const getTotalVotesFor = async (name) => {
+      const  contract = await Contract.deployed();
+      const vote = await contract.totalVotesFor(name);
+      return vote.toString();
+};
+
+export const voteForCandidate = async (candidate, name, from) => {
+      const  contract = await Contract.deployed();
+      const gas = 200000;
+      await contract.voteForCandidate(candidate, name, {from, gas});
+}

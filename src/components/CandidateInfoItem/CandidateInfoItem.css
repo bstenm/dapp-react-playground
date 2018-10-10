@@ -4,7 +4,17 @@
 
 .CandidateInfoItem .text h4 {
       margin-top: 0px;
-      color: #337ab7;
+      color: rgb(51, 122, 183);
+}
+
+.CandidateInfoItem .file-placeholder {
+      color: #CCC;
+      padding: 5px;
+      font-size: 20px;
+      border: 1px solid #CCC;
+      width: 70px;
+      height: 70px;
+      text-align: center;
 }
 
 

@@ -30,6 +30,10 @@ ul {
   color: purple;
 }
 
+.muted {
+  color: #DDD;
+}
+
 .bold {
   font-weight: bold;
 }
