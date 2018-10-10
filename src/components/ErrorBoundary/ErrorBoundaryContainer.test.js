@@ -23,7 +23,7 @@ describe('(Container) ErrorBoundaryContainer', () => {
       });
 
       it('Updates the state and logs the error if componentDidCatch is triggered', () => {
-           jest.spyOn(Log, 'error');
+           jest.spyOn(Log, 'error').mockImplementation(() => null);
             wrapper.instance().componentDidCatch('error', 'errorInfo');
             expect(wrapper.state().error).toEqual('error');
             expect(wrapper.state().errorInfo).toEqual('errorInfo');

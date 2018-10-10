@@ -9,7 +9,7 @@ describe('(Component) CandidateInfoFormFields', () => {
       let wrapper, props;
 
       beforeEach(() => {
-      props = {};
+      props = {isSubmitting: false};
       wrapper = shallow(<CandidateInfoFormFields {...props} />);
       });
 

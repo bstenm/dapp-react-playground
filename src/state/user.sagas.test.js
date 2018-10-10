@@ -24,16 +24,15 @@ jest.mock('../services/VotingContract.js');
 jest.mock('../services/TokenSaleContract.js');
 
 describe('(Sagas) user', () => {
+      let user = {
+            user: 'Joanna',
+            address: '0XUserAddress',
+            votingRecord: { Hilary: '4'}
+      };
 
       beforeEach(() => {
             jest.spyOn(Log, 'error');
-            getUserBalance.mockImplementation(() =>  100);
             getVotingContractAddress.mockImplementation(() => '0xContractAddress');
-            getUserData.mockImplementation(() => ({
-                  user: 'Joanna',
-                  address: '0XUserAddress',
-                  votingRecord: { Hilary: '4'}
-            }));
       });
 
       afterEach(async () => {
@@ -46,10 +45,12 @@ describe('(Sagas) user', () => {
 
       describe('login', () => {
 
+            afterEach(async () => {
+                  await dispatch.user.logout()
+            });
+
             it('Dispatches an alert when error thrown', (done) => {
-                  getUserData.mockImplementation(() => {
-                        throw new Error('getUserData error');
-                  });
+                  getUserData.mockImplementation(() => {throw new Error('error')});
                   dispatch.user.login('Joanna');
                   setTimeout(() => {
                         const logErrorCalls = Log.error.mock.calls;
@@ -59,13 +60,15 @@ describe('(Sagas) user', () => {
                               message: ms.noAddressAvailable
                         });
                         expect(logErrorCalls.length).toEqual(1);
-                        expect(logErrorCalls[0][0].message).toEqual('getUserData error');
+                        expect(logErrorCalls[0][0].message).toEqual('error');
                         done();
                   }, 1);
             });
 
-            it('Sets the user data into the state', (done) => {
-                  dispatch.user.login('Joanna');
+            it('Sets the user data into the state', async (done) => {
+                  getUserBalance.mockImplementation(() =>  100);
+                  getUserData.mockImplementation(() => user);
+                  await dispatch.user.login('Joanna');
                   setTimeout(() => {
                         const {user} = store.getState();
                         expect(user.name).toEqual('Joanna');
@@ -80,9 +83,11 @@ describe('(Sagas) user', () => {
       describe('buyTokens', () => {
 
             it('Dispatches an alert when error thrown', async (done) => {
-                  buy.mockImplementationOnce(() =>  {
-                        throw new Error('buy error');
-                  });
+                  getUserData.mockImplementation(() => user);
+                  getUserBalance.mockImplementation(() =>  90);
+                  // log the user in first
+                  await dispatch.user.login('Joanna');
+                  buy.mockImplementation(() =>  {throw new Error('error')});
                   await dispatch.user.buyTokens(2);
                   setTimeout(() => {
                         const logErrorCalls = Log.error.mock.calls;
@@ -91,20 +96,19 @@ describe('(Sagas) user', () => {
                               message: ms.buyTokensFailure
                         });
                         expect(logErrorCalls.length).toEqual(1);
-                        expect(logErrorCalls[0][0].message).toEqual('buy error');
+                        expect(logErrorCalls[0][0].message).toEqual('error');
                         done();
                   }, 1);
             });
 
             it('Updates the user tokens nb in state', async (done) => {
-                  // getUserBalance.mockImplementation(() =>  90);
-                  const buyTokensSpy = jest.fn();
-                  buy.mockImplementation(() => buyTokensSpy);
-                  // log theuser in first
+                  getUserData.mockImplementation(() => user);
+                  getUserBalance.mockImplementation(() =>  90);
+                  // log the user in first
                   await dispatch.user.login('Joanna');
                   await dispatch.user.buyTokens(2);
                   setTimeout(() => {
-                        expect(store.getState().user.tokens).toEqual(102);
+                        expect(store.getState().user.tokens).toEqual(92);
                         done();
                   }, 1);
             });

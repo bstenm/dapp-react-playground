@@ -8,7 +8,7 @@ describe('(Component) CandidateInfoForm', () => {
       let wrapper, props;
 
       beforeEach(() => {
-            props = { onDropAccepted: jest.fn() };
+            props = { isSubmitting: true, onDropAccepted: jest.fn() };
             wrapper = shallow(<Component {...props} />);
       });
 
@@ -22,5 +22,10 @@ describe('(Component) CandidateInfoForm', () => {
 
       it( 'Displays a CandidateInfoFormFields', () => {
             expect(wrapper.find(CandidateInfoFormFields).length).toEqual(1);
+      });
+
+      // CandidateInfoFormFields prop: isSubmitting
+      it('Passes isSubmitting to CandidateInfoFormFields component', () => {
+            expect(wrapper.find(CandidateInfoFormFields).props().isSubmitting).toEqual(true);
       });
 });

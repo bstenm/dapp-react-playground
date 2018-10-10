@@ -14,7 +14,7 @@ describe( '(Component) Voting', () => {
                         {name: 'Joanna', vote: '49'},
                         {name: 'Nick', vote: '0'}
                   ],
-                  loading: jest.fn(),
+                  loading: true,
                   voteFor: jest.fn()
             };
             wrapper = shallow( <Component {...props} />);

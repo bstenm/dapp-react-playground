@@ -60,6 +60,7 @@ export default {
                         const votingContractAddress = await getVotingContractAddress();
                         // allow voting contract to transfer tokens on user behalf
                         await approveProxy(address, votingContractAddress, nb);
+                        this.updateTokenCount(val);
                   }, () => dispatch.alert.error(ms.buyTokensFailure));
             }
       })

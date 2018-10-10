@@ -13,7 +13,6 @@ export default {
       state: cf.candidates.map(e => ({ name: e, vote: '0', info: [] })),
 
       selectors: {
-
             getInfoFor: () => ({ candidates }) => candidate => {
                   const e = candidates.find(e => e.name === candidate);
                   return e ? e.info : [];
@@ -21,7 +20,6 @@ export default {
       },
 
       reducers: {
-
             updateList( state, data ) {
                   return state.map( e => {
                         const src = data.find(k => k.name === e.name);
@@ -32,13 +30,12 @@ export default {
             updateInfo: (state, { name, info }) => {
                   return produce(state, draft => {
                         const i = draft.findIndex(e => e.name === name);
-                        draft[i].info = draft[i].info.concat(info);
+                        draft[i].info = info;
                   });
             }
       },
 
       effects: dispatch => ({
-
             async fetchInfo (name) {
                   execEffect(dispatch)(async () => {
                         const info = await getCandidateInfo(name);
@@ -72,7 +69,7 @@ export default {
                         let updated = [...candidates];
                         await voteForCandidate(candidate, name, address);
                         const vote = await getTotalVotesFor(candidate);
-                        updated.unshift({ name: candidate, vote: vote });
+                        updated.unshift({ name: candidate, vote });
                         this.updateList(uniqBy(updated, 'name'));
                   }, () => dispatch.alert.error(ms.notEnoughFunds));
             }

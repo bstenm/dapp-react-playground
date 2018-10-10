@@ -1,7 +1,7 @@
 import store from '../../store';
 import React from 'react';
 import {connect} from 'react-redux';
-import Component from './CandidateInfoList';
+import CandidateInfoList from './CandidateInfoList';
 
 const { select } = store;
 
@@ -14,9 +14,10 @@ export class CandidateInfoListContainer extends React.Component {
 
       render() {
             const { candidate } = this.props.match.params;
+            // selector
             const info = this.props.getInfoFor(candidate);
             return (
-                  <Component list={info} candidate={candidate} />
+                  <CandidateInfoList list={info} candidate={candidate} />
             );
       }
 };

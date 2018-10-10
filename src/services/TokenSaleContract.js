@@ -13,3 +13,5 @@ export const buy = async (from, val) => {
       const value =token.priceInWei * val;
       await contract.buy(val, { from, value });
 };
+
+export default Contract;

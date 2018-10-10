@@ -30,7 +30,7 @@ CustomInputComponent.propTypes = {
       form: PropTypes.shape({
             errors: PropTypes.object,
             touched: PropTypes.object,
-            handleChange: PropTypes.func.isRequired,
+            handleChange: PropTypes.func,
       }).isRequired
 };
 

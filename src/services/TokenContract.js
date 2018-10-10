@@ -16,3 +16,5 @@ export const approveProxy = async (from, proxy, nb) => {
       const ct = await Contract.deployed();
       await ct.approve(proxy, nb, {from});
 };
+
+export default Contract;

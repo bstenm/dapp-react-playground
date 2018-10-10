@@ -22,7 +22,7 @@ describe('(Reducer) candidates', () => {
             ]);
       });
 
-      it('(updateInfo) Adds the data to the info key for the candidate passed', () => {
+      it('(updateInfo) Sets the data to the info key for the candidate passed', () => {
             initialState = [
                   {name: 'Hilary', vote: '2', info: ['some info']},
                   {name: 'Jill', vote: '0', info: []},
@@ -30,10 +30,10 @@ describe('(Reducer) candidates', () => {
             ]
             const result = updateInfo(initialState, {
                   name: 'Hilary',
-                  info: 'some other info'
+                  info: ['some other info']
             });
             expect(result).toEqual([
-                  {name: 'Hilary', vote: '2', info: ['some info', 'some other info']},
+                  {name: 'Hilary', vote: '2', info: ['some other info']},
                   {name: 'Jill', vote: '0', info: []},
                   {name: 'Trump', vote: '0', info: []}
             ]);
