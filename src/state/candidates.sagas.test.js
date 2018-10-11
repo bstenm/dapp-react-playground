@@ -45,7 +45,7 @@ describe('(Effects) candidates', () => {
             });
 
             it('Adds the info fectched to the state for that candicate', async (done) => {
-                  getCandidateInfo.mockImplementation(() => 'candidate info');
+                  getCandidateInfo.mockImplementation(() => ['candidate info']);
                   await dispatch.candidates.fetchInfo('Hilary');
                   setTimeout(() => {
                         const state = store.getState().candidates;

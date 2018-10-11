@@ -4,6 +4,10 @@ const token = {
       priceInWei: 1000000000
 };
 
+const gas = {
+      addInfo: 500000
+};
+
 const candidates =  ['Hilary','Trump', 'Jill'];
 
 const routes = {

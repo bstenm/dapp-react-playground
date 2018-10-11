@@ -1,3 +1,4 @@
+import cf from '../config';
 import web3 from './Web3';
 import contract from 'truffle-contract';
 import contractArtifacts from '../contracts/Candidates.json';
@@ -7,7 +8,7 @@ const Contract = contract(contractArtifacts);
 Contract.setProvider(web3.currentProvider);
 
 export const addCandidateInfo = async (payload, from) => {
-      const gas = 500000;
+      const gas = cf.gas.addInfo;
       const {addInfo} = await Contract.deployed();
       const {candidate, title, description, fileHash} = payload;
       await addInfo(candidate, title, description, fileHash, { from, gas });
@@ -25,4 +26,6 @@ export const getCandidateInfo = async (name) => {
             // data[0] is title
       } while (!! data[0]);
       return info;
-}
+};
+
+export default Contract;
