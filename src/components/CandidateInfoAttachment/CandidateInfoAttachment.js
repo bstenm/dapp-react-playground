@@ -42,7 +42,6 @@ export const Component = ({
 
 Component.propTypes = {
       file: PropTypes.object,
-      onDrop: PropTypes.func,
       onDropRejected: PropTypes.func,
       onDropAccepted: PropTypes.func.isRequired
 };

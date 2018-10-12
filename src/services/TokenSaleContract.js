@@ -7,3 +7,8 @@ export const buy = async (from, val) => {
       const value = token.priceInWei * val;
       await contract.buy(val, { from, value });
 };
+
+export const getContractAddress = async () => {
+      const contract = await TokenSale.deployed();
+      return contract.address;
+}

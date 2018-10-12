@@ -1,7 +1,7 @@
-import {buy} from './TokenSaleContract';
 import web3 from './Web3';
 import {token} from '../config';
 import {TokenSale} from './ContractsInstances';
+import {buy, getContractAddress} from './TokenSaleContract';
 
 jest.mock('./ContractsInstances');
 
@@ -18,5 +18,14 @@ describe('buy', () => {
                   expect(buySpy.mock.calls[0][1].value).toEqual(token.priceInWei * 4);
                   done();
             }, 1)
+      });
+});
+
+describe('getContractAddress', () => {
+
+      it('Returns the address of the contract', async () => {
+            TokenSale.deployed.mockImplementation(() => ({ address: '0xContractAddress' }));
+            const address = await getContractAddress();
+            expect(address).toEqual('0xContractAddress');
       });
 });

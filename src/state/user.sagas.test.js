@@ -16,7 +16,7 @@ const {dispatch} = store;
 
 const {buy} = TokenSaleContract;
 const {getUserBalance} = TokenContract;
-const {getUserData, getVotingContractAddress} = VotingContract;
+const {getUserData, getVotingContractAddress, registerUser, getNewAddress} = VotingContract;
 
 jest.mock('../services/Log');
 jest.mock('../services/TokenContract.js');
@@ -24,7 +24,7 @@ jest.mock('../services/VotingContract.js');
 jest.mock('../services/TokenSaleContract.js');
 
 describe('(Sagas) user', () => {
-      let user = {
+      let userData = {
             user: 'Joanna',
             address: '0XUserAddress',
             votingRecord: { Hilary: '4'}
@@ -38,6 +38,8 @@ describe('(Sagas) user', () => {
       afterEach(async () => {
             buy.mockReset();
             Log.error.mockReset();
+            registerUser.mockReset();
+            getNewAddress.mockReset();
             getUserData.mockReset();
             getUserBalance.mockReset();
             getVotingContractAddress.mockReset();
@@ -67,7 +69,7 @@ describe('(Sagas) user', () => {
 
             it('Sets the user data into the state', async (done) => {
                   getUserBalance.mockImplementation(() =>  100);
-                  getUserData.mockImplementation(() => user);
+                  getUserData.mockImplementation(() => userData);
                   await dispatch.user.login('Joanna');
                   setTimeout(() => {
                         const {user} = store.getState();
@@ -78,12 +80,82 @@ describe('(Sagas) user', () => {
                         done();
                   }, 1);
             });
+
+            it('Regiters the user if not found on the blockchain', async (done) => {
+                  const registerSpy = jest.spyOn(dispatch.user, 'register');
+                  getUserBalance.mockImplementation(() =>  100);
+                  getUserData.mockImplementation(() => userData);
+                  await dispatch.user.login('Jenni');
+                  setTimeout(() => {
+                        // the login fn should not set the user into the state
+                        expect(store.getState().user).toEqual({});
+                        expect(registerSpy.mock.calls.length).toEqual(1);
+                        expect(registerSpy.mock.calls[0][0]).toEqual('Jenni');
+                        registerSpy.mockRestore();
+                        done();
+                  }, 1);
+            });
+      });
+
+      describe('register', () => {
+
+            afterEach(async () => {
+                  await dispatch.user.logout()
+            });
+
+            it('Dispatches an alert when error thrown', async (done) => {
+                  registerUser.mockImplementation(() => {throw new Error('error')});
+                  getNewAddress.mockImplementation(() => '0x1');
+                  await dispatch.user.register('Joanna');
+                  setTimeout(() => {
+                        const logErrorCalls = Log.error.mock.calls;
+                        expect(store.getState().user).toEqual({});
+                        expect(store.getState().alert).toEqual({
+                              type: 'danger',
+                              message: 'error'
+                        });
+                        expect(logErrorCalls.length).toEqual(1);
+                        expect(logErrorCalls[0][0].message).toEqual('error');
+                        done();
+                  }, 1);
+            });
+
+            it('Dispatches an alert when no new address returned', async (done) => {
+                  getNewAddress.mockImplementation(() => null);
+                  await dispatch.user.register('Joanna');
+                  setTimeout(() => {
+                        const logErrorCalls = Log.error.mock.calls;
+                        expect(store.getState().user).toEqual({});
+                        expect(store.getState().alert).toEqual({
+                              type: 'danger',
+                              message: ms.noAddressAvailable
+                        });
+                        expect(logErrorCalls.length).toEqual(1);
+                        expect(logErrorCalls[0][0].message).toEqual(ms.noAddressAvailable);
+                        done();
+                  }, 1);
+            });
+
+            it('Registers the new user on the blockchain and sets her data into the state', async (done) => {
+                  getNewAddress.mockImplementation(() => '0xNewAddress');
+                  await dispatch.user.register('Joanna');
+                  setTimeout(() => {
+                        const {user} = store.getState();
+                        expect(registerUser.mock.calls.length).toEqual(1);
+                        expect(registerUser.mock.calls[0][0] ).toEqual('Joanna', '0xNewAddress');
+                        expect(user.name).toEqual('Joanna');
+                        expect(user.tokens).toEqual(0);
+                        expect(user.address).toEqual('0xNewAddress');
+                        expect(user.votingRecord).toEqual({});
+                        done();
+                  }, 1);
+            });
       });
 
       describe('buyTokens', () => {
 
             it('Dispatches an alert when error thrown', async (done) => {
-                  getUserData.mockImplementation(() => user);
+                  getUserData.mockImplementation(() => userData);
                   getUserBalance.mockImplementation(() =>  90);
                   // log the user in first
                   await dispatch.user.login('Joanna');
@@ -102,7 +174,7 @@ describe('(Sagas) user', () => {
             });
 
             it('Updates the user tokens nb in state', async (done) => {
-                  getUserData.mockImplementation(() => user);
+                  getUserData.mockImplementation(() => userData);
                   getUserBalance.mockImplementation(() =>  90);
                   // log the user in first
                   await dispatch.user.login('Joanna');

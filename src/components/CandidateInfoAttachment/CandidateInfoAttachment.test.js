@@ -14,7 +14,6 @@ describe('(Component) CandidateInfoAttachment', () => {
       beforeEach(() => {
             props = {
                   file: { name: 'name', preview: 'preview' },
-                  // onDrop: jest.fn(),
                   onDropRejected: jest.fn(),
                   onDropAccepted: jest.fn()
             };
@@ -35,13 +34,6 @@ describe('(Component) CandidateInfoAttachment', () => {
       it('Passes the maximum file size allwoed to Dropzone component', () => {
             const { maxSize } = attachment;
             expect(wrapper.find(Dropzone).props().maxSize).toEqual(maxSize);
-      });
-
-      // prop: onDrop
-      it('Passes a cb prop to handle the ondrop event to Dropzone component', () => {
-            wrapper.find(Dropzone).props().onDrop('arg');
-            expect(props.onDrop.mock.calls.length).toEqual(1);
-            expect(props.onDrop.mock.calls[0][0]).toEqual('arg');
       });
 
       // props: onDropRejected

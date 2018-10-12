@@ -4,17 +4,16 @@ import web3 from '../../services/Web3';
 import {token} from '../../config';
 import {Router} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {transferTo} from '../../services/TokenContract';
 import customHistory from '../../history';
-import {TokenSale, Token} from '../../services/ContractsInstances';
+import {getContractAddress} from '../../services/TokenSaleContract';
 
 export class AppContainer extends React.Component {
 
-      async componentWillMount () {
+      async componentDidMount () {
             //[TEMPORARY]: Provisioning the token sale contract here for now
-            const from = web3.eth.accounts[0];
-            const ctToken = await Token.deployed();
-            const {address} = await TokenSale.deployed();
-            await ctToken.transfer(address, token.available, {from});
+            const address = await getContractAddress();
+            await transferTo(address, token.available);
       }
 
       render () {
