@@ -14,7 +14,7 @@ describe('(Component) CandidateInfoAttachment', () => {
       beforeEach(() => {
             props = {
                   file: { name: 'name', preview: 'preview' },
-                  onDrop: jest.fn(),
+                  // onDrop: jest.fn(),
                   onDropRejected: jest.fn(),
                   onDropAccepted: jest.fn()
             };

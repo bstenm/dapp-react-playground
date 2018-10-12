@@ -5,7 +5,9 @@ const token = {
 };
 
 const gas = {
-      addInfo: 500000
+      vote: 200000,
+      addInfo: 500000,
+      registration: 150000,
 };
 
 const candidates =  ['Hilary','Trump', 'Jill'];
@@ -33,6 +35,7 @@ const ipfsConfig = {
 const ipfsRoot = 'https://ipfs.io/ipfs/';
 
 module.exports = {
+      gas,
       token,
       candidates,
       routes,

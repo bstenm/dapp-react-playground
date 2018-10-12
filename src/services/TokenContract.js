@@ -1,20 +1,12 @@
-import web3 from './Web3';
-import contract from 'truffle-contract';
-import contractArtifacts from '../contracts/CorrToken.json';
-
-const Contract = contract(contractArtifacts);
-
-Contract.setProvider(web3.currentProvider);
+import {Token} from './ContractsInstances';
 
 export const getUserBalance = async (address) => {
-      const ct = await Contract.deployed();
+      const ct = await Token.deployed();
       const balance = await ct.balanceOf(address);
       return balance.toNumber();
 };
 
 export const approveProxy = async (from, proxy, nb) => {
-      const ct = await Contract.deployed();
+      const ct = await Token.deployed();
       await ct.approve(proxy, nb, {from});
 };
-
-export default Contract;

@@ -9,7 +9,6 @@ const { allowedTypes, maxSize, previewDim } = cf.attachment;
 
 export const Component = ({
       file,
-      onDrop,
       onDropRejected,
       onDropAccepted
 }) => (
@@ -17,7 +16,6 @@ export const Component = ({
             <ControlLabel>Attachment</ControlLabel>
             <Dropzone
                   accept={ allowedTypes.join( ',' ) }
-                  onDrop={onDrop}
                   maxSize={ maxSize }
                   className="dropzone"
                   onDropRejected={onDropRejected}
@@ -41,10 +39,6 @@ export const Component = ({
             }
       </div>
 );
-
-Component.defaultProps = {
-      onDrop: () => null
-};
 
 Component.propTypes = {
       file: PropTypes.object,
