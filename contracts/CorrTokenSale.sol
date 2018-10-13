@@ -36,14 +36,15 @@ contract CorrTokenSale {
             Sale(msg.sender, msg.value);
       }
 
-      function spend(uint256 _numberOfTokens) public payable {
-            // require spender has enough tokens
-            require(tokenContract.balanceOf(msg.sender) >= _numberOfTokens);
-            // first approve this contract to transfer on behalf of spender
-            require(tokenContract.approve(msg.sender, _numberOfTokens));
-            // transfer the amount of tokens from spender to this contract
-            require(tokenContract.transferFrom(msg.sender, this, _numberOfTokens));
-      }
+      // [TOREMOVE]
+      // function spend(uint256 _numberOfTokens) public payable {
+      //       // require spender has enough tokens
+      //       require(tokenContract.balanceOf(msg.sender) >= _numberOfTokens);
+      //       // first approve this contract to transfer on behalf of spender
+      //       require(tokenContract.approve(msg.sender, _numberOfTokens));
+      //       // transfer the amount of tokens from spender to this contract
+      //       require(tokenContract.transferFrom(msg.sender, this, _numberOfTokens));
+      // }
 
       function endSale() public  {
             require(msg.sender == admin);
