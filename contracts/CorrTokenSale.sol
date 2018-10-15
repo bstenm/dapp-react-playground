@@ -6,11 +6,17 @@ contract CorrTokenSale {
       address admin;
       uint256 public tokenPrice;
       uint256 public tokensSold;
+      uint256 public tokensRewarded;
       CorrToken public tokenContract;
 
       event Sale(
             address indexed _buyer,
             uint256 _value
+      );
+
+      event Reward(
+            address indexed _receiver,
+            uint256 _tokens
       );
 
       function CorrTokenSale(CorrToken _tokenContract, uint256 _tokenPrice) public {
@@ -26,25 +32,33 @@ contract CorrTokenSale {
       function buy(uint256 _numberOfTokens) public payable {
             // require the value corresponds to nb of tokens
             require(msg.value == mul(_numberOfTokens, tokenPrice));
+
             // require we have enough tokens in the contract
             require(tokenContract.balanceOf(this) >= _numberOfTokens);
+
             // transfer the amount of tokens to buyer
             require(tokenContract.transfer(msg.sender, _numberOfTokens));
+
             // keep track of tokens sold
             tokensSold += _numberOfTokens;
-            // Trigger sale event
+
+            // trigger sale event
             Sale(msg.sender, msg.value);
       }
 
-      // [TOREMOVE]
-      // function spend(uint256 _numberOfTokens) public payable {
-      //       // require spender has enough tokens
-      //       require(tokenContract.balanceOf(msg.sender) >= _numberOfTokens);
-      //       // first approve this contract to transfer on behalf of spender
-      //       require(tokenContract.approve(msg.sender, _numberOfTokens));
-      //       // transfer the amount of tokens from spender to this contract
-      //       require(tokenContract.transferFrom(msg.sender, this, _numberOfTokens));
-      // }
+      function reward (address receiver, uint256 _numberOfTokens) public {
+            // require we have enough tokens in the contract
+            require(tokenContract.balanceOf(this) >= _numberOfTokens);
+
+            // transfer the tokens to the caller
+            require(tokenContract.transfer(receiver, _numberOfTokens));
+
+            // keep track of tokens rewarded
+            tokensRewarded += _numberOfTokens;
+
+            // trigger Reward event
+            Reward(receiver, _numberOfTokens);
+      }
 
       function endSale() public  {
             require(msg.sender == admin);

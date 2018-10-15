@@ -8,44 +8,18 @@ contract Candidates {
             bytes attachmentHash;
       }
 
+      bytes32[] public candidateList;
+      mapping(bytes32 => uint) public candidateVotes;
       mapping(bytes32 => Item[]) public candidateInfo;
 
-      bytes32[] public candidateList;
+      modifier onlyValidCandidate(bytes32 _candidate) {
+            uint index = indexOfCandidate(_candidate);
+            require(index != uint(-1));
+            _;
+      }
 
       function Candidates(bytes32[] _candidateNames) public {
             candidateList = _candidateNames;
-      }
-
-      function addInfo (
-            bytes32 _candidate,
-            bytes _title,
-            bytes _description,
-            bytes _attachmentHash
-      ) public {
-            uint index = indexOfCandidate(_candidate);
-            // require valid candidate
-            require(index != uint(-1));
-            Item memory item;
-            item.title = _title;
-            item.description = _description;
-            item.attachmentHash = _attachmentHash;
-            candidateInfo[_candidate].push(item);
-      }
-
-      function getInfo (bytes32 _candidate, uint _idx) view public returns (bytes, bytes, bytes) {
-            uint index = indexOfCandidate(_candidate);
-            // require valid candidate
-            require(index != uint(-1));
-            Item[] memory items = candidateInfo[_candidate];
-            if (_idx >= items.length) {
-                  return;
-            }
-            Item memory item = items[_idx];
-            return (
-                  item.title,
-                  item.description,
-                  item.attachmentHash
-            );
       }
 
       function indexOfCandidate( bytes32 _candidate) view public returns (uint) {
@@ -55,5 +29,22 @@ contract Candidates {
                   }
             }
             return uint(-1);
+      }
+
+      function addInfo (
+            bytes32 _candidate,
+            bytes _title,
+            bytes _description,
+            bytes _attachmentHash
+      ) public onlyValidCandidate(_candidate) {
+            Item memory item;
+            item.title = _title;
+            item.description = _description;
+            item.attachmentHash = _attachmentHash;
+            candidateInfo[_candidate].push(item);
+      }
+
+      function addVoteFor(bytes32 _candidate) public onlyValidCandidate(_candidate) {
+            candidateVotes[_candidate] += 1;
       }
 }
