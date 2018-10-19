@@ -1,51 +1,57 @@
 pragma solidity ^0.4.18;
 
 import  './CorrToken.sol';
+import  './CorrTokenSale.sol';
 
 contract Users {
 
       struct User {
             address userAddress;
             uint[] votingRecord;
-            bytes32 name;
       }
 
-      mapping(bytes32 => User) public userInfo;
+      mapping(address => User) public userInfo;
 
-      address[] public userAddresses;
+      CorrToken public tokenContract;
+      CorrTokenSale public tokenSaleContract;
 
-      modifier onlyRegisteredUser (bytes32 name) {
-            require(isRegistered(name));
+      modifier onlyRegisteredUser () {
+            require(isRegistered(msg.sender));
             _;
       }
 
-      function registerUser(bytes32 _name) public {
-            userInfo[_name].name = _name;
-            userInfo[_name].userAddress = msg.sender;
-            // initialises voting record array
-            userInfo[_name].votingRecord = [0, 0, 0];
-            // to be used for ganache only: keep track of addresses in use
-            userAddresses.push(msg.sender);
+      function Users (CorrToken _tokenContract, CorrTokenSale _tokenContractSale) public {
+            tokenContract = _tokenContract;
+            tokenSaleContract = _tokenContractSale;
       }
 
-      function isRegistered(bytes32 _name) view public returns (bool) {
-            if (userInfo[_name].name == _name) {
+      function register() public {
+            userInfo[msg.sender].userAddress = msg.sender;
+            // initialises voting record array
+            userInfo[msg.sender].votingRecord = [0, 0, 0];
+      }
+
+      function isRegistered(address _address) view public returns (bool) {
+            if (userInfo[_address].userAddress == _address) {
                   return true;
             }
             return false;
       }
 
-      function userData(bytes32 _name) view public returns (uint[], address, bytes32) {
+      function userData(address _address) view public returns (uint[], address) {
             return (
-                  userInfo[_name].votingRecord,
-                  userInfo[_name].userAddress,
-                  userInfo[_name].name
+                  userInfo[_address].votingRecord,
+                  userInfo[_address].userAddress
             );
       }
 
       // we pass the index of the candidate in the candidate list
       // instead of her name because we can not return tuples
-      function addVoteFor(uint _index, bytes32 _name) public onlyRegisteredUser(_name) {
-            userInfo[_name].votingRecord[_index] += 1;
+      function addVoteFor(uint _index) public onlyRegisteredUser {
+            // get one token out of user's account back into the token sale contract
+            require(tokenContract.transferFrom(msg.sender, tokenSaleContract, 1));
+
+            // then update the user's voting record
+            userInfo[msg.sender].votingRecord[_index] += 1;
       }
 }

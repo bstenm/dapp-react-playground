@@ -7,13 +7,13 @@ import  './CorrTokenSale.sol';
 
 contract UserActions {
 
-       Users public usersContract;
-       CorrToken public tokenContract;
-       Candidates public candidatesContract;
-       CorrTokenSale public tokenSaleContract;
+      Users public usersContract;
+      CorrToken public tokenContract;
+      Candidates public candidatesContract;
+      CorrTokenSale public tokenSaleContract;
 
-      modifier onlyRegisteredUser (bytes32 _name) {
-            require(usersContract.isRegistered(_name));
+      modifier onlyRegisteredUser () {
+            require(usersContract.isRegistered(msg.sender));
             _;
       }
 
@@ -29,7 +29,7 @@ contract UserActions {
             candidatesContract = _candidatesContract;
       }
 
-      function voteForCandidate(bytes32 _candidate, bytes32 _user) public onlyRegisteredUser(_user) {
+      function voteForCandidate(bytes32 _candidate) public onlyRegisteredUser {
             // require user has enough tokens
             require(tokenContract.balanceOf(msg.sender) >= 1);
 
@@ -37,7 +37,7 @@ contract UserActions {
             candidatesContract.addVoteFor(_candidate);
 
             // update the user voting record
-            usersContract.addVoteFor(1, _user);
+            usersContract.addVoteFor(1, msg.sender);
 
             // transfer one token from user back to the token sale contract
             tokenContract.transferFrom(msg.sender, tokenSaleContract, 1);

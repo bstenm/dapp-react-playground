@@ -1,6 +1,5 @@
 import App from './App';
 import React from 'react';
-import web3 from '../../services/Web3';
 import {token} from '../../config';
 import {Router} from 'react-router-dom';
 import {connect} from 'react-redux';

@@ -5,8 +5,7 @@ import * as ms from '../config/messages';
 import {produce} from 'immer';
 import {execEffect} from '../libs/execEffect';
 import {uploadToIpfs} from '../libs/ipfsLib';
-import {getTotalVotesFor, voteForCandidate} from '../services/VotingContract';
-import {addCandidateInfo, getCandidateInfo} from '../services/CandidateContract';
+import {getCandidateInfo, getTotalVotesFor, addCandidateInfo, addVoteFor} from '../services/CandidatesContract';
 
 export default {
       name: 'candidates',
@@ -45,10 +44,10 @@ export default {
 
             async addInfo (payload, { user: { address }}) {
                   execEffect(dispatch)(async () => {
-                        let fileHash = null;
+                        let attachmentHash = null;
                         const {file, ...rest} = payload;
-                        if (file) fileHash = await uploadToIpfs(file);
-                        await addCandidateInfo({ ...rest, fileHash }, address);
+                        if (file) attachmentHash = await uploadToIpfs(file);
+                        await addCandidateInfo({ ...rest, attachmentHash }, address);
                         history.push(cf.routes.voting);
                   }, () => dispatch.alert.error(ms.notSaved));
             },
@@ -64,10 +63,10 @@ export default {
                   }, () => dispatch.alert.error(ms.retrieveDataFailure));
             },
 
-            async addVote (candidate, {candidates, user: {name, address}}) {
+            async addVote (candidate, {candidates, user: { address }}) {
                   execEffect(dispatch)(async () => {
                         let updated = [...candidates];
-                        await voteForCandidate(candidate, name, address);
+                        await addVoteFor(candidate, address);
                         const vote = await getTotalVotesFor(candidate);
                         updated.unshift({ name: candidate, vote });
                         this.updateList(uniqBy(updated, 'name'));

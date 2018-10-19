@@ -2,8 +2,7 @@ import {buy} from '../services/TokenSaleContract';
 import * as ms from '../config/messages';
 import {execEffect} from '../libs/execEffect';
 import {getUserBalance, approveProxy} from '../services/TokenContract';
-// [TOREMOVE]: won't need getVotingContractAddress when Solidity contract takes care of setting the proxy approval
-import {getUserData, getVotingContractAddress, getNewAddress, registerUser} from '../services/VotingContract';
+import {getUserData, registerUser, getContractAddress} from '../services/UsersContract';
 
 export default {
       state: {},
@@ -19,7 +18,7 @@ export default {
 
             addVoteToRecord (state, {name, vote}) {
                   // [TODO]: use immer
-                  const {votingRecord} = state;
+                  const votingRecord = state.votingRecord || {};;
                   const nbOfVotes = votingRecord[name] || 0;
                   const newRecord = {...votingRecord, [name]: vote + nbOfVotes};
                   return {...state, votingRecord: newRecord};
@@ -31,35 +30,24 @@ export default {
       },
       effects: (dispatch) => ({
 
-            async register (name) {
+            async login (address) {
                   execEffect(dispatch)(async () => {
                         const {setUserData} = dispatch.user;
-                        const address = await getNewAddress();
-                        if (! address) { throw new Error(ms.noAddressAvailable) }
-                        await registerUser(name, address);
-                        setUserData({tokens: 0, votingRecord: {}, name, address});
-                  }, e => dispatch.alert.error(e.message));
+                        const {votingRecord, userAddress} =  await getUserData(address);
+                        const registered = !! userAddress;
+                        if (! registered) { await registerUser(address); }
+                        const tokens = registered ? await getUserBalance(address) : 0;
+                        setUserData({tokens, votingRecord, address});
+                  }, () => dispatch.alert.error(ms.loginFailure));
             },
 
-            async login (name) {
-                  execEffect(dispatch)(async () => {
-                        const {setUserData} = dispatch.user;
-                        const {votingRecord, address, user} =  await getUserData(name);
-                        const registered = (user === name);
-                        if (! registered) { return this.register(name); }  // * exit *
-                        const tokens = await getUserBalance(address);
-                        setUserData({tokens, votingRecord, name, address});
-                  }, () => dispatch.alert.error(ms.noAddressAvailable));
-            },
-
-            async buyTokens (val, { user: { name, address, tokens }}) {
+            async buyTokens (val, { user: { address, tokens }}) {
                   execEffect(dispatch)(async () => {
                         const nb = parseInt(val, 10) + (tokens || 0);
                         await buy(address, val);
-                        // [TOREMOVE]: won't need it when Solidity contract takes care of setting the proxy approval
-                        const votingContractAddress = await getVotingContractAddress();
-                        // allow voting contract to transfer tokens on user behalf
-                        await approveProxy(address, votingContractAddress, nb);
+                        const contractAddress = await getContractAddress();
+                        // allow users contract to transfer tokens on user behalf
+                        await approveProxy(address, contractAddress, nb);
                         this.updateTokenCount(val);
                   }, () => dispatch.alert.error(ms.buyTokensFailure));
             }

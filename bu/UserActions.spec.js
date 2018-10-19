@@ -61,7 +61,7 @@ contract( 'UserActions:', accounts => {
 
             // we register this user
             const usersContract = await Users.deployed();
-            await usersContract.registerUser(name);
+            await usersContract.register(name);
 
             // reverts if user does not have enough fund
             e = await voteForCandidate(candidate, name, {from: user});
@@ -108,7 +108,7 @@ contract( 'UserActions:', accounts => {
 
             // we register this user
             const usersContract = await Users.deployed();
-            await usersContract.registerUser(name);
+            await usersContract.register(name);
 
             // successful transaction
             await addCandidateInfo(candidate, 'Title', 'Description', 'FileHash', name, {from: user2});

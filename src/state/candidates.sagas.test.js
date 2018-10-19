@@ -1,25 +1,24 @@
+import cf from '../config';
 import Log from '../services/Log';
 import user from './user';
 import {init} from '@rematch/core';
 import alert from './alert';
 import web3 from '../services/Web3';
 import * as ms from '../config/messages';
+import history from '../history';
 import loading from './loading';
 import candidates from './candidates';
 import * as ipfsLib from '../libs/ipfsLib';
-import * as VotingContract from '../services/VotingContract';
-import * as CandidateContract from '../services/CandidateContract';
+import * as CandidatesContract from '../services/CandidatesContract';
 
 const store = init({ models: { candidates, loading, alert, user }});
 const { dispatch } = store;
 
 jest.mock('../libs/ipfsLib');
 jest.mock('../services/Log');
-jest.mock('../services/VotingContract');
-jest.mock('../services/CandidateContract');
+jest.mock('../services/CandidatesContract');
 
-const {getTotalVotesFor, voteForCandidate} = VotingContract;
-const {addCandidateInfo, getCandidateInfo} = CandidateContract;
+const {getTotalVotesFor, getCandidateInfo, addCandidateInfo, addVoteFor} = CandidatesContract;
 
 const initialState = [
       {name: 'Hilary', vote: 0, info: []},
@@ -114,6 +113,13 @@ describe('(Effects) candidates', () => {
                         done();
                   }, 1);
             });
+
+            it('Redirests the user to the voting page', async () => {
+                  jest.spyOn(history, 'push');
+                  await dispatch.candidates.addInfo(info);
+                  expect(history.push.mock.calls.length).toEqual(1);
+                  expect(history.push.mock.calls[0][0] ).toEqual(cf.routes.voting);
+            });
       });
 
       describe('fetchVotes', () => {
@@ -158,7 +164,7 @@ describe('(Effects) candidates', () => {
 
             afterEach(() => {
                   getTotalVotesFor.mockReset();
-                  voteForCandidate.mockReset();
+                  addVoteFor.mockReset();
             });
 
             it('Adds the votes entered by user to the state for this candidate', async (done) => {
@@ -169,15 +175,14 @@ describe('(Effects) candidates', () => {
                         const {vote} = state.find(e => e.name === 'Trump');
                         expect(vote).toEqual(4);
                         // [TODO]: why calls length is 0?
-                        expect(voteForCandidate.mock.calls.length).toEqual(1);
-                        expect(voteForCandidate.mock.calls[0][0] ).toEqual('Trump');
-                        expect(voteForCandidate.mock.calls[0][1] ).toEqual('username');
+                        expect(addVoteFor.mock.calls.length).toEqual(1);
+                        expect(addVoteFor.mock.calls[0][0] ).toEqual('Trump');
                         done();
                   }, 1);
             });
 
             it('Dispatches an alert when error thrown', async (done) => {
-                  voteForCandidate.mockImplementation(() => {throw new Error('error')});
+                  addVoteFor.mockImplementation(() => {throw new Error('error')});
                   await dispatch.candidates.addVote('Trump');
                   setTimeout(() => {
                         expect(store.getState().alert).toEqual({

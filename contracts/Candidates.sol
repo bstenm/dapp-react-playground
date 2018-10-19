@@ -44,7 +44,18 @@ contract Candidates {
             candidateInfo[_candidate].push(item);
       }
 
-      function addVoteFor(bytes32 _candidate) public onlyValidCandidate(_candidate) {
+      function getCandidateInfoAt (bytes32 _candidate, uint _idx) view public returns (bytes, bytes, bytes) {
+            if (candidateInfo[_candidate].length <= _idx) {
+                  return;
+            }
+            return (
+                  candidateInfo[_candidate][_idx].title,
+                  candidateInfo[_candidate][_idx].description,
+                  candidateInfo[_candidate][_idx].attachmentHash
+            );
+      }
+
+      function addVoteFor(bytes32 _candidate) public {
             candidateVotes[_candidate] += 1;
       }
 }

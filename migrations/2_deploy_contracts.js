@@ -10,8 +10,7 @@ module.exports = function (deployer) {
       deployer
       .deploy(CorrToken, config.token.supply)
       .then(() => deployer.deploy(CorrTokenSale, CorrToken.address, config.token.priceInWei))
-      .then(() => deployer.deploy(Users))
+      .then(() => deployer.deploy(Users, CorrToken.address, CorrTokenSale.address))
       .then(() => deployer.deploy(Candidates, config.candidates))
-      .then(() => deployer.deploy(UserActions, CorrToken.address, CorrTokenSale.address, Users.address, Candidates.address))
       .then(() => deployer.deploy(Banking, CorrToken.address))
 };

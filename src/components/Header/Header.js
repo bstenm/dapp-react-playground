@@ -50,12 +50,12 @@ export const Component = ({buyTokens, login, logout, user}) => (
                                     Account
                               </NavItem>
                         </OverlayTrigger>
-                        {user.name &&
+                        {user.address &&
                         <NavItem onClick={logout} href="#">
                               Logout
                          </NavItem>
                         }
-                        <SignIn login={login} show={! user.name}/>
+                        <SignIn login={login} show={! user.address}/>
                   </Nav>
             </Navbar.Collapse>
       </Navbar>
@@ -67,7 +67,7 @@ Component.propTypes = {
       user: PropTypes.shape({
             tokens: PropTypes.number,
             votingRecord: PropTypes.object,
-            name: PropTypes.string
+            address: PropTypes.string
       }).isRequired
 };
 

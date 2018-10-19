@@ -13,7 +13,7 @@ export const Component = ({show, value, onChange, onLogin}) => (
                                     type="text"
                                     value={value}
                                     onChange={onChange}
-                                    placeholder="Your name"
+                                    placeholder="Your ethereum address"
                                     style={{marginRight:"5px"}}
                               />
                               <Button onClick={onLogin}>Login</Button>
