@@ -1,8 +1,8 @@
-import {gas} from '../config';
 import web3 from './Web3';
 import {Users} from './ContractsInstances';
 import {BigNumber} from 'bignumber.js';
-import {registerUser, getUserData, getTotalVotesFor, getContractAddress} from './UsersContract';
+import {gas, candidates} from '../config';
+import {addVoteFor, registerUser, getUserData, getTotalVotesFor, getContractAddress} from './UsersContract';
 
 jest.mock('./Web3');
 jest.mock('./ContractsInstances');
@@ -24,7 +24,7 @@ describe('registerUser', () => {
 describe('getUserData', () => {
 
       it('Returns empty object if no data found fot that user', async () => {
-            mockImplementation(() => ({ userData: () => []}));
+            mockImplementation(() => ({ userData: () => [null, '0x0000']}));
             const data = await getUserData('0xUserAddress');
             expect(data).toEqual({});
       });
@@ -55,5 +55,18 @@ describe('getContractAddress', () => {
             }));
             const address = await getContractAddress();
             expect(address).toEqual('0xContractAddress');
+      });
+});
+
+describe('addVoteFor', () => {
+
+      it('Saves the new vote on the blockchain by passing the index of the candidate rather than her name', async () => {
+            const updateVotingRecordSpy = jest.fn();
+            Users.deployed.mockImplementation(() => ({
+                  updateVotingRecord: updateVotingRecordSpy
+            }));
+            await addVoteFor(candidates[2]);
+            expect(updateVotingRecordSpy.mock.calls.length).toEqual(1);
+            expect(updateVotingRecordSpy.mock.calls[0][0]).toEqual(2);
       });
 });

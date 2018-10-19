@@ -3,21 +3,18 @@ import user from './user';
 import store from '../store';
 
 const initialState = {
-        name: 'Joanna'
-      , tokens: 9
-      , votingRecord: {Jill: 10, Hilary: 2}
+      tokens: 9,
+      votingRecord: {Jill: 10, Hilary: 2}
 };
 
 describe('(Reducer) User state', () => {
 
       it('(setUserData) Updates the details of a user', () => {
             const newState = user.reducers.setUserData( initialState, {
-                  name: 'Joanna',
                   tokens: 8,
                   votingRecord: {Jill: 1, Trump: 20}
             });
             expect(newState).toEqual({
-                  name: 'Joanna',
                   tokens: 8,
                   votingRecord: {Jill: 1, Trump: 20}
             });
@@ -26,7 +23,6 @@ describe('(Reducer) User state', () => {
       it('(setUserData) Adds tokens to user account', async () => {
             const newState = user.reducers.setUserData( initialState, { tokens: 17 });
             expect(newState).toEqual({
-                  name: 'Joanna',
                   tokens: 17,
                   votingRecord: {Jill: 10, Hilary: 2}
             });
@@ -35,18 +31,16 @@ describe('(Reducer) User state', () => {
       it('(updateTokenCount) Updates tokens from the user account', async () => {
             const newState = user.reducers.updateTokenCount( initialState, -2);
             expect(newState).toEqual({
-                  name: 'Joanna',
                   tokens: 7,
                   votingRecord: {Jill: 10, Hilary: 2}
             });
       });
 
-      it('(addVoteToRecord) Updates its voting record on vote event', async () => {
-            const newState = user.reducers.addVoteToRecord( initialState, {name: 'Jill', vote: 2});
+      it('(updateVotingRecord) Updates its voting record on vote event', async () => {
+            const newState = user.reducers.updateVotingRecord( initialState, 'Jill');
             expect(newState).toEqual({
-                  name: 'Joanna',
                   tokens: 9,
-                  votingRecord: {Jill: 12, Hilary: 2}
+                  votingRecord: {Jill: 11, Hilary: 2}
             });
       });
 

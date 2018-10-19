@@ -1,3 +1,4 @@
+import cf from '../config';
 import Log from '../services/Log';
 import user from './user';
 import {init} from '@rematch/core';
@@ -16,7 +17,7 @@ const {dispatch} = store;
 
 const {buy} = TokenSaleContract;
 const {getUserBalance, approveProxy} = TokenContract;
-const {getUserData, registerUser, getContractAddress} = UsersContract;
+const {getUserData, registerUser, getContractAddress, addVoteFor} = UsersContract;
 
 jest.mock('../services/Log');
 jest.mock('../services/TokenContract.js');
@@ -26,7 +27,8 @@ jest.mock('../services/TokenSaleContract.js');
 describe('(Sagas) user', () => {
       let userData = {
             userAddress: '0XUserAddress',
-            votingRecord: { Hilary: '4'}
+            votingRecord: { Candidate1: 4},
+            tokens: 2
       };
 
       beforeEach(() => {
@@ -49,9 +51,9 @@ describe('(Sagas) user', () => {
                   await dispatch.user.logout()
             });
 
-            it('Dispatches an alert when error thrown', (done) => {
+            it('Dispatches an alert when error thrown', async (done) => {
                   getUserData.mockImplementation(() => {throw new Error('error')});
-                  dispatch.user.login('0xUserAddress');
+                  await dispatch.user.login('0xUserAddress');
                   setTimeout(() => {
                         const logErrorCalls = Log.error.mock.calls;
                         expect(store.getState().user).toEqual({});
@@ -73,7 +75,7 @@ describe('(Sagas) user', () => {
                         const {user} = store.getState();
                         expect(user.tokens).toEqual(100);
                         expect(user.address).toEqual('0XUserAddress');
-                        expect(user.votingRecord).toEqual({Hilary: '4'});
+                        expect(user.votingRecord).toEqual({Candidate1: 4});
                         done();
                   }, 1);
             });
@@ -132,6 +134,36 @@ describe('(Sagas) user', () => {
                         expect(approveProxy.mock.calls[0][0]).toEqual('0xUserAddress');
                         expect(approveProxy.mock.calls[0][1]).toEqual('0xContractAddress');
                         expect(approveProxy.mock.calls[0][2]).toEqual(92);
+                        done();
+                  }, 1);
+            });
+      });
+
+      describe('addVoteToRecord', () => {
+
+            it('Adds the vote to the user\' record on the blockchain and updates the state for voting recored and tokens', async (done) => {
+                  await dispatch.user.addVoteToRecord('Candidate2');
+                  expect(addVoteFor.mock.calls.length).toEqual(1);
+                  expect(addVoteFor.mock.calls[0][0]).toEqual('Candidate2');
+                  setTimeout(() => {
+                        expect(store.getState().user.votingRecord).toEqual({ Candidate1: 4, Candidate2: 1});
+                        // substract a token
+                        expect(store.getState().user.tokens).toEqual(91);
+                        done();
+                  });
+            });
+
+            it('Dispatches an alert when error thrown', async (done) => {
+                  addVoteFor.mockImplementation(() => {throw new Error('error')});
+                  await dispatch.user.addVoteToRecord('Candidate2');
+                  setTimeout(() => {
+                        const logErrorCalls = Log.error.mock.calls;
+                        expect(store.getState().alert).toEqual({
+                              type: 'danger',
+                              message: ms.unexpectedError
+                        });
+                        expect(logErrorCalls.length).toEqual(1);
+                        expect(logErrorCalls[0][0].message).toEqual('error');
                         done();
                   }, 1);
             });

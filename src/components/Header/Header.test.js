@@ -13,7 +13,7 @@ describe( '(Component) Header', () => {
 
       beforeEach(() => {
             props = {
-                  user: {tokens: 10, name: 'Jennifer', votingRecord: {Trump: 100}},
+                  user: {tokens: 10, address: '0xUserAddress', votingRecord: {Trump: 100}},
                   login: jest.fn(),
                   logout: jest.fn(),
                   buyTokens: jest.fn()
@@ -70,7 +70,7 @@ describe( '(Component) Header', () => {
       });
 
       // Signin prop: show
-     it('Passes show prop to component to show sign in if nu ser name set', () => {
+     it('Passes show prop to component to show sign in if no user set', () => {
             expect(wrapper.find(SignIn).props().show).toEqual(false);
             wrapper.setProps({user: {}});
             expect(wrapper.find(SignIn).props().show).toEqual(true);
@@ -78,9 +78,9 @@ describe( '(Component) Header', () => {
 
       // Signin prop: login
       it( 'Passes login cb to sign in component', () => {
-            wrapper.find(SignIn).props().login('Jennifer');
+            wrapper.find(SignIn).props().login('0xUserAddress');
             expect(props.login.mock.calls.length).toEqual(1);
-            expect(props.login.mock.calls[0][0]).toEqual('Jennifer');
+            expect(props.login.mock.calls[0][0]).toEqual('0xUserAddress');
       });
 
       // NavItem with prop: logout

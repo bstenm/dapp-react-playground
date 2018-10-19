@@ -14,8 +14,7 @@ describe( '(Container) Voting', () => {
                               error: jest.fn()
                         },
                         user: {
-                              addVoteToRecord : jest.fn(),
-                              updateTokenCount: jest.fn()
+                              addVoteToRecord : jest.fn()
                         },
                         candidates: {
                               addVote: jest.fn(),
@@ -59,9 +58,7 @@ describe( '(Container) Voting', () => {
             expect(props.dispatch.candidates.addVote.mock.calls.length).toEqual(1);
             expect(props.dispatch.candidates.addVote.mock.calls[0][0]).toEqual('name');
             expect(props.dispatch.user.addVoteToRecord.mock.calls.length).toEqual(1);
-            expect(props.dispatch.user.addVoteToRecord.mock.calls[0][0]).toEqual({name: 'name', vote: 1});
-            expect(props.dispatch.user.updateTokenCount.mock.calls.length).toEqual(1);
-            expect(props.dispatch.user.updateTokenCount.mock.calls[0][0]).toEqual(-1);
+            expect(props.dispatch.user.addVoteToRecord.mock.calls[0][0]).toEqual('name');
       });
 
       // prop: voteFor
@@ -70,7 +67,6 @@ describe( '(Container) Voting', () => {
             wrapper.find(Component).props().voteFor('name');
             expect(props.dispatch.candidates.addVote.mock.calls.length).toEqual(0);
             expect(props.dispatch.user.addVoteToRecord.mock.calls.length).toEqual(0);
-            expect(props.dispatch.user.updateTokenCount.mock.calls.length).toEqual(0);
       });
 
       // prop: voteFor
@@ -80,7 +76,6 @@ describe( '(Container) Voting', () => {
             expect(props.dispatch.alert.error.mock.calls.length).toEqual(1);
             expect(props.dispatch.candidates.addVote.mock.calls.length).toEqual(0);
             expect(props.dispatch.user.addVoteToRecord.mock.calls.length).toEqual(0);
-            expect(props.dispatch.user.updateTokenCount.mock.calls.length).toEqual(0);
       });
 });
 

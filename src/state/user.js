@@ -2,7 +2,7 @@ import {buy} from '../services/TokenSaleContract';
 import * as ms from '../config/messages';
 import {execEffect} from '../libs/execEffect';
 import {getUserBalance, approveProxy} from '../services/TokenContract';
-import {getUserData, registerUser, getContractAddress} from '../services/UsersContract';
+import {addVoteFor, getUserData, registerUser, getContractAddress} from '../services/UsersContract';
 
 export default {
       state: {},
@@ -16,11 +16,11 @@ export default {
                   return {...state, tokens};
             },
 
-            addVoteToRecord (state, {name, vote}) {
+            updateVotingRecord (state, name) {
                   // [TODO]: use immer
                   const votingRecord = state.votingRecord || {};;
                   const nbOfVotes = votingRecord[name] || 0;
-                  const newRecord = {...votingRecord, [name]: vote + nbOfVotes};
+                  const newRecord = {...votingRecord, [name]: 1 + nbOfVotes};
                   return {...state, votingRecord: newRecord};
             },
 
@@ -50,6 +50,14 @@ export default {
                         await approveProxy(address, contractAddress, nb);
                         this.updateTokenCount(val);
                   }, () => dispatch.alert.error(ms.buyTokensFailure));
+            },
+
+            async addVoteToRecord (name, { user: { address }}) {
+                  execEffect(dispatch)(async () => {
+                        await addVoteFor(name, address);
+                        this.updateVotingRecord(name);
+                        this.updateTokenCount( -1 );
+                  }, () => dispatch.alert.error(ms.unexpectedError));
             }
       })
 };

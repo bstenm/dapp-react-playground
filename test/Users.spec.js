@@ -10,7 +10,7 @@ const web3 = new Web3();
 const { tryCatchWrapper, assertRevert } = helpers;
 
 contract( 'Users:', accounts => {
-      let instance, addVoteFor, tokenContract, tokenSaleContract;
+      let instance, updateVotingRecord, tokenContract, tokenSaleContract;
       const admin = accounts[0];
       const user1 = accounts[1];
       const user2 = accounts[2];
@@ -21,17 +21,15 @@ contract( 'Users:', accounts => {
             tokenContract = await CorrToken.deployed();
             tokenSaleContract = await CorrTokenSale.deployed();
             // wrap method that could revert
-            addVoteFor = tryCatchWrapper(instance.addVoteFor);
+            updateVotingRecord = tryCatchWrapper(instance.updateVotingRecord);
       })
 
       // REGISTER NEW USER
       it('Allows to register a new user', async () => {
-            const name = web3.fromUtf8('Jenni1');
             // register
-            await instance.register('Jenni1', {from: user1});
-            const [record, address, username] = await instance.userData(user1);
+            await instance.register({from: user1});
+            const [record, address] = await instance.userData(user1);
             // sets all the new user data
-            assert.equal(username.slice(0, 14), name, 'The user name has been set');
             assert.equal(address, user1, 'The user address has been set');
             assert.deepEqual(record.toString(), '0,0,0', 'The user voting record has been set');
       });
@@ -39,7 +37,7 @@ contract( 'Users:', accounts => {
       // CHECK IF USER IS REGISTERED
       it('Checks if user is registered', async () => {
             let registered;
-            await instance.register('Jenni2', {from: user2});
+            await instance.register( {from: user2});
             // true if registered
             registered = await instance.isRegistered.call(user2);
             assert.equal(registered, true, 'Returns true if user is registered');
@@ -51,21 +49,20 @@ contract( 'Users:', accounts => {
       // VOTE FOR CANDIDATE
       it('Updates the voting record on voting event', async () => {
             let e;
-            const name = 'Jenni3';
 
             // reverts if user not registered
-            e = await addVoteFor(1, {from: user3});
+            e = await updateVotingRecord(1, {from: user3});
             assertRevert(e, 'reverts if user is not registered');
 
             // we now register this user
-            await instance.register(name, {from: user3});
+            await instance.register({from: user3});
             // then provides some fund to the user
             await tokenContract.transfer(user3, 2, {from: admin});
             // and approve Users contract to spend those tokens on user's behalf
             await tokenContract.approve(instance.address, 2, {from: user3});
 
             // successful transaction: vote for candidate with index 1 in the list set in config
-            await addVoteFor(1, {from: user3});
+            await updateVotingRecord(1, {from: user3});
 
             // transfer one token from user's account back the the token sale contract balance
             const userBalance = await tokenContract.balanceOf(user3);

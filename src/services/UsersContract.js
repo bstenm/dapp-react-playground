@@ -24,3 +24,12 @@ export const getContractAddress = async () => {
       const ct = await Users.deployed();
       return ct.address;
 };
+
+export const addVoteFor = async (name, from) => {
+      // we pass the index rather than the name of the candidaterelated
+      // to the issue about not being able to return tuples form solidity fn
+      const idx = cf.candidates.indexOf(name);
+      const gas = cf.gas.vote;
+      const {updateVotingRecord} = await Users.deployed();
+      await updateVotingRecord(idx, {from, gas});
+};

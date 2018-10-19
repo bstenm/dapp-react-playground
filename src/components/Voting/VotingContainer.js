@@ -18,8 +18,7 @@ export class VotingContainer extends React.Component {
                   return error(ms.notEnoughFunds);
             }
             dispatch.candidates.addVote(name);
-            dispatch.user.updateTokenCount(-1);
-            dispatch.user.addVoteToRecord({name, vote: 1});
+            dispatch.user.addVoteToRecord(name);
       }
 
       render() {

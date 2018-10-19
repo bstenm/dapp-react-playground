@@ -47,7 +47,7 @@ contract Users {
 
       // we pass the index of the candidate in the candidate list
       // instead of her name because we can not return tuples
-      function addVoteFor(uint _index) public onlyRegisteredUser {
+      function updateVotingRecord(uint _index) public onlyRegisteredUser {
             // get one token out of user's account back into the token sale contract
             require(tokenContract.transferFrom(msg.sender, tokenSaleContract, 1));
 
