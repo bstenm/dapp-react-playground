@@ -42,7 +42,7 @@ describe('getUserData', () => {
             );
             const data = await getUserData('0xUserAddress');
 
-            expect(data.address).toEqual('0xUserAddress');
+            expect(data.userAddress).toEqual('0xUserAddress');
             expect(data.votingRecord).toEqual({ Hilary: 4, Trump: 3, Jill: 0 });
       });
 });

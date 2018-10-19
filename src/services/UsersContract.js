@@ -17,7 +17,7 @@ export const getUserData = async (userAddress) => {
             r[v] = record[k].toNumber();
             return r;
       }, {});
-      return { votingRecord, address };
+      return { votingRecord, userAddress };
 };
 
 export const getContractAddress = async () => {
