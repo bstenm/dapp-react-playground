@@ -41,7 +41,7 @@ describe('(Component) UserAccount', () => {
       });
 
       test('Does not attempt to display any voting record html if none passed', () => {
-            wrapper.setProps({account: { votingRecord: null}});
+            wrapper.setProps({account: { votingRecord: null, address: '0xUserAccount'}});
             expect(wrapper.find('table').length).toEqual(0);
       });
 });
