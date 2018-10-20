@@ -8,7 +8,11 @@ import {Glyphicon} from 'react-bootstrap';
 export const UserAccount = ({account: {tokens, address, votingRecord}}) => (
       <div className="UserAccount" >
             <div className="userInfo">
-                  <div><Glyphicon glyph="user"/><span  title={address}>{address.slice(0, 15)}...</span></div>
+                  <div><Glyphicon glyph="user"/>
+                        <span  title={address}>
+                              {address.slice(0, 15)}...
+                        </span>
+                  </div>
                   <div><Glyphicon glyph="usd"/>{tokens} tokens left</div>
             </div>
             {! isEmpty(votingRecord) &&
