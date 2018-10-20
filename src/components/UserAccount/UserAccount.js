@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import {Glyphicon} from 'react-bootstrap';
 
 
-export const UserAccount = ({account: {tokens, name, votingRecord}}) => (
+export const UserAccount = ({account: {tokens, address, votingRecord}}) => (
       <div className="UserAccount" >
             <div className="userInfo">
-                  <div><Glyphicon glyph="user"/>{name}</div>
+                  <div><Glyphicon glyph="user"/>{address}</div>
                   <div><Glyphicon glyph="usd"/>{tokens} tokens left</div>
             </div>
             {! isEmpty(votingRecord) &&
@@ -30,8 +30,8 @@ export const UserAccount = ({account: {tokens, name, votingRecord}}) => (
 
 UserAccount.propTypes = {
       account: PropTypes.shape({
-            name: PropTypes.string,
             tokens: PropTypes.number,
+            address: PropTypes.string,
             votingRecord: PropTypes.object
       }).isRequired
 };

@@ -1,7 +1,5 @@
 import cf from '../config';
-import web3 from './Web3';
 import {Users} from './ContractsInstances';
-import difference from 'lodash/difference';
 
 export const registerUser = async (from) => {
       const {register} = await Users.deployed();
