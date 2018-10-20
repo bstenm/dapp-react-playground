@@ -55,7 +55,7 @@ contract Candidates {
             );
       }
 
-      function addVoteFor(bytes32 _candidate) public {
+      function addVoteFor(bytes32 _candidate) public onlyValidCandidate(_candidate) {
             candidateVotes[_candidate] += 1;
       }
 }
