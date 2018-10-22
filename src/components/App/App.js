@@ -5,6 +5,7 @@ import Voting from '../Voting';
 import Loader from '../Loader';
 import Header from '../Header';
 import Dimmer from '../Dimmer';
+import PropTypes from 'prop-types';
 import ErrorBoundary from '../ErrorBoundary';
 import {Route, Switch} from 'react-router-dom';
 import CandidateInfoList from '../CandidateInfoList';
@@ -30,6 +31,14 @@ export const App = ({ loading }) => (
                   </div>
             </ErrorBoundary>
       </div>
-)
+);
 
-export default App
+App.defaultProps = {
+      loading: false
+};
+
+App.propTypes = {
+      loading: PropTypes.bool
+};
+
+export default App;

@@ -5,20 +5,20 @@ import {getUserBalance, approveProxy} from '../services/TokenContract';
 import {addVoteFor, getUserData, registerUser, getContractAddress} from '../services/UsersContract';
 
 export default {
-      state: {},
+      state: { tokens: 0, votingRecord: {}},
       reducers: {
             setUserData (state, payload) {
                   return {...state, ...payload };
             },
 
             updateTokenCount (state, payload) {
-                  const tokens = (state.tokens || 0) + parseInt(payload, 10);
+                  const tokens = state.tokens + parseInt(payload, 10);
                   return {...state, tokens};
             },
 
             updateVotingRecord (state, name) {
                   // [TODO]: use immer
-                  const votingRecord = state.votingRecord || {};;
+                  const votingRecord = state.votingRecord;
                   const nbOfVotes = votingRecord[name] || 0;
                   const newRecord = {...votingRecord, [name]: 1 + nbOfVotes};
                   return {...state, votingRecord: newRecord};
@@ -43,7 +43,7 @@ export default {
 
             async buyTokens (val, { user: { address, tokens }}) {
                   execEffect(dispatch)(async () => {
-                        const nb = parseInt(val, 10) + (tokens || 0);
+                        const nb = parseInt(val, 10) + tokens;
                         await buy(address, val);
                         const contractAddress = await getContractAddress();
                         // allow users contract to transfer tokens on user behalf

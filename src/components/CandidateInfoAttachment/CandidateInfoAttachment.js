@@ -7,7 +7,7 @@ import {Glyphicon, ControlLabel} from 'react-bootstrap';
 
 const { allowedTypes, maxSize, previewDim } = cf.attachment;
 
-export const Component = ({
+export const CandidateInfoAttachment = ({
       file,
       onDropRejected,
       onDropAccepted
@@ -40,11 +40,16 @@ export const Component = ({
       </div>
 );
 
-Component.propTypes = {
+CandidateInfoAttachment.defaultProps = {
+      file: {},
+      onDropRejected: () => null
+};
+
+CandidateInfoAttachment.propTypes = {
       file: PropTypes.object,
       onDropRejected: PropTypes.func,
       onDropAccepted: PropTypes.func.isRequired
 };
 
-export default Component;
+export default CandidateInfoAttachment;
 

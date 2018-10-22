@@ -31,6 +31,10 @@ export const CandidateInfoFormFields = ({ isSubmitting }) => (
       </div>
 );
 
+CandidateInfoFormFields.defaultProps = {
+      isSubmitting: false,
+};
+
 CandidateInfoFormFields.propTypes = {
       isSubmitting: PropTypes.bool.isRequired
 };

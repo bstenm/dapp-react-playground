@@ -1,7 +1,7 @@
 import './Loader.css';
 import React from 'react';
 
-export const Component = () => (
+export const Loader = () => (
         <div className="Loader ">
             <div className="lds-blocks">
                   <div className="lds-blocks-1"></div>
@@ -12,5 +12,5 @@ export const Component = () => (
       </div>
 );
 
-export default Component;
+export default Loader;
 

@@ -87,16 +87,32 @@ describe('(Effects) candidates', () => {
                   addCandidateInfo.mockReset();;
             });
 
-            it('Adds the user entered info  to the state for that candicate', async () => {
+            it('Adds the user entered info  to the state for that candicate', async (done) => {
                   await dispatch.candidates.addInfo(info);
                   setTimeout(() => {
-                        expect(addInfo.mock.calls.length).toEqual(1);
-                        expect(addInfo.mock.calls[0][0]).toEqual('Hilary');
-                        expect(addInfo.mock.calls[0][1]).toEqual('title');
-                        expect(addInfo.mock.calls[0][2]).toEqual('description');
-                        expect(addInfo.mock.calls[0][3]).toEqual('filehash');
-                        expect(addInfo.mock.calls[0][4].gas).toEqual(500000);
-                        expect(addInfo.mock.calls[0][4].from).toEqual('0xUserAdress');
+                        const arg = addCandidateInfo.mock.calls[0];
+                        expect(addCandidateInfo.mock.calls.length).toEqual(1);
+                        expect(arg[0].candidate).toEqual('Hilary');
+                        expect(arg[0].title).toEqual('title');
+                        expect(arg[0].description).toEqual('description');
+                        expect(arg[0].attachmentHash).toEqual('filehash');
+                        expect(arg[1]).toEqual('0xUserAdress');
+                        done();
+                  }, 1);
+            });
+
+            it('Adds the user entered info  to the state for that candicate with attahcment hash set to null if no attahcment provided', async (done) => {
+                  const { file, ...infoNoFile } = info;
+                  await dispatch.candidates.addInfo(infoNoFile);
+                  setTimeout(() => {
+                        const arg = addCandidateInfo.mock.calls[0];
+                        expect(addCandidateInfo.mock.calls.length).toEqual(1);
+                        expect(arg[0].candidate).toEqual('Hilary');
+                        expect(arg[0].title).toEqual('title');
+                        expect(arg[0].description).toEqual('description');
+                        expect(arg[0].attachmentHash).toEqual(null);
+                        expect(arg[1]).toEqual('0xUserAdress');
+                        done();
                   }, 1);
             });
 

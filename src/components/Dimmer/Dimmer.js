@@ -1,7 +1,7 @@
 import './Dimmer.css';
 import React from 'react';
 
-export const Component = () => <div className="Dimmer" ></div>;
+export const Dimmer = () => <div className="Dimmer" ></div>;
 
-export default Component;
+export default Dimmer;
 

@@ -19,6 +19,10 @@ export const PurchaseTokens = ({value, onChange, onSubmit}) => (
             </div>
 );
 
+PurchaseTokens.defaultProps = {
+      value: ''
+};
+
 PurchaseTokens.propTypes = {
       value: PropTypes.string,
       onSubmit: PropTypes.func.isRequired,

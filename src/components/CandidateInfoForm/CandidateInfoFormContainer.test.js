@@ -32,7 +32,7 @@ describe( '(Container) CandidateInfoForm', () => {
       });
 
       // Formik prop: render
-      it( 'Passes the CandidateInfoForm component as prop  to Formik', () => {
+      it( 'Passes a cb to render the CandidateInfoForm component as prop  to Formik', () => {
             const Component = wrapper.find(Formik).props().render({});
             const withParent = <div>{Component}</div>;
             expect(shallow(withParent).find(CandidateInfoForm).length).toEqual(1);

@@ -12,6 +12,11 @@ export const CandidateInfoForm = ({ ...props, isSubmitting }) => (
       </div>
 );
 
+CandidateInfoForm.defaultProps = {
+      props: {},
+      isSubmitting: false,
+};
+
 CandidateInfoForm.propTypes = {
       props: PropTypes.object,
       isSubmitting: PropTypes.bool,

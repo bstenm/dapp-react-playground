@@ -29,6 +29,10 @@ export const CandidateList = ({candidates, voteFor, loading}) => (
       </div>
 );
 
+CandidateList.defaultProps = {
+      loading: false
+};
+
 CandidateList.propTypes = {
       loading: PropTypes.bool,
       voteFor: PropTypes.func.isRequired,

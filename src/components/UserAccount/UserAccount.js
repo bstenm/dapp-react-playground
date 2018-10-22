@@ -32,6 +32,12 @@ export const UserAccount = ({account: {tokens, address, votingRecord}}) => (
       </div>
 );
 
+UserAccount.defaultProps = {
+      account: {
+            address: ''
+      }
+};
+
 UserAccount.propTypes = {
       account: PropTypes.shape({
             tokens: PropTypes.number,

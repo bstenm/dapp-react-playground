@@ -10,7 +10,7 @@ import * as UsersContract from '../services/UsersContract';
 import * as TokenContract from '../services/TokenContract';
 import * as TokenSaleContract from '../services/TokenSaleContract';
 
-const initialState = {};
+const initialState = { tokens: 0, votingRecord: {}};
 
 const store = init({ models: { loading, alert, user }});
 const {dispatch} = store;
@@ -56,7 +56,7 @@ describe('(Sagas) user', () => {
                   await dispatch.user.login('0xUserAddress');
                   setTimeout(() => {
                         const logErrorCalls = Log.error.mock.calls;
-                        expect(store.getState().user).toEqual({});
+                        expect(store.getState().user).toEqual(initialState);
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
                               message: ms.loginFailure

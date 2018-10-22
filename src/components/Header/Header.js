@@ -20,7 +20,7 @@ const purchaseTokensPopover = onSubmit => (
       </Popover>
 );
 
-export const Component = ({buyTokens, login, logout, user}) => (
+export const Header = ({buyTokens, login, logout, user}) => (
       <Navbar inverse collapseOnSelect className="Header">
             <Navbar.Header>
                   <Navbar.Brand >
@@ -61,15 +61,14 @@ export const Component = ({buyTokens, login, logout, user}) => (
       </Navbar>
 );
 
-Component.propTypes = {
+Header.propTypes = {
       login: PropTypes.func.isRequired,
+      logout: PropTypes.func.isRequired,
       buyTokens: PropTypes.func.isRequired,
       user: PropTypes.shape({
-            tokens: PropTypes.number,
-            votingRecord: PropTypes.object,
             address: PropTypes.string
       }).isRequired
 };
 
-export default Component;
+export default Header;
 

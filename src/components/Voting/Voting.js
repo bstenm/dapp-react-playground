@@ -15,13 +15,14 @@ const Voting  = ({voteFor, candidates, loading }) => (
 )
 
 Voting.propTypes = {
-      candidates: PropTypes.arrayOf(
-            PropTypes.shape({
-                  vote: PropTypes.string,
-                  name: PropTypes.string
-            }),
-      ),
-      voteFor: PropTypes.func.isRequired
+      loading: false,
+      candidates: []
+};
+
+Voting.propTypes = {
+      voteFor: PropTypes.func.isRequired,
+      loading: PropTypes.bool,
+      candidates: PropTypes.array
 };
 
 export default Voting
