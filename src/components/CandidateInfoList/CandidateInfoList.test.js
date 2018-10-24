@@ -12,7 +12,7 @@ describe('(Component) CandidateInfoList', () => {
                         { fileHash: 'fileHash1', description: 'description1', title: 'title1' },
                         { fileHash: 'fileHash2', description: 'description2', title: 'title2' }
                   ],
-                  candidate: 'Hilary'
+                  candidate: 'Candidate'
             };
             wrapper = shallow(<CandidateInfoList {...props} />);
       });

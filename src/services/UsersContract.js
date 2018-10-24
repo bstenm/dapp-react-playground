@@ -10,9 +10,12 @@ export const registerUser = async (from) => {
 export const getUserData = async (userAddress) => {
       const  {userData} = await Users.deployed();
       const [record, address] =  await userData(userAddress);
-      if (address.slice(0, 6) === '0x0000') return {}; // * exit if not found *
-      const votingRecord = cf.candidates.reduce((r, v, k) => {
-            r[v] = record[k].toNumber();
+      if (address.slice(0, 6) === '0x0000') {
+            return { votingRecord: {}};  // * exit if not found *
+      }
+      const votingRecord = record.reduce((r, v, k) => {
+            const key = cf.candidates[k];
+            r[key] = v.toNumber();
             return r;
       }, {});
       return { votingRecord, userAddress };

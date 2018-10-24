@@ -17,7 +17,7 @@ describe('getCandidateInfo', () => {
                         ["title2", 'description2', 'file2']
                   ].map(e1 => e1.map(e2 => web3.fromUtf8(e2)))[i]
             }));
-            const infos = await getCandidateInfo('Trump');
+            const infos = await getCandidateInfo('Khalifa Bin Zayed');
             expect(infos).toEqual([
                   {title: "title1", description: 'description1', fileHash: null},
                   {title: "title2", description: 'description2', fileHash: 'file2'}
@@ -29,7 +29,7 @@ describe('getTotalVotesFor', () => {
 
       it('Returns a candidate\'s  vote data', async () => {
             mockImplementation(() => ({ candidateVotes: () => new BigNumber(3) }));
-            const vote = await getTotalVotesFor('Trump');
+            const vote = await getTotalVotesFor('Khalifa Bin Zayed');
             expect(vote).toEqual('3');
       });
 });

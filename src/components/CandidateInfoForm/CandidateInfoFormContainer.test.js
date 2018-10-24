@@ -14,7 +14,7 @@ describe( '(Container) CandidateInfoForm', () => {
 
       beforeEach(() => {
             props = {
-                  match: { params: { candidate: 'Hilary'}},
+                  match: { params: { candidate: 'Candidate'}},
                   error: jest.fn(),
                   addInfo: jest.fn(),
             };
@@ -48,7 +48,7 @@ describe( '(Container) CandidateInfoForm', () => {
             const args = { description: 'description', title: 'title', file: 'file' }
             wrapper.find(Formik).props().onSubmit(args);
             expect(props.addInfo.mock.calls.length).toEqual(1);
-            expect(props.addInfo.mock.calls[0][0]).toEqual({ ...args, candidate: 'Hilary' });
+            expect(props.addInfo.mock.calls[0][0]).toEqual({ ...args, candidate: 'Candidate' });
       });
 
       // CandidateInfoForm prop: file

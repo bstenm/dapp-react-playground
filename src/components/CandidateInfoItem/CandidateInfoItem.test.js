@@ -9,8 +9,7 @@ describe('(Component) CandidateInfoItem', () => {
 
       beforeEach(() => {
             props = {
-                  item: { fileHash: 'fileHash', description: 'description', title: 'title' },
-                  candidate: 'Hilary'
+                  item: { fileHash: 'fileHash', description: 'description', title: 'title' }
             };
             wrapper = shallow(<CandidateInfoItem {...props} />);
       });

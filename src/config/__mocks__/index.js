@@ -4,7 +4,7 @@ const token = {
       priceInWei: 1000000000
 };
 
-const candidates =  ['Hilary','Trump', 'Jill'];
+const candidates =  ['Asif Ali Zardari','Khalifa Bin Zayed', 'Petro Poroshenko'];
 
 const routes = {
       home: "/",

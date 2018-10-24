@@ -13,7 +13,7 @@ describe( '(Component) Header', () => {
 
       beforeEach(() => {
             props = {
-                  user: {tokens: 10, address: '0xUserAddress', votingRecord: {Trump: 100}},
+                  user: {tokens: 10, address: '0xUserAddress', votingRecord: {'Khalifa Bin Zayed': 100}},
                   login: jest.fn(),
                   logout: jest.fn(),
                   buyTokens: jest.fn()

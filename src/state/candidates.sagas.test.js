@@ -20,12 +20,6 @@ jest.mock('../services/CandidatesContract');
 
 const {getTotalVotesFor, getCandidateInfo, addCandidateInfo, addVoteFor} = CandidatesContract;
 
-const initialState = [
-      {name: 'Hilary', vote: 0, info: []},
-      {name: 'Trump', vote: 0, info: []},
-      {name: 'Jill', vote: 0, info: []}
-];
-
 describe('(Effects) candidates', () => {
       let logErrorSpy;
 
@@ -45,10 +39,10 @@ describe('(Effects) candidates', () => {
 
             it('Adds the info fectched to the state for that candicate', async (done) => {
                   getCandidateInfo.mockImplementation(() => ['candidate info']);
-                  await dispatch.candidates.fetchInfo('Hilary');
+                  await dispatch.candidates.fetchInfo('Asif Ali Zardari');
                   setTimeout(() => {
                         const state = store.getState().candidates;
-                        const {info} = state.find(e => e.name === 'Hilary');
+                        const {info} = state.find(e => e.name === 'Asif Ali Zardari');
                         expect(info).toEqual(['candidate info']);
                         done();
                   }, 1);
@@ -56,7 +50,7 @@ describe('(Effects) candidates', () => {
 
             it('Dispatches an alert and logs when error thrown', async (done) => {
                   getCandidateInfo.mockImplementation(() => { throw new Error('error')});
-                  await dispatch.candidates.fetchInfo('Hilary');
+                  await dispatch.candidates.fetchInfo('Asif Ali Zardari');
                   setTimeout(() => {
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
@@ -73,7 +67,7 @@ describe('(Effects) candidates', () => {
             let info = {
                   file: 'file',
                   title: 'title',
-                  candidate: 'Hilary',
+                  candidate: 'Asif Ali Zardari',
                   description: 'description'
             };
 
@@ -92,7 +86,7 @@ describe('(Effects) candidates', () => {
                   setTimeout(() => {
                         const arg = addCandidateInfo.mock.calls[0];
                         expect(addCandidateInfo.mock.calls.length).toEqual(1);
-                        expect(arg[0].candidate).toEqual('Hilary');
+                        expect(arg[0].candidate).toEqual('Asif Ali Zardari');
                         expect(arg[0].title).toEqual('title');
                         expect(arg[0].description).toEqual('description');
                         expect(arg[0].attachmentHash).toEqual('filehash');
@@ -107,7 +101,7 @@ describe('(Effects) candidates', () => {
                   setTimeout(() => {
                         const arg = addCandidateInfo.mock.calls[0];
                         expect(addCandidateInfo.mock.calls.length).toEqual(1);
-                        expect(arg[0].candidate).toEqual('Hilary');
+                        expect(arg[0].candidate).toEqual('Asif Ali Zardari');
                         expect(arg[0].title).toEqual('title');
                         expect(arg[0].description).toEqual('description');
                         expect(arg[0].attachmentHash).toEqual(null);
@@ -145,13 +139,13 @@ describe('(Effects) candidates', () => {
             });
 
             it('Sets the votes fectched for all  candicates to the state', async (done) => {
-                  getTotalVotesFor.mockImplementation(name => ({ Hilary: 2, Trump: 3 }[name]));
+                  getTotalVotesFor.mockImplementation(name => ({ 'Asif Ali Zardari': 2, 'Khalifa Bin Zayed': 3 }[name]));
                   await dispatch.candidates.fetchVotes();
                   setTimeout(() => {
                         const state = store.getState().candidates;
                         const vote = name => state.find(e => e.name === name).vote;
-                        expect(vote('Hilary')).toEqual(2);
-                        expect(vote('Trump')).toEqual(3);
+                        expect(vote('Asif Ali Zardari')).toEqual(2);
+                        expect(vote('Khalifa Bin Zayed')).toEqual(3);
                         done();
                   }, 1);
             });
@@ -184,22 +178,22 @@ describe('(Effects) candidates', () => {
             });
 
             it('Adds the votes entered by user to the state for this candidate', async (done) => {
-                  getTotalVotesFor.mockImplementation(name => ({ Hilary: 2, Trump: 4 }[name]));
-                  await dispatch.candidates.addVote('Trump');
+                  getTotalVotesFor.mockImplementation(name => ({ 'Asif Ali Zardari': 2, 'Khalifa Bin Zayed': 4 }[name]));
+                  await dispatch.candidates.addVote('Khalifa Bin Zayed');
                   setTimeout(() => {
                         const state = store.getState().candidates;
-                        const {vote} = state.find(e => e.name === 'Trump');
+                        const {vote} = state.find(e => e.name === 'Khalifa Bin Zayed');
                         expect(vote).toEqual(4);
                         // [TODO]: why calls length is 0?
                         expect(addVoteFor.mock.calls.length).toEqual(1);
-                        expect(addVoteFor.mock.calls[0][0] ).toEqual('Trump');
+                        expect(addVoteFor.mock.calls[0][0] ).toEqual('Khalifa Bin Zayed');
                         done();
                   }, 1);
             });
 
             it('Dispatches an alert when error thrown', async (done) => {
                   addVoteFor.mockImplementation(() => {throw new Error('error')});
-                  await dispatch.candidates.addVote('Trump');
+                  await dispatch.candidates.addVote('Khalifa Bin Zayed');
                   setTimeout(() => {
                         expect(store.getState().alert).toEqual({
                               type: 'danger',

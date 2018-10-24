@@ -11,9 +11,9 @@ describe('(Component) UserAccount', () => {
                         tokens: 10,
                         address: '0xUserAddress',
                         votingRecord: {
-                              Hilary: -10,
-                              Jill: 100,
-                              Trump: 0
+                              'Asif Ali Zardari': -10,
+                              'Petro Poroshenko' : 100,
+                              'Khalifa Bin Zayed': 0
                         }
                   }
             };
@@ -36,7 +36,7 @@ describe('(Component) UserAccount', () => {
             const table = wrapper.find('table');
             expect(table.length).toEqual(1);
             expect(table.find('tr').length).toEqual(3);
-            expect(wrapper.find('tr').at(1).find('td').at(0).text()).toContain('Jill');
+            expect(wrapper.find('tr').at(1).find('td').at(0).text()).toContain('Petro Poroshenko');
             expect(wrapper.find('tr').at(1).find('td').at(1).text()).toEqual("100");
       });
 

@@ -10,7 +10,7 @@ const gas = {
       registration: 150000,
 };
 
-const candidates =  ['Hilary','Trump', 'Jill'];
+const candidates =  ['Asif Ali Zardari','Khalifa Bin Zayed', 'Petro Poroshenko'];
 
 const routes = {
       home: "/",

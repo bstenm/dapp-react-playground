@@ -1,3 +1,4 @@
+import cf from '../config';
 import web3 from './Web3';
 import {Users} from './ContractsInstances';
 import {BigNumber} from 'bignumber.js';
@@ -23,10 +24,10 @@ describe('registerUser', () => {
 
 describe('getUserData', () => {
 
-      it('Returns empty object if no data found fot that user', async () => {
+      it('Returns empty object for voting record if no data found fot that user', async () => {
             mockImplementation(() => ({ userData: () => [null, '0x0000']}));
             const data = await getUserData('0xUserAddress');
-            expect(data).toEqual({});
+            expect(data).toEqual({ votingRecord: {}});
       });
 
       it('Fetches the user data from the blockchain', async () => {
@@ -40,10 +41,10 @@ describe('getUserData', () => {
                         '0xUserAddress'
                   ]})
             );
+            const {candidates} = cf;
             const data = await getUserData('0xUserAddress');
-
             expect(data.userAddress).toEqual('0xUserAddress');
-            expect(data.votingRecord).toEqual({ Hilary: 4, Trump: 3, Jill: 0 });
+            expect(data.votingRecord).toEqual({ [candidates[0]]: 4, [candidates[1]]: 3, [candidates[2]] : 0 });
       });
 });
 
