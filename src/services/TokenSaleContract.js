@@ -1,5 +1,5 @@
-import {token} from '../config';
-import {TokenSale} from './ContractsInstances';
+import { token } from '../config';
+import { TokenSale } from './ContractsInstances';
 
 export const buy = async (from, val) => {
       const contract = await TokenSale.deployed();
@@ -11,4 +11,4 @@ export const buy = async (from, val) => {
 export const getContractAddress = async () => {
       const contract = await TokenSale.deployed();
       return contract.address;
-}
+};

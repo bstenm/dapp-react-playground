@@ -1,36 +1,36 @@
 import './CandidateList.css';
 import React from 'react';
 import sortBy from 'lodash/sortBy';
-import {Table} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import CandidateListRow from '../CandidateListRow';
 
-export const CandidateList = ({candidates, voteFor, loading}) => (
-      <div className="CandidateList" >
-            <Table>
-                  <thead>
-                        <tr>
-                              <th>Candidate</th>
+export const CandidateList = ({ candidates, voteFor, loading }) => (
+  <div className="CandidateList">
+        <Table>
+              <thead>
+            <tr>
+                  <th>Candidate</th>
                               <th>Votes</th>
-                              <th></th>
+                              <th />
                         </tr>
                   </thead>
-                  <tbody>
-                  {sortBy(candidates, ['name']).map((candidate, i) => (
-                        <CandidateListRow
-                              key={i}
-                              loading={loading}
-                              voteFor={voteFor}
-                              candidate={candidate}
-                        />
-                  ))}
+              <tbody>
+                    {sortBy(candidates, ['name']).map((candidate, i) => (
+                          <CandidateListRow
+                                key={i}
+                                loading={loading}
+                                voteFor={voteFor}
+                                candidate={candidate}
+                              />
+                        ))}
                   </tbody>
             </Table>
       </div>
 );
 
 CandidateList.defaultProps = {
-      loading: false
+      loading: false,
 };
 
 CandidateList.propTypes = {
@@ -40,4 +40,3 @@ CandidateList.propTypes = {
 };
 
 export default CandidateList;
-

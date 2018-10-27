@@ -3,22 +3,29 @@ import candidates from './candidates';
 const { getInfoFor } = candidates.selectors;
 
 const data = [
-      { name: 'Asif Ali Zardari', vote: '0', info: [
-            { title: 'title1', description: 'description1' },
-            { title: 'title2', description: 'description2' },
-      ]},
-      { name: 'Petro Poroshenko', vote: '0', info: [
-            { title: 'title3', description: 'description3' }
-      ]},
-      { name: 'Khalifa Bin Zayed', vote: '0', info: []},
+      {
+            name: 'Asif Ali Zardari',
+            vote: '0',
+            info: [
+                  { title: 'title1', description: 'description1' },
+                  { title: 'title2', description: 'description2' },
+            ],
+      },
+      {
+            name: 'Petro Poroshenko',
+            vote: '0',
+            info: [{ title: 'title3', description: 'description3' }],
+      },
+      { name: 'Khalifa Bin Zayed', vote: '0', info: [] },
 ];
 
 describe('(Selector) candidates', () => {
-
       it('(getInfoFor) Returns the infos for a specific candidate', () => {
-            const result = getInfoFor()({ candidates: data })('Petro Poroshenko');
+            const result = getInfoFor()({ candidates: data })(
+                  'Petro Poroshenko',
+            );
             expect(result).toEqual([
-                  { title: 'title3', description: 'description3' }
+                  { title: 'title3', description: 'description3' },
             ]);
       });
 

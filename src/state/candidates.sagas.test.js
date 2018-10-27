@@ -1,7 +1,7 @@
+import { init } from '@rematch/core';
 import cf from '../config';
 import Log from '../services/Log';
 import user from './user';
-import {init} from '@rematch/core';
 import alert from './alert';
 import web3 from '../services/Web3';
 import * as ms from '../config/messages';
@@ -11,14 +11,26 @@ import candidates from './candidates';
 import * as ipfsLib from '../libs/ipfsLib';
 import * as CandidatesContract from '../services/CandidatesContract';
 
-const store = init({ models: { candidates, loading, alert, user }});
+const store = init({
+      models: {
+            candidates,
+            loading,
+            alert,
+            user,
+      },
+});
 const { dispatch } = store;
 
 jest.mock('../libs/ipfsLib');
 jest.mock('../services/Log');
 jest.mock('../services/CandidatesContract');
 
-const {getTotalVotesFor, getCandidateInfo, addCandidateInfo, addVoteFor} = CandidatesContract;
+const {
+      getTotalVotesFor,
+      getCandidateInfo,
+      addCandidateInfo,
+      addVoteFor,
+} = CandidatesContract;
 
 describe('(Effects) candidates', () => {
       let logErrorSpy;
@@ -32,7 +44,6 @@ describe('(Effects) candidates', () => {
       });
 
       describe('fetchInfo', () => {
-
             afterEach(() => {
                   getCandidateInfo.mockReset();
             });
@@ -42,50 +53,58 @@ describe('(Effects) candidates', () => {
                   await dispatch.candidates.fetchInfo('Asif Ali Zardari');
                   setTimeout(() => {
                         const state = store.getState().candidates;
-                        const {info} = state.find(e => e.name === 'Asif Ali Zardari');
+                        const { info } = state.find(
+                              e => e.name === 'Asif Ali Zardari',
+                        );
                         expect(info).toEqual(['candidate info']);
                         done();
                   }, 1);
             });
 
             it('Dispatches an alert and logs when error thrown', async (done) => {
-                  getCandidateInfo.mockImplementation(() => { throw new Error('error')});
+                  getCandidateInfo.mockImplementation(() => {
+                        throw new Error('error');
+                  });
                   await dispatch.candidates.fetchInfo('Asif Ali Zardari');
                   setTimeout(() => {
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
-                              message: ms.retrieveDataFailure
+                              message: ms.retrieveDataFailure,
                         });
-                        expect(Log.error.mock.calls.length).toEqual(1);
-                        expect(Log.error.mock.calls[0][0].message ).toEqual('error');
+                        expect(Log.error.mock.calls).toHaveLength(1);
+                        expect(Log.error.mock.calls[0][0].message).toEqual(
+                              'error',
+                        );
                         done();
                   }, 1);
             });
       });
 
       describe('addInfo', () => {
-            let info = {
+            const info = {
                   file: 'file',
                   title: 'title',
                   candidate: 'Asif Ali Zardari',
-                  description: 'description'
+                  description: 'description',
             };
 
             beforeEach(() => {
-                  ipfsLib.uploadToIpfs.mockImplementation(file => file + 'hash');
+                  ipfsLib.uploadToIpfs.mockImplementation(
+                        file => `${file}hash`,
+                  );
                   // we need to have a user in the state
                   dispatch.user.setUserData({ address: '0xUserAdress' });
             });
 
             afterEach(() => {
-                  addCandidateInfo.mockReset();;
+                  addCandidateInfo.mockReset();
             });
 
             it('Adds the user entered info  to the state for that candicate', async (done) => {
                   await dispatch.candidates.addInfo(info);
                   setTimeout(() => {
                         const arg = addCandidateInfo.mock.calls[0];
-                        expect(addCandidateInfo.mock.calls.length).toEqual(1);
+                        expect(addCandidateInfo.mock.calls).toHaveLength(1);
                         expect(arg[0].candidate).toEqual('Asif Ali Zardari');
                         expect(arg[0].title).toEqual('title');
                         expect(arg[0].description).toEqual('description');
@@ -100,7 +119,7 @@ describe('(Effects) candidates', () => {
                   await dispatch.candidates.addInfo(infoNoFile);
                   setTimeout(() => {
                         const arg = addCandidateInfo.mock.calls[0];
-                        expect(addCandidateInfo.mock.calls.length).toEqual(1);
+                        expect(addCandidateInfo.mock.calls).toHaveLength(1);
                         expect(arg[0].candidate).toEqual('Asif Ali Zardari');
                         expect(arg[0].title).toEqual('title');
                         expect(arg[0].description).toEqual('description');
@@ -111,15 +130,19 @@ describe('(Effects) candidates', () => {
             });
 
             it('Dispatches an alert when error thrown', async (done) => {
-                  addCandidateInfo.mockImplementation(() => {throw new Error('error')});
+                  addCandidateInfo.mockImplementation(() => {
+                        throw new Error('error');
+                  });
                   await dispatch.candidates.addInfo(info);
                   setTimeout(() => {
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
-                              message: ms.notSaved
+                              message: ms.notSaved,
                         });
-                        expect(Log.error.mock.calls.length).toEqual(1);
-                        expect(Log.error.mock.calls[0][0].message ).toEqual('error');
+                        expect(Log.error.mock.calls).toHaveLength(1);
+                        expect(Log.error.mock.calls[0][0].message).toEqual(
+                              'error',
+                        );
                         done();
                   }, 1);
             });
@@ -127,19 +150,25 @@ describe('(Effects) candidates', () => {
             it('Redirests the user to the voting page', async () => {
                   jest.spyOn(history, 'push');
                   await dispatch.candidates.addInfo(info);
-                  expect(history.push.mock.calls.length).toEqual(1);
-                  expect(history.push.mock.calls[0][0] ).toEqual(cf.routes.voting);
+                  expect(history.push.mock.calls).toHaveLength(1);
+                  expect(history.push.mock.calls[0][0]).toEqual(
+                        cf.routes.voting,
+                  );
             });
       });
 
       describe('fetchVotes', () => {
-
             afterEach(() => {
                   getTotalVotesFor.mockReset();
             });
 
             it('Sets the votes fectched for all  candicates to the state', async (done) => {
-                  getTotalVotesFor.mockImplementation(name => ({ 'Asif Ali Zardari': 2, 'Khalifa Bin Zayed': 3 }[name]));
+                  getTotalVotesFor.mockImplementation(
+                        name => ({
+                              'Asif Ali Zardari': 2,
+                              'Khalifa Bin Zayed': 3,
+                        }[name]),
+                  );
                   await dispatch.candidates.fetchVotes();
                   setTimeout(() => {
                         const state = store.getState().candidates;
@@ -151,25 +180,31 @@ describe('(Effects) candidates', () => {
             });
 
             it('Dispatches an alert when error thrown', async (done) => {
-                  getTotalVotesFor.mockImplementation(() => {throw new Error('error')});
+                  getTotalVotesFor.mockImplementation(() => {
+                        throw new Error('error');
+                  });
                   await dispatch.candidates.fetchVotes();
                   setTimeout(() => {
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
-                              message: ms.retrieveDataFailure
+                              message: ms.retrieveDataFailure,
                         });
-                        expect(Log.error.mock.calls.length).toEqual(1);
-                        expect(Log.error.mock.calls[0][0].message ).toEqual('error');
+                        expect(Log.error.mock.calls).toHaveLength(1);
+                        expect(Log.error.mock.calls[0][0].message).toEqual(
+                              'error',
+                        );
                         done();
                   }, 1);
             });
       });
 
       describe('addVotes', () => {
-
             beforeEach(async () => {
                   // we need to have a user in the state
-                  await dispatch.user.setUserData({ address: '0xUserAdress', name: 'username' });
+                  await dispatch.user.setUserData({
+                        address: '0xUserAdress',
+                        name: 'username',
+                  });
             });
 
             afterEach(() => {
@@ -178,29 +213,42 @@ describe('(Effects) candidates', () => {
             });
 
             it('Adds the votes entered by user to the state for this candidate', async (done) => {
-                  getTotalVotesFor.mockImplementation(name => ({ 'Asif Ali Zardari': 2, 'Khalifa Bin Zayed': 4 }[name]));
+                  getTotalVotesFor.mockImplementation(
+                        name => ({
+                              'Asif Ali Zardari': 2,
+                              'Khalifa Bin Zayed': 4,
+                        }[name]),
+                  );
                   await dispatch.candidates.addVote('Khalifa Bin Zayed');
                   setTimeout(() => {
                         const state = store.getState().candidates;
-                        const {vote} = state.find(e => e.name === 'Khalifa Bin Zayed');
+                        const { vote } = state.find(
+                              e => e.name === 'Khalifa Bin Zayed',
+                        );
                         expect(vote).toEqual(4);
                         // [TODO]: why calls length is 0?
-                        expect(addVoteFor.mock.calls.length).toEqual(1);
-                        expect(addVoteFor.mock.calls[0][0] ).toEqual('Khalifa Bin Zayed');
+                        expect(addVoteFor.mock.calls).toHaveLength(1);
+                        expect(addVoteFor.mock.calls[0][0]).toEqual(
+                              'Khalifa Bin Zayed',
+                        );
                         done();
                   }, 1);
             });
 
             it('Dispatches an alert when error thrown', async (done) => {
-                  addVoteFor.mockImplementation(() => {throw new Error('error')});
+                  addVoteFor.mockImplementation(() => {
+                        throw new Error('error');
+                  });
                   await dispatch.candidates.addVote('Khalifa Bin Zayed');
                   setTimeout(() => {
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
-                              message: ms.notEnoughFunds
+                              message: ms.notEnoughFunds,
                         });
-                        expect(logErrorSpy.mock.calls.length).toEqual(1);
-                        expect(Log.error.mock.calls[0][0].message ).toEqual('error');
+                        expect(logErrorSpy.mock.calls).toHaveLength(1);
+                        expect(Log.error.mock.calls[0][0].message).toEqual(
+                              'error',
+                        );
                         done();
                   }, 1);
             });

@@ -1,7 +1,7 @@
-export const  switchCase = cases => {
+export const switchCase = (cases) => {
       let res;
-      for (let e of cases) {
-            if (e.case) return res = e.then();
+      for (const e of cases) {
+            if (e.case) return (res = e.then());
       }
       return res;
 };

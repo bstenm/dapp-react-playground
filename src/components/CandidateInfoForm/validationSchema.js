@@ -1,5 +1,5 @@
-import * as ms from '../../config/messages';
 import * as yup from 'yup';
+import * as ms from '../../config/messages';
 
 export default yup.object({
       title: yup
@@ -11,5 +11,5 @@ export default yup.object({
             .string()
             .min(20)
             .max(500)
-            .required(ms.requiredField)
+            .required(ms.requiredField),
 });

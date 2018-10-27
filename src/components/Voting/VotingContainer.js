@@ -1,39 +1,37 @@
-import React from 'react'
-import * as ms from '../../config/messages';
+import React from "react";
 import {connect} from 'react-redux';
-import Component from './Voting';
+import * as ms from '../../config/messages';
+import Component from "./Voting";
 
 export class VotingContainer extends React.Component {
+      constructor(props) {
+    super(props);
+    this.props.dispatch.candidates.fetchVotes();
+  }
 
-      constructor (props) {
-            super(props)
-            this.props.dispatch.candidates.fetchVotes();
-      }
-
-      voteFor = name => {
-            const {loading, user, dispatch} = this.props;
-            const {error} = dispatch.alert;
-            if (loading) return;
-            if (user.tokens < 1) {
-                  return error(ms.notEnoughFunds);
-            }
-            dispatch.candidates.addVote(name);
-            dispatch.user.addVoteToRecord(name);
-      }
+      voteFor = (name) => {
+        const { loading, user, dispatch } = this.props;
+        const { error } = dispatch.alert;
+        if (loading) return;
+        if (user.tokens < 1) {
+          return error(ms.notEnoughFunds);
+        }
+        dispatch.candidates.addVote(name);
+        dispatch.user.addVoteToRecord(name);
+      };
 
       render() {
-            const {candidates, loading} = this.props;
-            return (
-                  <Component
-                        voteFor={this.voteFor}
-                        candidates={candidates}
-                        loading={loading}
+        const { candidates, loading } = this.props;
+        return (
+              <Component
+                    voteFor={this.voteFor}
+                    candidates={candidates}
+                    loading={loading}
                   />
-            );
+        );
       }
-};
+}
 
-export default connect(
-      ({ user, loading, candidates }) =>
-      ({ user, loading, candidates })
+export default connect(({ user, loading, candidates }) => ({
+    ({ user, loading, candidates }),
 )(VotingContainer);

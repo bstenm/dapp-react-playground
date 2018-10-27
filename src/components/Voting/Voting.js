@@ -3,26 +3,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CandidateList from '../CandidateList';
 
-
-const Voting  = ({voteFor, candidates, loading }) => (
-      <div className="Voting">
-            <CandidateList
-                  voteFor={voteFor}
-                  candidates={candidates}
-                  loading={loading}
-            />
+const Voting = ({ voteFor, candidates, loading }) => (
+  <div className="Voting">
+        <CandidateList
+      voteFor={voteFor}
+      candidates={candidates}
+      loading={loading}
+    />
       </div>
-)
+);
 
 Voting.propTypes = {
       loading: false,
-      candidates: []
+      candidates: [],
 };
 
 Voting.propTypes = {
       voteFor: PropTypes.func.isRequired,
       loading: PropTypes.bool,
-      candidates: PropTypes.array
+      candidates: PropTypes.array,
 };
 
-export default Voting
+export default Voting;

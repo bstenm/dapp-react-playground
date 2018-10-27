@@ -1,18 +1,21 @@
 import cf from '../config';
 import web3 from './Web3';
-import {Candidates} from './ContractsInstances';
+import { Candidates } from './ContractsInstances';
 
 export const getCandidateInfo = async (name) => {
-      let i = 0, raw, data, info = [];
-      const {getCandidateInfoAt} = await Candidates.deployed();
+      let i = 0;
+      let raw;
+      let data;
+      const info = [];
+      const { getCandidateInfoAt } = await Candidates.deployed();
       do {
             raw = await getCandidateInfoAt(name, i++);
             data = (raw || []).map(e => web3.toUtf8(e));
-            const [ title, description, ipfsHash ] = data;
+            const [title, description, ipfsHash] = data;
             const fileHash = ipfsHash === 'null' ? null : ipfsHash;
             if (title) info.push({ title, description, fileHash });
             // data[0] is title
-      } while (!! data[0]);
+      } while (data[0]);
       return info;
 };
 
@@ -23,13 +26,18 @@ export const getTotalVotesFor = async (name) => {
 };
 
 export const addCandidateInfo = async (payload, from) => {
-      const { candidate, title, description, attachmentHash } = payload;
+      const {
+            candidate, title, description, attachmentHash,
+      } = payload;
       const { addInfo } = await Candidates.deployed();
       const gas = cf.gas.addInfo;
-      await addInfo(candidate, title, description, attachmentHash, {from, gas});
+      await addInfo(candidate, title, description, attachmentHash, {
+            from,
+            gas,
+      });
 };
 
 export const addVoteFor = async (candidate, from) => {
       const ct = await Candidates.deployed();
-      await ct.addVoteFor(candidate, {from});
+      await ct.addVoteFor(candidate, { from });
 };

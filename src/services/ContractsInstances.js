@@ -1,5 +1,5 @@
-import web3 from '../services/Web3';
 import contract from 'truffle-contract';
+import web3 from './Web3';
 import usersArtifacts from '../contracts/Users.json';
 import tokenArtifacts from '../contracts/CorrToken.json';
 import tokenSaleArtifacts from '../contracts/CorrTokenSale.json';

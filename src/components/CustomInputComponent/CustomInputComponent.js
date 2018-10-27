@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {capitalize} from 'lodash';
-import {FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
+import { capitalize } from 'lodash';
+import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 
 const CustomInputComponent = ({
       type,
       field: { value, name },
       form: { handleChange, errors, touched },
 }) => (
-      <FormGroup controlId={name}>
-            <ControlLabel>{capitalize(name)}</ControlLabel>
-            <FormControl
-                  value={value}
-                  onChange={handleChange}
-                  componentClass={type}
+  <FormGroup controlId={name}>
+        <ControlLabel>{capitalize(name)}</ControlLabel>
+        <FormControl
+              value={value}
+              onChange={handleChange}
+              componentClass={type}
             />
-            {errors[name] && touched[name] && (
+        {errors[name]
+                  && touched[name] && (
                   <div className="input-error">{errors[name]}</div>
             )}
       </FormGroup>
@@ -31,8 +32,7 @@ CustomInputComponent.propTypes = {
             errors: PropTypes.object,
             touched: PropTypes.object,
             handleChange: PropTypes.func,
-      }).isRequired
+      }).isRequired,
 };
 
 export default CustomInputComponent;
-

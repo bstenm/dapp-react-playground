@@ -2,7 +2,6 @@ import ms from '../config/messages';
 import loading from './loading';
 
 describe('(Reducer) loading', () => {
-
       it('(start) Sets the loading state to true', () => {
             const newState = loading.reducers.start();
             expect(newState).toEqual(true);
