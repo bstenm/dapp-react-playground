@@ -10,11 +10,11 @@ export const CandidateInfoList = ({ list , candidate }) => (
             { ! list.length ?
             <div>No info entered yet for {candidate}</div> :
             <ul>
-            {list.map((item, i) => (
+                  {list.map((item, i) => (
                   <li key={i}>
                         <CandidateInfoItem item={item} />
                   </li>
-            ))}
+                  ))}
             </ul>
             }
       </div>
