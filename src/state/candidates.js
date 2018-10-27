@@ -23,7 +23,7 @@ export default {
                   return state.map( e => {
                         const src = data.find(k => k.name === e.name);
                         return Object.assign({}, e, src);
-                  });
+                  })
             },
 
             updateInfo: (state, { name, info }) => {

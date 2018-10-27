@@ -45,5 +45,8 @@
         "statements": 90
       }
     }
+  },
+  "prettier": {
+    "tabWidth": 6
   }
 }
