@@ -20,6 +20,7 @@
     "yup": "0.25.1"
   },
   "scripts": {
+    "prettier": "prettier --write src/**/*.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
