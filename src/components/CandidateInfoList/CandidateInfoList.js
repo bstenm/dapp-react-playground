@@ -1,5 +1,6 @@
 import './CandidateInfoList.css';
 import React from 'react';
+import asPage from '../../hoc/AsPage';
 import PropTypes from 'prop-types';
 import CandidateInfoItem from '../CandidateInfoItem';
 
@@ -28,5 +29,5 @@ CandidateInfoList.propTypes = {
       candidate: PropTypes.string.isRequired
 };
 
-export default CandidateInfoList;
+export default asPage(CandidateInfoList);
 
