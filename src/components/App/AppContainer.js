@@ -16,8 +16,8 @@ export class AppContainer extends React.Component {
 
       render() {
             return (
-              <Router history={customHistory}>
-                    <App {...this.props} />
+                  <Router history={customHistory}>
+                        <App {...this.props} />
                   </Router>
             );
       }

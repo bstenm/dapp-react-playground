@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Dropzone from 'react-dropzone';
-import { Glyphicon, ControlLabel } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import CandidateInfoAttachment from './CandidateInfoAttachment';
 
 jest.mock('../../config');
 
-const attachment = require('../../config').attachment;
+const { attachment } = require('../../config');
 
 describe('(Component) CandidateInfoAttachment', () => {
       let wrapper;
@@ -16,7 +16,7 @@ describe('(Component) CandidateInfoAttachment', () => {
             props = {
                   file: { name: 'name', preview: 'preview' },
                   onDropRejected: jest.fn(),
-                  onDropAccepted: jest.fn(),
+                  onDropAccepted: jest.fn()
             };
             wrapper = shallow(<CandidateInfoAttachment {...props} />);
       });

@@ -8,7 +8,10 @@ module.exports = {
 	extends: [
             'airbnb',
             'plugin:jest/recommended',
-            'jest-enzyme'
+		'jest-enzyme',
+		"prettier",
+		"prettier/react",
+		"prettier/standard"
       ],
 	plugins: [
 		'babel',
@@ -26,7 +29,13 @@ module.exports = {
 		}
 	},
 	rules: {
-            "indent": ["error", 6],
-            "prettier/prettier": "error",
+		"no-param-reassign": "off",
+            'comma-dangle': ['error', 'never'],
+		'no-plusplus': 'off',
+		'indent': ['error', 6],
+		"react/jsx-filename-extension": "off",
+		"react/forbid-prop-types": "off",
+		"react/destructuring-assignment": "off",
+            'prettier/prettier': 'error'
 	}
 };

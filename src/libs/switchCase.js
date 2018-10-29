@@ -1,7 +1,9 @@
-export const switchCase = (cases) => {
+export default cases => {
       let res;
-      for (const e of cases) {
-            if (e.case) return (res = e.then());
-      }
+      cases.forEach(e => {
+            if (e.case && !res) {
+                  res = e.then();
+            }
+      });
       return res;
 };

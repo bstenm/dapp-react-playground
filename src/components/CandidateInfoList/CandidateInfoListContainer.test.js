@@ -11,7 +11,7 @@ describe('(Container) CandidateInfoList', () => {
             props = {
                   match: { params: { candidate: 'Khalifa Bin Zayed' } },
                   fetchInfo: jest.fn(),
-                  getInfoFor: jest.fn().mockImplementation(() => ['info']),
+                  getInfoFor: jest.fn().mockImplementation(() => ['info'])
             };
             wrapper = shallow(<CandidateInfoListContainer {...props} />);
       });
@@ -19,7 +19,7 @@ describe('(Container) CandidateInfoList', () => {
       it("Gets the candidate's info on mount", () => {
             expect(props.fetchInfo.mock.calls).toHaveLength(1);
             expect(props.fetchInfo.mock.calls[0][0]).toEqual(
-                  'Khalifa Bin Zayed',
+                  'Khalifa Bin Zayed'
             );
       });
 
@@ -30,7 +30,7 @@ describe('(Container) CandidateInfoList', () => {
       //  prop: candidate
       it('Passes candidate data as prop to  component', () => {
             expect(wrapper.find(CandidateInfoList).props().candidate).toEqual(
-                  'Khalifa Bin Zayed',
+                  'Khalifa Bin Zayed'
             );
       });
 
@@ -38,10 +38,10 @@ describe('(Container) CandidateInfoList', () => {
       it('Passes the list of the candidate info returned by the selector as prop to  component', () => {
             expect(props.getInfoFor.mock.calls).toHaveLength(1);
             expect(props.getInfoFor.mock.calls[0][0]).toEqual(
-                  'Khalifa Bin Zayed',
+                  'Khalifa Bin Zayed'
             );
             expect(wrapper.find(CandidateInfoList).props().list).toEqual([
-                  'info',
+                  'info'
             ]);
       });
 });

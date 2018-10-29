@@ -1,4 +1,3 @@
-
 import { init } from '@rematch/core';
 import Log from '../services/Log';
 import user from './user';
@@ -20,7 +19,7 @@ const {
       getUserData,
       registerUser,
       getContractAddress,
-      addVoteFor,
+      addVoteFor
 } = UsersContract;
 
 jest.mock('../services/Log');
@@ -32,7 +31,7 @@ describe('(Sagas) user', () => {
       const userData = {
             userAddress: '0XUserAddress',
             votingRecord: { Candidate1: 4 },
-            tokens: 2,
+            tokens: 2
       };
 
       beforeEach(() => {
@@ -54,7 +53,7 @@ describe('(Sagas) user', () => {
                   await dispatch.user.logout();
             });
 
-            it('Dispatches an alert when error thrown', async (done) => {
+            it('Dispatches an alert when error thrown', async done => {
                   getUserData.mockImplementation(() => {
                         throw new Error('error');
                   });
@@ -64,7 +63,7 @@ describe('(Sagas) user', () => {
                         expect(store.getState().user).toEqual(initialState);
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
-                              message: ms.loginFailure,
+                              message: ms.loginFailure
                         });
                         expect(logErrorCalls).toHaveLength(1);
                         expect(logErrorCalls[0][0].message).toEqual('error');
@@ -72,7 +71,7 @@ describe('(Sagas) user', () => {
                   }, 1);
             });
 
-            it('Sets the user data into the state', async (done) => {
+            it('Sets the user data into the state', async done => {
                   getUserBalance.mockImplementation(() => 100);
                   getUserData.mockImplementation(() => userData);
                   await dispatch.user.login('0XUserAddress');
@@ -80,22 +79,24 @@ describe('(Sagas) user', () => {
                         const { user: userState } = store.getState();
                         expect(userState.tokens).toEqual(100);
                         expect(userState.address).toEqual('0XUserAddress');
-                        expect(userState.votingRecord).toEqual({ Candidate1: 4 });
+                        expect(userState.votingRecord).toEqual({
+                              Candidate1: 4
+                        });
                         done();
                   }, 1);
             });
 
-            it('Regiters the user if not found on the blockchain', async (done) => {
+            it('Regiters the user if not found on the blockchain', async done => {
                   getUserData.mockImplementation(() => ({}));
                   await dispatch.user.login('0XNewUserAddress');
                   setTimeout(() => {
-                        const { user } = store.getState();
+                        const { user: userState } = store.getState();
                         expect(registerUser.mock.calls[0][0]).toEqual(
-                              '0XNewUserAddress',
+                              '0XNewUserAddress'
                         );
-                        expect(user.tokens).toEqual(0);
-                        expect(user.address).toEqual('0XNewUserAddress');
-                        expect(user.votingRecord).toEqual(undefined);
+                        expect(userState.tokens).toEqual(0);
+                        expect(userState.address).toEqual('0XNewUserAddress');
+                        expect(userState.votingRecord).toEqual(undefined);
                         done();
                   }, 1);
             });
@@ -109,7 +110,7 @@ describe('(Sagas) user', () => {
                   await dispatch.user.login('0xUserAddress');
             });
 
-            it('Dispatches an alert when error thrown', async (done) => {
+            it('Dispatches an alert when error thrown', async done => {
                   buy.mockImplementation(() => {
                         throw new Error('error');
                   });
@@ -118,7 +119,7 @@ describe('(Sagas) user', () => {
                         const logErrorCalls = Log.error.mock.calls;
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
-                              message: ms.buyTokensFailure,
+                              message: ms.buyTokensFailure
                         });
                         expect(logErrorCalls).toHaveLength(1);
                         expect(logErrorCalls[0][0].message).toEqual('error');
@@ -126,7 +127,7 @@ describe('(Sagas) user', () => {
                   }, 1);
             });
 
-            it('Updates the user tokens nb in state', async (done) => {
+            it('Updates the user tokens nb in state', async done => {
                   await dispatch.user.buyTokens(2);
                   setTimeout(() => {
                         expect(store.getState().user.tokens).toEqual(92);
@@ -134,18 +135,18 @@ describe('(Sagas) user', () => {
                   }, 1);
             });
 
-            it("Approves the Users contract to transfer those tokens on the user's behalf", async (done) => {
+            it("Approves the Users contract to transfer those tokens on the user's behalf", async done => {
                   getContractAddress.mockImplementation(
-                        () => '0xContractAddress',
+                        () => '0xContractAddress'
                   );
                   await dispatch.user.buyTokens(2);
                   setTimeout(() => {
                         expect(approveProxy.mock.calls).toHaveLength(1);
                         expect(approveProxy.mock.calls[0][0]).toEqual(
-                              '0xUserAddress',
+                              '0xUserAddress'
                         );
                         expect(approveProxy.mock.calls[0][1]).toEqual(
-                              '0xContractAddress',
+                              '0xContractAddress'
                         );
                         expect(approveProxy.mock.calls[0][2]).toEqual(92);
                         done();
@@ -154,14 +155,14 @@ describe('(Sagas) user', () => {
       });
 
       describe('addVoteToRecord', () => {
-            it("Adds the vote to the user' record on the blockchain and updates the state for voting recored and tokens", async (done) => {
+            it("Adds the vote to the user' record on the blockchain and updates the state for voting recored and tokens", async done => {
                   await dispatch.user.addVoteToRecord('Candidate2');
                   expect(addVoteFor.mock.calls).toHaveLength(1);
                   expect(addVoteFor.mock.calls[0][0]).toEqual('Candidate2');
                   setTimeout(() => {
                         expect(store.getState().user.votingRecord).toEqual({
                               Candidate1: 4,
-                              Candidate2: 1,
+                              Candidate2: 1
                         });
                         // substract a token
                         expect(store.getState().user.tokens).toEqual(91);
@@ -169,7 +170,7 @@ describe('(Sagas) user', () => {
                   });
             });
 
-            it('Dispatches an alert when error thrown', async (done) => {
+            it('Dispatches an alert when error thrown', async done => {
                   addVoteFor.mockImplementation(() => {
                         throw new Error('error');
                   });
@@ -178,7 +179,7 @@ describe('(Sagas) user', () => {
                         const logErrorCalls = Log.error.mock.calls;
                         expect(store.getState().alert).toEqual({
                               type: 'danger',
-                              message: ms.unexpectedError,
+                              message: ms.unexpectedError
                         });
                         expect(logErrorCalls).toHaveLength(1);
                         expect(logErrorCalls[0][0].message).toEqual('error');

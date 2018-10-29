@@ -3,5 +3,5 @@ import Alert from './Alert';
 
 export default connect(
       ({ alert }) => ({ alert }),
-      ({ alert: { silence } }) => ({ silence }),
+      ({ alert: { silence } }) => ({ silence })
 )(Alert);

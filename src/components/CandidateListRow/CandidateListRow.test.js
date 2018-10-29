@@ -13,7 +13,7 @@ describe('(Component) CandidateListRow', () => {
             props = {
                   loading: false,
                   voteFor: jest.fn(),
-                  candidate: { name: 'Jason', vote: '3' },
+                  candidate: { name: 'Jason', vote: '3' }
             };
             wrapper = shallow(<CandidateListRow {...props} />);
       });
@@ -49,13 +49,13 @@ describe('(Component) CandidateListRow', () => {
                   wrapper
                         .find(Link)
                         .at(0)
-                        .props().to,
+                        .props().to
             ).toEqual(routes.candidateInfoList('Jason'));
             expect(
                   wrapper
                         .find(Link)
                         .at(1)
-                        .props().to,
+                        .props().to
             ).toEqual(routes.candidateInfoForm('Jason'));
       });
 });

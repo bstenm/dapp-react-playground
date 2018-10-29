@@ -2,13 +2,15 @@ import cf from '../config';
 import web3 from './Web3';
 import { Candidates } from './ContractsInstances';
 
-export const getCandidateInfo = async (name) => {
+export const getCandidateInfo = async name => {
       let i = 0;
       let raw;
       let data;
       const info = [];
       const { getCandidateInfoAt } = await Candidates.deployed();
       do {
+            // [TOEDIT]
+            // eslint-disable-next-line no-await-in-loop
             raw = await getCandidateInfoAt(name, i++);
             data = (raw || []).map(e => web3.toUtf8(e));
             const [title, description, ipfsHash] = data;
@@ -19,21 +21,19 @@ export const getCandidateInfo = async (name) => {
       return info;
 };
 
-export const getTotalVotesFor = async (name) => {
+export const getTotalVotesFor = async name => {
       const { candidateVotes } = await Candidates.deployed();
       const vote = await candidateVotes(name);
       return vote.toString();
 };
 
 export const addCandidateInfo = async (payload, from) => {
-      const {
-            candidate, title, description, attachmentHash,
-      } = payload;
+      const { candidate, title, description, attachmentHash } = payload;
       const { addInfo } = await Candidates.deployed();
       const gas = cf.gas.addInfo;
       await addInfo(candidate, title, description, attachmentHash, {
             from,
-            gas,
+            gas
       });
 };
 

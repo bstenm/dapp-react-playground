@@ -1,8 +1,6 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import { shallow } from 'enzyme';
-import { routes } from '../../config';
 import CandidateList from './CandidateList';
 import CandidateListRow from '../CandidateListRow';
 
@@ -15,10 +13,10 @@ describe('(Component) CandidateList', () => {
                   candidates: [
                         { name: 'Nick', vote: '0' },
                         { name: 'Jason', vote: '3' },
-                        { name: 'Joanna', vote: '49' },
+                        { name: 'Joanna', vote: '49' }
                   ],
                   loading: false,
-                  voteFor: jest.fn(),
+                  voteFor: jest.fn()
             };
             wrapper = shallow(<CandidateList {...props} />);
       });
@@ -40,13 +38,13 @@ describe('(Component) CandidateList', () => {
                   wrapper
                         .find(CandidateListRow)
                         .at(0)
-                        .props().candidate.name,
+                        .props().candidate.name
             ).toEqual('Jason');
             expect(
                   wrapper
                         .find(CandidateListRow)
                         .at(2)
-                        .props().candidate.name,
+                        .props().candidate.name
             ).toEqual('Nick');
       });
 
@@ -55,14 +53,14 @@ describe('(Component) CandidateList', () => {
                   wrapper
                         .find(CandidateListRow)
                         .at(0)
-                        .props().loading,
+                        .props().loading
             ).toEqual(false);
             wrapper.setProps({ loading: true });
             expect(
                   wrapper
                         .find(CandidateListRow)
                         .at(0)
-                        .props().loading,
+                        .props().loading
             ).toEqual(true);
       });
 });

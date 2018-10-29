@@ -10,9 +10,9 @@ const store = init({
             loading,
             candidates,
             user,
-            alert,
+            alert
       },
-      plugins: [selectPlugin()],
+      plugins: [selectPlugin()]
 });
 
 export default store;

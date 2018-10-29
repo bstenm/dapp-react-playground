@@ -11,40 +11,40 @@ import ErrorBoundary from '../ErrorBoundary';
 import CandidateInfoList from '../CandidateInfoList';
 import CandidateInfoForm from '../CandidateInfoForm';
 
-export const App = ({ loading }) => (
-  <div className="App">
-        {loading && (
-            <div>
-          <Dimmer />
-          <Loader />
+const App = ({ loading }) => (
+      <div className="App">
+            {loading && (
+                  <div>
+                        <Dimmer />
+                        <Loader />
                   </div>
             )}
-        <Header />
-        <ErrorBoundary>
+            <Header />
+            <ErrorBoundary>
                   <div className="container">
-            <Alert />
-            <Switch>
-                          <Route
-                                path="/info/list/:candidate"
+                        <Alert />
+                        <Switch>
+                              <Route
+                                    path="/info/list/:candidate"
                                     component={CandidateInfoList}
                               />
-                          <Route
-                                path="/info/form/:candidate"
-                                component={CandidateInfoForm}
+                              <Route
+                                    path="/info/form/:candidate"
+                                    component={CandidateInfoForm}
                               />
-                          <Route path="/" component={Voting} />
+                              <Route path="/" component={Voting} />
                         </Switch>
-          </div>
+                  </div>
             </ErrorBoundary>
       </div>
 );
 
 App.defaultProps = {
-      loading: false,
+      loading: false
 };
 
 App.propTypes = {
-      loading: PropTypes.bool,
+      loading: PropTypes.bool
 };
 
 export default App;

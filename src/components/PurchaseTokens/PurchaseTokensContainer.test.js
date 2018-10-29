@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Container from './PurchaseTokensContainer';
 import Component from './PurchaseTokens';
 import { PurchaseTokensContainer } from './PurchaseTokensContainer';
 
@@ -10,7 +9,7 @@ describe('(Container) PurchaseTokens', () => {
 
       beforeEach(() => {
             props = {
-                  onSubmit: jest.fn(),
+                  onSubmit: jest.fn()
             };
             wrapper = shallow(<PurchaseTokensContainer {...props} />);
       });

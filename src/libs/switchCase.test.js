@@ -1,4 +1,4 @@
-import { switchCase } from './switchCase';
+import switchCase from './switchCase';
 
 it('Executes the "then" clause of the cases resolving to true', () => {
       const example = {};

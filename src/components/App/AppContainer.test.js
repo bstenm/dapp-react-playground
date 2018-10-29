@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { shallow } from 'enzyme';
-import web3 from '../../services/Web3';
 import App from './App';
 import customHistory from '../../history';
 import { AppContainer } from './AppContainer';
@@ -15,7 +14,6 @@ jest.mock('../../services/TokenSaleContract');
 describe('(Container) App', () => {
       let wrapper;
       let props;
-      let transferSpy;
 
       beforeEach(() => {
             props = { loading: true };

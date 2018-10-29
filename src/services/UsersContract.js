@@ -1,13 +1,13 @@
 import cf from '../config';
 import { Users } from './ContractsInstances';
 
-export const registerUser = async (from) => {
+export const registerUser = async from => {
       const { register } = await Users.deployed();
       const gas = cf.gas.registration;
       await register({ from, gas });
 };
 
-export const getUserData = async (userAddress) => {
+export const getUserData = async userAddress => {
       const { userData } = await Users.deployed();
       const [record, address] = await userData(userAddress);
       if (address.slice(0, 6) === '0x0000') {

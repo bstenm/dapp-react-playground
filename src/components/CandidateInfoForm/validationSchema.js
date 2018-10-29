@@ -11,5 +11,5 @@ export default yup.object({
             .string()
             .min(20)
             .max(500)
-            .required(ms.requiredField),
+            .required(ms.requiredField)
 });

@@ -28,7 +28,7 @@ describe('(Component) CandidateInfoForm', () => {
       // CandidateInfoFormFields prop: isSubmitting
       it('Passes isSubmitting to CandidateInfoFormFields component', () => {
             expect(
-                  wrapper.find(CandidateInfoFormFields).props().isSubmitting,
+                  wrapper.find(CandidateInfoFormFields).props().isSubmitting
             ).toEqual(true);
       });
 });

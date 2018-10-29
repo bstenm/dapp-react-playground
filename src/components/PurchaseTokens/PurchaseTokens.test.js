@@ -11,7 +11,7 @@ describe('(Component) PurchaseTokens', () => {
             props = {
                   value: '5',
                   onSubmit: jest.fn(),
-                  onChange: jest.fn(),
+                  onChange: jest.fn()
             };
             wrapper = shallow(<Component {...props} />);
       });

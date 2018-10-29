@@ -1,4 +1,3 @@
-import ms from '../config/messages';
 import loading from './loading';
 
 describe('(Reducer) loading', () => {

@@ -1,28 +1,37 @@
 import React from 'react';
-import Component from './SignIn';
+import PropTypes from 'prop-types';
+import SignIn from './SignIn';
 
 export class SignInContainer extends React.Component {
       state = { name: '' };
 
       login = () => {
-            this.props.login(this.state.name);
+            const { login } = this.props;
+            login(this.state.name);
             this.setState({ name: '' });
       };
 
-      onChange = (e) => {
+      onChange = e => {
             this.setState({ name: e.target.value });
       };
 
       render() {
+            const { show } = this.props;
+            const { name } = this.state;
             return (
-              <Component
-                    show={this.props.show}
-                    value={this.state.name}
-                    onLogin={this.login}
-                    onChange={this.onChange}
+                  <SignIn
+                        show={show}
+                        value={name}
+                        onLogin={this.login}
+                        onChange={this.onChange}
                   />
             );
       }
 }
+
+SignInContainer.propTypes = {
+      login: PropTypes.func.isRequired,
+      show: PropTypes.bool.isRequired
+};
 
 export default SignInContainer;

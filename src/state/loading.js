@@ -6,6 +6,6 @@ export default {
             },
             stop() {
                   return false;
-            },
-      },
+            }
+      }
 };

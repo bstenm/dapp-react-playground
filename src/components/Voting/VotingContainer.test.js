@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Container from './VotingContainer';
-import Component from './Voting';
+import Component from './CandidateList';
 import { VotingContainer } from './VotingContainer';
 
 describe('(Container) Voting', () => {
@@ -12,23 +11,23 @@ describe('(Container) Voting', () => {
             props = {
                   dispatch: {
                         alert: {
-                              error: jest.fn(),
+                              error: jest.fn()
                         },
                         user: {
-                              addVoteToRecord: jest.fn(),
+                              addVoteToRecord: jest.fn()
                         },
                         candidates: {
                               addVote: jest.fn(),
-                              fetchVotes: jest.fn(),
-                        },
+                              fetchVotes: jest.fn()
+                        }
                   },
                   loading: false,
                   user: { tokens: 50 },
                   candidates: [
                         { name: 'Jason', vote: '3' },
                         { name: 'Joanna', vote: '49' },
-                        { name: 'Nick', vote: '0' },
-                  ],
+                        { name: 'Nick', vote: '0' }
+                  ]
             };
             wrapper = shallow(<VotingContainer {...props} />);
       });
@@ -39,7 +38,7 @@ describe('(Container) Voting', () => {
 
       it('Gets the votes data on initialisation', () => {
             expect(
-                  props.dispatch.candidates.fetchVotes.mock.calls,
+                  props.dispatch.candidates.fetchVotes.mock.calls
             ).toHaveLength(1);
       });
 
@@ -53,7 +52,7 @@ describe('(Container) Voting', () => {
       // prop: candidates
       it('Passes candidates to component', () => {
             expect(wrapper.find(Component).props().candidates).toEqual(
-                  props.candidates,
+                  props.candidates
             );
       });
 
@@ -64,16 +63,16 @@ describe('(Container) Voting', () => {
                   .props()
                   .voteFor('name');
             expect(props.dispatch.candidates.addVote.mock.calls).toHaveLength(
-                  1,
+                  1
             );
             expect(props.dispatch.candidates.addVote.mock.calls[0][0]).toEqual(
-                  'name',
+                  'name'
             );
             expect(props.dispatch.user.addVoteToRecord.mock.calls).toHaveLength(
-                  1,
+                  1
             );
             expect(
-                  props.dispatch.user.addVoteToRecord.mock.calls[0][0],
+                  props.dispatch.user.addVoteToRecord.mock.calls[0][0]
             ).toEqual('name');
       });
 
@@ -85,10 +84,10 @@ describe('(Container) Voting', () => {
                   .props()
                   .voteFor('name');
             expect(props.dispatch.candidates.addVote.mock.calls).toHaveLength(
-                  0,
+                  0
             );
             expect(props.dispatch.user.addVoteToRecord.mock.calls).toHaveLength(
-                  0,
+                  0
             );
       });
 
@@ -101,10 +100,10 @@ describe('(Container) Voting', () => {
                   .voteFor('name');
             expect(props.dispatch.alert.error.mock.calls).toHaveLength(1);
             expect(props.dispatch.candidates.addVote.mock.calls).toHaveLength(
-                  0,
+                  0
             );
             expect(props.dispatch.user.addVoteToRecord.mock.calls).toHaveLength(
-                  0,
+                  0
             );
       });
 });

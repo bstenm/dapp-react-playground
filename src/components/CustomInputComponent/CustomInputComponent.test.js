@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { capitalize } from 'lodash';
 import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 import CustomInputComponent from './CustomInputComponent';
 
@@ -15,8 +14,8 @@ describe('(Component) CustomInputComponent', () => {
                   form: {
                         errors: { name: true },
                         touched: { name: true },
-                        handleChange: jest.fn(),
-                  },
+                        handleChange: jest.fn()
+                  }
             };
             wrapper = shallow(<CustomInputComponent {...props} />);
       });
@@ -32,7 +31,7 @@ describe('(Component) CustomInputComponent', () => {
                   wrapper
                         .find(ControlLabel)
                         .childAt(0)
-                        .text(),
+                        .text()
             ).toEqual('Name');
       });
 
@@ -57,22 +56,22 @@ describe('(Component) CustomInputComponent', () => {
       // prop: componentClass
       it('Passes componentClass to FormControl component', () => {
             expect(wrapper.find(FormControl).props().componentClass).toEqual(
-                  'textarea',
+                  'textarea'
             );
       });
 
       it('Displays a input error message component only if input has been touched and an error exists for this field', () => {
             expect(wrapper.find('.input-error')).toHaveLength(1);
             wrapper.setProps({
-                  form: { touched: { name: false }, errors: { name: true } },
+                  form: { touched: { name: false }, errors: { name: true } }
             });
             expect(wrapper.find('.input-error')).toHaveLength(0);
             wrapper.setProps({
-                  form: { touched: { name: true }, errors: { name: false } },
+                  form: { touched: { name: true }, errors: { name: false } }
             });
             expect(wrapper.find('.input-error')).toHaveLength(0);
             wrapper.setProps({
-                  form: { touched: { name: false }, errors: { name: false } },
+                  form: { touched: { name: false }, errors: { name: false } }
             });
             expect(wrapper.find('.input-error')).toHaveLength(0);
       });

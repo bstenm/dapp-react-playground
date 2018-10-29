@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { shallow } from 'enzyme';
 import CandidateInfoItem from './CandidateInfoItem';
-import { ipfsRoot, attachment } from '../../config';
+import { ipfsRoot } from '../../config';
 
 describe('(Component) CandidateInfoItem', () => {
       let wrapper;
@@ -13,8 +13,8 @@ describe('(Component) CandidateInfoItem', () => {
                   item: {
                         fileHash: 'fileHash',
                         description: 'description',
-                        title: 'title',
-                  },
+                        title: 'title'
+                  }
             };
             wrapper = shallow(<CandidateInfoItem {...props} />);
       });
@@ -26,14 +26,14 @@ describe('(Component) CandidateInfoItem', () => {
       it('Displays a Link component that points to the attachment', () => {
             expect(wrapper.find(Link)).toHaveLength(1);
             expect(wrapper.find(Link).props().to).toEqual(
-                  `${ipfsRoot}fileHash`,
+                  `${ipfsRoot}fileHash`
             );
       });
 
       it('Displays the attachment', () => {
             expect(wrapper.find('img')).toHaveLength(1);
             expect(wrapper.find('img').props().src).toEqual(
-                  `${ipfsRoot}fileHash`,
+                  `${ipfsRoot}fileHash`
             );
       });
 

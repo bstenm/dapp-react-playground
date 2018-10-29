@@ -1,7 +1,7 @@
 import web3 from './Web3';
 import { Token } from './ContractsInstances';
 
-export const getUserBalance = async (address) => {
+export const getUserBalance = async address => {
       const ct = await Token.deployed();
       const balance = await ct.balanceOf(address);
       return balance.toNumber();

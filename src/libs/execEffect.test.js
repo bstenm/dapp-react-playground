@@ -1,16 +1,15 @@
 import Log from '../services/Log';
-import { execEffect } from './execEffect';
+import execEffect from './execEffect';
 
 describe('(Lib) execffect', () => {
       let dispatch;
-      let logError;
 
       beforeEach(() => {
             dispatch = {
                   loading: {
                         stop: jest.fn(),
-                        start: jest.fn(),
-                  },
+                        start: jest.fn()
+                  }
             };
       });
 
@@ -20,9 +19,10 @@ describe('(Lib) execffect', () => {
             let onError;
 
             beforeEach(() => {
-                  action = () => new Promise((resolve, reject) => {
-                        setTimeout(() => resolve('resolved'), 1000);
-                  });
+                  action = () =>
+                        new Promise(resolve => {
+                              setTimeout(() => resolve('resolved'), 1000);
+                        });
                   onError = jest.fn();
             });
 
@@ -44,13 +44,13 @@ describe('(Lib) execffect', () => {
 
       describe('Action is rejected', () => {
             let action;
-            let res;
             let onError;
 
             beforeEach(() => {
-                  action = () => new Promise((resolve, reject) => {
-                        reject('rejected');
-                  });
+                  action = () =>
+                        new Promise((resolve, reject) => {
+                              reject(new Error('rejected'));
+                        });
                   onError = jest.fn();
                   jest.spyOn(Log, 'error').mockImplementation(() => null);
             });

@@ -5,22 +5,20 @@ import PropTypes from 'prop-types';
 import CandidateInfoFormFields from '../CandidateInfoFormFields';
 import CandidateInfoAttachment from '../CandidateInfoAttachment';
 
-export const CandidateInfoForm = ({ ...props, isSubmitting }) => (
-      <div className="CandidateInfoForm" >
+const CandidateInfoForm = ({ isSubmitting, ...props }) => (
+      <div className="CandidateInfoForm">
             <CandidateInfoAttachment {...props} />
             <CandidateInfoFormFields isSubmitting={isSubmitting} />
       </div>
 );
 
 CandidateInfoForm.defaultProps = {
-      props: {},
-      isSubmitting: false,
+      props: {}
 };
 
 CandidateInfoForm.propTypes = {
       props: PropTypes.object,
-      isSubmitting: PropTypes.bool,
+      isSubmitting: PropTypes.bool.isRequired
 };
 
 export default CandidateInfoForm;
-

@@ -1,7 +1,7 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import { shallow } from 'enzyme';
 import { Form, Field } from 'formik';
-import { Button, Glyphicon, ControlLabel } from 'react-bootstrap';
 import CustomInputComponent from '../CustomInputComponent';
 import CandidateInfoFormFields from './CandidateInfoFormFields';
 
@@ -27,28 +27,28 @@ describe('(Component) CandidateInfoFormFields', () => {
                   wrapper
                         .find(Field)
                         .at(0)
-                        .props().name,
+                        .props().name
             ).toEqual('title');
             expect(
                   wrapper
                         .find(Field)
                         .at(0)
-                        .props().component,
+                        .props().component
             ).toEqual(CustomInputComponent);
       });
 
-      it('Displays a Field component for the info title', () => {
+      it('Displays a Field component for the info description', () => {
             expect(
                   wrapper
                         .find(Field)
                         .at(1)
-                        .props().name,
+                        .props().name
             ).toEqual('description');
             expect(
                   wrapper
                         .find(Field)
                         .at(1)
-                        .props().component,
+                        .props().component
             ).toEqual(CustomInputComponent);
       });
 

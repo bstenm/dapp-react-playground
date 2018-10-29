@@ -11,9 +11,9 @@ describe('(Component) Alert', () => {
             props = {
                   alert: {
                         type: 'success',
-                        message: 'message1',
+                        message: 'message1'
                   },
-                  silence: jest.fn(),
+                  silence: jest.fn()
             };
             wrapper = shallow(<Component {...props} />);
       });
@@ -28,7 +28,7 @@ describe('(Component) Alert', () => {
                   wrapper
                         .find(Alert)
                         .childAt(0)
-                        .text(),
+                        .text()
             ).toEqual('message1');
             wrapper.setProps({ alert: { message: 'message2', type: 'info' } });
             expect(wrapper.find(Alert).props().bsStyle).toEqual('info');
@@ -36,7 +36,7 @@ describe('(Component) Alert', () => {
                   wrapper
                         .find(Alert)
                         .childAt(0)
-                        .text(),
+                        .text()
             ).toEqual('message2');
       });
 

@@ -22,7 +22,7 @@ describe('(Component) ErrorBoundary', () => {
                   wrapper
                         .find('.ErrorBoundary')
                         .childAt(0)
-                        .text(),
+                        .text()
             ).toEqual(unexpectedError);
       });
 });

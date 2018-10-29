@@ -6,9 +6,11 @@
     "@rematch/core": "1.0.0-beta.4",
     "@rematch/select": "2.0.0",
     "formik": "1.0.1",
+    "history": "4.7.2",
     "immer": "1.7.1",
     "ipfs-api": "24.0.1",
     "lodash": "4.17.11",
+    "prop-types": "15.6.2",
     "react": "^16.3.2",
     "react-bootstrap": "0.32.1",
     "react-dom": "^16.3.2",
@@ -18,7 +20,24 @@
     "react-scripts": "1.1.5",
     "truffle-contract": "1.1.11",
     "web3": "0.20.0",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
     "yup": "0.25.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "10.0.1",
+    "bignumber.js": "7.2.1",
+    "eslint": "5.8.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-config-jest-enzyme": "7.0.0",
+    "eslint-config-prettier": "3.1.0",
+    "eslint-plugin-babel": "5.2.1",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jest": "21.26.2",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-prettier": "3.0.0",
+    "eslint-plugin-react": "7.11.1",
+    "prettier": "1.14.3"
   },
   "scripts": {
     "lint": "eslint --debug src/",
@@ -28,22 +47,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "babel-eslint": "10.0.1",
-    "bignumber.js": "7.2.1",
-    "enzyme": "3.3.0",
-    "enzyme-adapter-react-16": "1.1.1",
-    "eslint": "5.8.0",
-    "eslint-config-airbnb": "17.1.0",
-    "eslint-config-jest-enzyme": "7.0.0",
-    "eslint-plugin-babel": "5.2.1",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-jest": "21.26.2",
-    "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-prettier": "3.0.0",
-    "eslint-plugin-react": "7.11.1",
-    "prettier": "1.14.3"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -60,6 +63,7 @@
     }
   },
   "prettier": {
-    "tabWidth": 6
+    "tabWidth": 6,
+    "singleQuote": true
   }
 }

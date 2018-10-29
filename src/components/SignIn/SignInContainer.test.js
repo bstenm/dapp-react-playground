@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Container from './SignInContainer';
 import Component from './SignIn';
 import { SignInContainer } from './SignInContainer';
 
@@ -11,7 +10,7 @@ describe('(Container) SignIn', () => {
       beforeEach(() => {
             props = {
                   show: true,
-                  login: jest.fn(),
+                  login: jest.fn()
             };
             wrapper = shallow(<SignInContainer {...props} />);
       });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-export default (WrappedComponent) => {
+export default WrappedComponent => {
       class AsPage extends React.Component {
             componentWillMount() {
                   this.props.silenceAlert();
@@ -14,6 +14,6 @@ export default (WrappedComponent) => {
 
       return connect(
             null,
-            ({ alert: { silence } }) => ({ silenceAlert: silence }),
+            ({ alert: { silence } }) => ({ silenceAlert: silence })
       )(AsPage);
 };

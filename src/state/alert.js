@@ -9,6 +9,6 @@ export default {
             },
             success(state, message) {
                   return { type: 'success', message };
-            },
-      },
+            }
+      }
 };

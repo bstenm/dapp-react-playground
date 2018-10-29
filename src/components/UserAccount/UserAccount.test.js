@@ -14,9 +14,9 @@ describe('(Component) UserAccount', () => {
                         votingRecord: {
                               'Asif Ali Zardari': -10,
                               'Petro Poroshenko': 100,
-                              'Khalifa Bin Zayed': 0,
-                        },
-                  },
+                              'Khalifa Bin Zayed': 0
+                        }
+                  }
             };
             wrapper = shallow(<Component {...props} />);
       });
@@ -30,7 +30,7 @@ describe('(Component) UserAccount', () => {
                   wrapper
                         .find('div')
                         .at(0)
-                        .text(),
+                        .text()
             ).toContain('0xUserAddress');
       });
 
@@ -39,7 +39,7 @@ describe('(Component) UserAccount', () => {
                   wrapper
                         .find('div')
                         .at(0)
-                        .text(),
+                        .text()
             ).toContain(10);
       });
 
@@ -53,7 +53,7 @@ describe('(Component) UserAccount', () => {
                         .at(1)
                         .find('td')
                         .at(0)
-                        .text(),
+                        .text()
             ).toContain('Petro Poroshenko');
             expect(
                   wrapper
@@ -61,13 +61,13 @@ describe('(Component) UserAccount', () => {
                         .at(1)
                         .find('td')
                         .at(1)
-                        .text(),
+                        .text()
             ).toEqual('100');
       });
 
       test('Does not attempt to display any voting record html if none passed', () => {
             wrapper.setProps({
-                  account: { votingRecord: null, address: '0xUserAccount' },
+                  account: { votingRecord: null, address: '0xUserAccount' }
             });
             expect(wrapper.find('table')).toHaveLength(0);
       });

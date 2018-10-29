@@ -1,7 +1,6 @@
 import React from 'react';
-import { Modal } from 'react-bootstrap';
 import { shallow } from 'enzyme';
-import { Form, FormControl, Button } from 'react-bootstrap';
+import { Form, FormControl, Button, Modal } from 'react-bootstrap';
 import Component from './SignIn';
 
 describe('(Component) SignIn', () => {
@@ -12,7 +11,7 @@ describe('(Component) SignIn', () => {
             props = {
                   show: true,
                   onLogin: jest.fn(),
-                  onChange: jest.fn(),
+                  onChange: jest.fn()
             };
             wrapper = shallow(<Component {...props} />);
       });

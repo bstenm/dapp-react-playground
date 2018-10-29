@@ -2,12 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { shallow } from 'enzyme';
 import {
-      Nav,
       Navbar,
       NavItem,
       OverlayTrigger,
       Popover,
-      Glyphicon,
+      Glyphicon
 } from 'react-bootstrap';
 import SignIn from '../SignIn';
 import Header from './Header';
@@ -23,11 +22,11 @@ describe('(Component) Header', () => {
                   user: {
                         tokens: 10,
                         address: '0xUserAddress',
-                        votingRecord: { 'Khalifa Bin Zayed': 100 },
+                        votingRecord: { 'Khalifa Bin Zayed': 100 }
                   },
                   login: jest.fn(),
                   logout: jest.fn(),
-                  buyTokens: jest.fn(),
+                  buyTokens: jest.fn()
             };
             wrapper = shallow(<Header {...props} />);
       });
@@ -49,13 +48,13 @@ describe('(Component) Header', () => {
                   wrapper
                         .find(Navbar.Brand)
                         .find(Link)
-                        .props().to,
+                        .props().to
             ).toEqual('/');
             expect(
                   wrapper
                         .find(Navbar.Brand)
                         .find(Link)
-                        .find(Glyphicon),
+                        .find(Glyphicon)
             ).toHaveLength(1);
       });
 
@@ -95,7 +94,7 @@ describe('(Component) Header', () => {
             expect(popOver.instance() instanceof Popover).toBe(true);
             expect(popOver.find(UserAccount)).toHaveLength(1);
             expect(popOver.find(UserAccount).props().account).toEqual(
-                  props.user,
+                  props.user
             );
       });
 
