@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import store from '../../store';
+import asPage from '../../hoc/AsPage';
 import CandidateInfoList from './CandidateInfoList';
 
 const { select } = store;
@@ -25,7 +26,7 @@ CandidateInfoListContainer.propTypes = {
       getInfoFor: PropTypes.func.isRequired,
       match: PropTypes.shape({
             params: PropTypes.shape({
-                  candidate: PropTypes.number
+                  candidate: PropTypes.string
             }).isRequired
       }).isRequired
 };
@@ -33,4 +34,4 @@ CandidateInfoListContainer.propTypes = {
 export default connect(
       select(({ candidates: { getInfoFor } }) => ({ getInfoFor })),
       ({ candidates: { fetchInfo } }) => ({ fetchInfo })
-)(CandidateInfoListContainer);
+)(asPage(CandidateInfoListContainer));

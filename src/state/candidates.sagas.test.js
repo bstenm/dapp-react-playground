@@ -18,6 +18,7 @@ const store = init({
             user
       }
 });
+
 const { dispatch } = store;
 
 jest.mock('../libs/ipfsLib');
@@ -233,6 +234,17 @@ describe('(Effects) candidates', () => {
                         );
                         done();
                   }, 1);
+            });
+
+            it('Dispatches an action to update the user voting record', async () => {
+                  jest.spyOn(dispatch.user, 'addVoteToRecord');
+                  await dispatch.candidates.addVote('Khalifa Bin Zayed');
+                  expect(dispatch.user.addVoteToRecord.mock.calls).toHaveLength(
+                        1
+                  );
+                  expect(
+                        dispatch.user.addVoteToRecord.mock.calls[0][0]
+                  ).toEqual('Khalifa Bin Zayed');
             });
 
             it('Dispatches an alert when error thrown', async done => {

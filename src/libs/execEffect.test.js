@@ -45,11 +45,13 @@ describe('(Lib) execffect', () => {
       describe('Action is rejected', () => {
             let action;
             let onError;
+            let error;
 
             beforeEach(() => {
+                  error = new Error('rejected');
                   action = () =>
                         new Promise((resolve, reject) => {
-                              reject(new Error('rejected'));
+                              reject(error);
                         });
                   onError = jest.fn();
                   jest.spyOn(Log, 'error').mockImplementation(() => null);
@@ -67,13 +69,13 @@ describe('(Lib) execffect', () => {
             it('Executes the error cb', async () => {
                   await execEffect(dispatch)(action, onError);
                   expect(onError.mock.calls).toHaveLength(1);
-                  expect(onError.mock.calls[0][0]).toEqual('rejected');
+                  expect(onError.mock.calls[0][0]).toEqual(error);
             });
 
             it('Logs the error', async () => {
                   await execEffect(dispatch)(action, onError);
                   expect(Log.error.mock.calls).toHaveLength(1);
-                  expect(Log.error.mock.calls[0][0]).toEqual('rejected');
+                  expect(Log.error.mock.calls[0][0]).toEqual(error);
             });
 
             it('Dispatches a stop loader event', async () => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import { shallow } from 'enzyme';
-import CandidateList from './CandidateList';
+import VotingTable from './VotingTable';
 import CandidateListRow from '../CandidateListRow';
 
-describe('(Component) CandidateList', () => {
+describe('(Component) VotingTable', () => {
       let wrapper;
       let props;
 
@@ -18,11 +18,11 @@ describe('(Component) CandidateList', () => {
                   loading: false,
                   voteFor: jest.fn()
             };
-            wrapper = shallow(<CandidateList {...props} />);
+            wrapper = shallow(<VotingTable {...props} />);
       });
 
-      it('Displays a CandidateList', () => {
-            expect(wrapper.find('.CandidateList')).toHaveLength(1);
+      it('Displays a VotingTable', () => {
+            expect(wrapper.find('.VotingTable')).toHaveLength(1);
       });
 
       it('Displays a Table component', () => {

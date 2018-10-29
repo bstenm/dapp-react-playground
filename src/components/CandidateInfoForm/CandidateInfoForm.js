@@ -13,12 +13,13 @@ const CandidateInfoForm = ({ isSubmitting, ...props }) => (
 );
 
 CandidateInfoForm.defaultProps = {
-      props: {}
+      props: {},
+      isSubmitting: false
 };
 
 CandidateInfoForm.propTypes = {
       props: PropTypes.object,
-      isSubmitting: PropTypes.bool.isRequired
+      isSubmitting: PropTypes.bool
 };
 
 export default CandidateInfoForm;

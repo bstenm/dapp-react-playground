@@ -1,3 +1,3 @@
-import Component from './VotingContainer';
+import Component from './VotingTableContainer';
 
 export default Component;

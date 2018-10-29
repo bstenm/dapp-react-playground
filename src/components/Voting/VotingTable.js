@@ -1,12 +1,12 @@
-import './CandidateList.css';
+import './VotingTable.css';
 import React from 'react';
 import sortBy from 'lodash/sortBy';
 import { Table } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import CandidateListRow from '../CandidateListRow';
 
-const CandidateList = ({ candidates, voteFor, loading }) => (
-      <div className="CandidateList">
+const VotingTable = ({ candidates, voteFor, loading }) => (
+      <div className="VotingTable">
             <Table>
                   <thead>
                         <tr>
@@ -29,14 +29,14 @@ const CandidateList = ({ candidates, voteFor, loading }) => (
       </div>
 );
 
-CandidateList.defaultProps = {
+VotingTable.defaultProps = {
       loading: false
 };
 
-CandidateList.propTypes = {
+VotingTable.propTypes = {
       loading: PropTypes.bool,
       voteFor: PropTypes.func.isRequired,
       candidates: PropTypes.array.isRequired
 };
 
-export default CandidateList;
+export default VotingTable;

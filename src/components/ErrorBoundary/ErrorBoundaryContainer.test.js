@@ -19,7 +19,7 @@ describe('(Container) ErrorBoundaryContainer', () => {
       });
 
       it('Displays a ErrorBoundaryContainer component if state error is not null', () => {
-            wrapper.setState({ error: true, errorInfo: 'error info' });
+            wrapper.setState({ error: true });
             expect(wrapper.find(ErrorBoundary)).toHaveLength(1);
       });
 
@@ -27,7 +27,6 @@ describe('(Container) ErrorBoundaryContainer', () => {
             jest.spyOn(Log, 'error').mockImplementation(() => null);
             wrapper.instance().componentDidCatch('error', 'errorInfo');
             expect(wrapper.state().error).toEqual('error');
-            expect(wrapper.state().errorInfo).toEqual('errorInfo');
             expect(Log.error.mock.calls).toHaveLength(1);
             expect(Log.error.mock.calls[0][0]).toEqual('errorInfo');
       });
