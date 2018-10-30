@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'formik';
+import Loader from '../Loader';
 import CustomInputComponent from '../CustomInputComponent';
 
 const CandidateInfoFormFields = ({ isSubmitting }) => (
@@ -22,11 +23,10 @@ const CandidateInfoFormFields = ({ isSubmitting }) => (
                   />
                   <Button
                         type="submit"
-                        bsStyle="primary"
                         disabled={isSubmitting}
                         className="pull-right"
                   >
-                        Submit
+                        {!isSubmitting ? 'Submit' : <Loader />}
                   </Button>
             </Form>
       </div>

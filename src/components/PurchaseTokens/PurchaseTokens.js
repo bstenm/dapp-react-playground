@@ -2,8 +2,9 @@ import './PurchaseTokens.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, FormControl, Button } from 'react-bootstrap';
+import Loader from '../Loader';
 
-export const PurchaseTokens = ({ value, onChange, onSubmit }) => (
+const PurchaseTokens = ({ value, onChange, onSubmit, loading }) => (
       <div className="PurchaseTokens">
             <Form inline>
                   <FormControl
@@ -13,17 +14,21 @@ export const PurchaseTokens = ({ value, onChange, onSubmit }) => (
                         className="FormControl"
                         placeholder="Amount"
                   />
-                  <Button onClick={onSubmit}>Buy</Button>
+                  <Button onClick={onSubmit}>
+                        {loading ? <Loader /> : 'Buy'}
+                  </Button>
             </Form>
       </div>
 );
 
 PurchaseTokens.defaultProps = {
-      value: ''
+      value: '',
+      loading: false
 };
 
 PurchaseTokens.propTypes = {
       value: PropTypes.string,
+      loading: PropTypes.bool,
       onSubmit: PropTypes.func.isRequired,
       onChange: PropTypes.func.isRequired
 };

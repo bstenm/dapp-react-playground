@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import { Form, Field } from 'formik';
 import CustomInputComponent from '../CustomInputComponent';
 import CandidateInfoFormFields from './CandidateInfoFormFields';
+import Loader from '../Loader';
 
 describe('(Component) CandidateInfoFormFields', () => {
       let wrapper;
@@ -54,6 +55,20 @@ describe('(Component) CandidateInfoFormFields', () => {
 
       it('Displays a Button component', () => {
             expect(wrapper.find(Button)).toHaveLength(1);
+      });
+
+      it('Displays "Submit" if form not yet submitting', () => {
+            expect(
+                  wrapper
+                        .find(Button)
+                        .childAt(0)
+                        .text()
+            ).toEqual('Submit');
+      });
+
+      it('Displays a Loader if form is being submitted', () => {
+            wrapper.setProps({ isSubmitting: true });
+            expect(wrapper.find(Button).find(Loader)).toHaveLength(1);
       });
 
       it('Disables the button is foorm is being submitted', async () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Component from './PurchaseTokens';
 
@@ -17,9 +18,11 @@ export class PurchaseTokensContainer extends React.Component {
 
       render() {
             const { value } = this.state;
+            const { loading } = this.props;
             return (
                   <Component
                         value={value}
+                        loading={loading}
                         onSubmit={this.onSubmit}
                         onChange={this.onChange}
                   />
@@ -27,8 +30,13 @@ export class PurchaseTokensContainer extends React.Component {
       }
 }
 
+PurchaseTokensContainer.defaultProps = {
+      loading: false
+};
+
 PurchaseTokensContainer.propTypes = {
+      loading: PropTypes.bool,
       onSubmit: PropTypes.func.isRequired
 };
 
-export default PurchaseTokensContainer;
+export default connect(({ loading }) => ({ loading }))(PurchaseTokensContainer);

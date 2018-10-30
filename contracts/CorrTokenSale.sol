@@ -19,16 +19,28 @@ contract CorrTokenSale {
             uint256 _tokens
       );
 
+      /**
+      * Constructor function
+      */
       function CorrTokenSale(CorrToken _tokenContract, uint256 _tokenPrice) public {
             admin = msg.sender;
             tokenPrice = _tokenPrice;
             tokenContract = _tokenContract;
       }
 
+      /**
+      * Safe multiplication of uint
+      *
+      */
       function mul(uint _x, uint _y) internal pure returns (uint z) {
             require(_y == 0 || (z = _x * _y) / _y == _x);
       }
 
+      /**
+      * Transfer tokens to a buyer
+      *
+      * @param _numberOfTokens - number of tokens being purchased
+      */
       function buy(uint256 _numberOfTokens) public payable {
             // require the value corresponds to nb of tokens
             require(msg.value == mul(_numberOfTokens, tokenPrice));
@@ -46,20 +58,29 @@ contract CorrTokenSale {
             Sale(msg.sender, msg.value);
       }
 
-      function reward (address receiver, uint256 _numberOfTokens) public {
+      /**
+      * Transfer tokens to a user for free
+      *
+      * @param _receiver - the address to receive the free tokens
+      * @param _numberOfTokens - number of tokens being given away
+      */
+      function reward (address _receiver, uint256 _numberOfTokens) public {
             // require we have enough tokens in the contract
             require(tokenContract.balanceOf(this) >= _numberOfTokens);
 
             // transfer the tokens to the caller
-            require(tokenContract.transfer(receiver, _numberOfTokens));
+            require(tokenContract.transfer(_receiver, _numberOfTokens));
 
             // keep track of tokens rewarded
             tokensRewarded += _numberOfTokens;
 
             // trigger Reward event
-            Reward(receiver, _numberOfTokens);
+            Reward(_receiver, _numberOfTokens);
       }
 
+      /**
+      * Transfer all the tokens this contract hold back to the admin account
+      */
       function endSale() public  {
             require(msg.sender == admin);
             require(tokenContract.transfer(admin, tokenContract.balanceOf(this)));

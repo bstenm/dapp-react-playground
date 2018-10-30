@@ -1,10 +1,4 @@
-.Loader {
-	position: absolute;
-	z-index: 10;
-	top: 50%;
-	left: 50%;
-}
-.lds-blocks {
+.Loader .lds-blocks {
 	margin: auto;
 	animation-name: rotateThis;
 	animation-duration: 1s;
@@ -12,13 +6,13 @@
 	/* animation-timing-function: linear; */
 	display: flex;
 	flex-wrap: wrap;
-	width: 20px;
+	width: 16px;
 	/* transform: rotate(45deg); */
 }
 
-.lds-blocks div {
-	width: 8px;
-	height: 8px;
+.Loader .lds-blocks div {
+	width: 6px;
+	height: 6px;
 	background: #757575;
 	/* -webkit-animation: lds-blocks 2s linear infinite;
 	animation: lds-blocks 2s linear infinite; */

@@ -2,9 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { shallow } from 'enzyme';
 import Voting from '../Voting';
-import Loader from '../Loader';
 import Header from '../Header';
-import Dimmer from '../Dimmer';
 import Component from './App';
 import ErrorBoundary from '../ErrorBoundary';
 import CandidateInfoList from '../CandidateInfoList';
@@ -12,22 +10,9 @@ import CandidateInfoForm from '../CandidateInfoForm';
 
 describe('(Component) App', () => {
       let wrapper;
-      let props;
 
       beforeEach(() => {
-            props = { loading: false };
-            wrapper = shallow(<Component {...props} />);
-      });
-
-      it('Displays a Loader and Dimmer components if loading is on', () => {
-            wrapper.setProps({ loading: true });
-            expect(wrapper.find(Loader)).toHaveLength(1);
-            expect(wrapper.find(Dimmer)).toHaveLength(1);
-      });
-
-      it('Does not display a Loader and Dimmer components if loading is off', () => {
-            expect(wrapper.find(Loader)).toHaveLength(0);
-            expect(wrapper.find(Dimmer)).toHaveLength(0);
+            wrapper = shallow(<Component />);
       });
 
       it('Displays a ErrorBoundary', () => {

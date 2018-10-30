@@ -18,10 +18,19 @@ contract Candidates {
             _;
       }
 
+      /**
+      * Constructor function
+      */
       function Candidates(bytes32[] _candidateNames) public {
             candidateList = _candidateNames;
       }
 
+      /**
+      * Returns the index of the candidate passed in the candidate array
+      *
+      * @param _candidate
+      * @return - the index found or -1
+      */
       function indexOfCandidate( bytes32 _candidate) view public returns (uint) {
             for (uint i = 0; i < candidateList.length; i++) {
                   if (candidateList[i] == _candidate) {
@@ -31,6 +40,14 @@ contract Candidates {
             return uint(-1);
       }
 
+      /**
+      * Pushes a new item in the array of infos for a candidate
+      *
+      * @param _candidate
+      * @param _title - title of new item
+      * @param _description - description of new item
+      * @param _attachmentHash - the hash of the attachment associated with the new item
+      */
       function addInfo (
             bytes32 _candidate,
             bytes _title,
@@ -44,6 +61,13 @@ contract Candidates {
             candidateInfo[_candidate].push(item);
       }
 
+      /**
+      * Returns the item located at a given index in the array of infos
+      *
+      * @param _candidate
+      * @param _idx - index of the item in the array of infos
+      * @return (item title, item description, item attachment hash)
+      */
       function getCandidateInfoAt (bytes32 _candidate, uint _idx) view public returns (bytes, bytes, bytes) {
             if (candidateInfo[_candidate].length <= _idx) {
                   return;
@@ -55,6 +79,11 @@ contract Candidates {
             );
       }
 
+      /**
+      * Records the vote for a given candidate
+      *
+      * @param _candidate
+      */
       function addVoteFor(bytes32 _candidate) public onlyValidCandidate(_candidate) {
             candidateVotes[_candidate] += 1;
       }
