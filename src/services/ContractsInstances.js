@@ -9,7 +9,7 @@ const UsersContract = contract(usersArtifacts);
 const TokenContract = contract(tokenArtifacts);
 const TokenSaleContract = contract(tokenSaleArtifacts);
 const CandidatesContract = contract(candidatesArtifacts);
-const UserActionsContract = contract(userActionsArtifacts);
+
 UsersContract.setProvider(web3.currentProvider);
 TokenContract.setProvider(web3.currentProvider);
 TokenSaleContract.setProvider(web3.currentProvider);
