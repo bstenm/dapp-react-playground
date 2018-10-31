@@ -12,3 +12,7 @@
       padding: 20px 0;
       border-top: 1px solid #555;
 }
+
+.CandidateInfoList .loader {
+      margin-top: 40px;
+}

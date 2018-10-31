@@ -5,7 +5,7 @@ import store from '../../store';
 import asPage from '../../hoc/AsPage';
 import CandidateInfoList from './CandidateInfoList';
 
-const { select } = store;
+const { select, getState } = store;
 
 export class CandidateInfoListContainer extends React.Component {
       componentWillMount() {
@@ -14,16 +14,31 @@ export class CandidateInfoListContainer extends React.Component {
       }
 
       render() {
-            const { candidate } = this.props.match.params;
+            const {
+                  loading,
+                  match: {
+                        params: { candidate }
+                  }
+            } = this.props;
             // selector
-            const info = this.props.getInfoFor(candidate);
-            return <CandidateInfoList list={info} candidate={candidate} />;
+            const info = select.candidates.getInfoFor(getState())(candidate);
+            return (
+                  <CandidateInfoList
+                        list={info}
+                        candidate={candidate}
+                        loading={loading}
+                  />
+            );
       }
 }
 
+CandidateInfoListContainer.defaultProps = {
+      loading: false
+};
+
 CandidateInfoListContainer.propTypes = {
       fetchInfo: PropTypes.func.isRequired,
-      getInfoFor: PropTypes.func.isRequired,
+      loading: PropTypes.bool,
       match: PropTypes.shape({
             params: PropTypes.shape({
                   candidate: PropTypes.string
@@ -32,6 +47,6 @@ CandidateInfoListContainer.propTypes = {
 };
 
 export default connect(
-      select(({ candidates: { getInfoFor } }) => ({ getInfoFor })),
+      ({ loading }) => ({ loading }),
       ({ candidates: { fetchInfo } }) => ({ fetchInfo })
 )(asPage(CandidateInfoListContainer));

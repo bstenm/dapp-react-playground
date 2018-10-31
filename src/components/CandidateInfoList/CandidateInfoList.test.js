@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import CandidateInfoList from './CandidateInfoList';
 import CandidateInfoItem from '../CandidateInfoItem';
+import Loader from '../Loader';
 
 describe('(Component) CandidateInfoList', () => {
       let wrapper;
@@ -21,6 +22,7 @@ describe('(Component) CandidateInfoList', () => {
                               title: 'title2'
                         }
                   ],
+                  loading: false,
                   candidate: 'Candidate'
             };
             wrapper = shallow(<CandidateInfoList {...props} />);
@@ -47,5 +49,10 @@ describe('(Component) CandidateInfoList', () => {
       it('Does not attempt to display the list if no list passed', () => {
             wrapper.setProps({ list: [] });
             expect(wrapper.find('ul')).toHaveLength(0);
+      });
+
+      it('Shows Loader while list is being fetched', () => {
+            wrapper.setProps({ loading: true, list: [] });
+            expect(wrapper.find(Loader)).toHaveLength(1);
       });
 });
