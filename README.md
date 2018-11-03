@@ -1,7 +1,7 @@
 ## Ethereum Dapp with React Redux Playground
 
 This app uses [Create React App](https://github.com/facebook/create-react-app) for scaffolding,
-[Rematch](https://rematch.gitbooks.io/rematch/) (a wrapper around [Redux](https://redux.js.org/)) for state management, [Formik](https://github.com/jaredpalmer/formik) for form management, [Jest](https://jestjs.io/) and [Enzyme](https://airbnb.io/enzyme/) for client side testing,  [Truffle](https://truffleframework.com/) as development framework for Ethereum, and [web3](https://github.com/ethereum/web3.js/) as Etherrum javascript api.
+[Rematch](https://rematch.gitbooks.io/rematch/) (a wrapper around [Redux](https://redux.js.org/)) for state management, [Formik](https://github.com/jaredpalmer/formik) for form management, [Jest](https://jestjs.io/) and [Enzyme](https://airbnb.io/enzyme/) for client side testing,  [Truffle](https://truffleframework.com/) as development framework for Ethereum, and [web3](https://github.com/ethereum/web3.js/) as Etherrum javascript api. The contracts are written in [Solidity](https://solidity.readthedocs.io/).
 
 #### Testing
 
