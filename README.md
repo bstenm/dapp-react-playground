@@ -31,7 +31,7 @@ Run the linter:
 Start a [ganache](https://truffleframework.com/ganache) instance
 
 ```
-ganache-cli
+> ganache-cli
 ```
 
 Start the app:
