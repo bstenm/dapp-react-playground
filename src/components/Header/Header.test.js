@@ -98,13 +98,13 @@ describe('(Component) Header', () => {
             );
       });
 
-      it('Does not display any Popover components if no user address',  () => {
-            wrapper.setProps({ user: {}});
+      it('Does not display any Popover components if no user address', () => {
+            wrapper.setProps({ user: {} });
             const overlayTrigger = wrapper.find(OverlayTrigger);
             expect(overlayTrigger).toHaveLength(0);
       });
 
-      // Singin
+      // Signin
       it('Displays a SignIn component', () => {
             expect(wrapper.find(SignIn)).toHaveLength(1);
       });

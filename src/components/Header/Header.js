@@ -39,27 +39,31 @@ const Header = ({ buyTokens, login, logout, user }) => (
             <Navbar.Collapse>
                   <Nav pullRight>
                         {user.address && (
-                        <React.Fragment>
-                              <OverlayTrigger
-                                    rootClose
-                                    trigger="click"
-                                    placement="bottom"
-                                    overlay={purchaseTokensPopover(buyTokens)}
-                              >
-                                    <NavItem href="#">Purchase Corr Tokens</NavItem>
-                              </OverlayTrigger>
-                              <OverlayTrigger
-                                    rootClose
-                                    trigger="click"
-                                    placement="bottom"
-                                    overlay={accountPopover(user)}
-                              >
-                                    <NavItem href="#">Account</NavItem>
-                              </OverlayTrigger>
-                              <NavItem onClick={logout} href="#">
-                                    Logout
-                              </NavItem>
-                        </React.Fragment>
+                              <React.Fragment>
+                                    <OverlayTrigger
+                                          rootClose
+                                          trigger="click"
+                                          placement="bottom"
+                                          overlay={purchaseTokensPopover(
+                                                buyTokens
+                                          )}
+                                    >
+                                          <NavItem href="#">
+                                                Purchase Corr Tokens
+                                          </NavItem>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger
+                                          rootClose
+                                          trigger="click"
+                                          placement="bottom"
+                                          overlay={accountPopover(user)}
+                                    >
+                                          <NavItem href="#">Account</NavItem>
+                                    </OverlayTrigger>
+                                    <NavItem onClick={logout} href="#">
+                                          Logout
+                                    </NavItem>
+                              </React.Fragment>
                         )}
                         <SignIn login={login} show={!user.address} />
                   </Nav>
