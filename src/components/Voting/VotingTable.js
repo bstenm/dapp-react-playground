@@ -1,12 +1,16 @@
 import './VotingTable.css';
 import React from 'react';
 import sortBy from 'lodash/sortBy';
-import { Table } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { Table, Alert } from 'react-bootstrap';
 import CandidateListRow from '../CandidateListRow';
 
 const VotingTable = ({ candidates, voteFor, loading }) => (
       <div className="VotingTable">
+            <Alert bsStyle="info">
+                  Here you can vote for who is the most corrupt politician in
+                  the world
+            </Alert>
             <Table>
                   <thead>
                         <tr>
