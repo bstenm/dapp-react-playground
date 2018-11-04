@@ -29,20 +29,17 @@ Run the linter:
 
 #### Starting the app
 
-Start a [ganache](https://truffleframework.com/ganache) instance
-
+Start a [ganache](https://truffleframework.com/ganache) instance:
 ```
 > ganache-cli
 ```
 
-Then migrate the contracts
-
+Then migrate the contracts:
 ```
 > truffle migrate --reset
 ```
 
 Then start the app:
-
 ```
 > yarn start
 ```
