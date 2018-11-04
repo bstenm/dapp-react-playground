@@ -1,9 +1,10 @@
 // [TODO]: Deal with preview memory leaks
-import './CandidateInfoForm.css';
 import React from 'react';
 import PropTypes from 'prop-types';
+import asPage from '../../hoc/AsPage';
 import CandidateInfoFormFields from '../CandidateInfoFormFields';
 import CandidateInfoAttachment from '../CandidateInfoAttachment';
+import './CandidateInfoForm.css';
 
 const CandidateInfoForm = ({ isSubmitting, ...props }) => (
       <div className="CandidateInfoForm">
@@ -22,4 +23,4 @@ CandidateInfoForm.propTypes = {
       isSubmitting: PropTypes.bool
 };
 
-export default CandidateInfoForm;
+export default asPage(CandidateInfoForm);

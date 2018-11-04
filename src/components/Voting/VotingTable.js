@@ -1,16 +1,17 @@
 import './VotingTable.css';
 import React from 'react';
 import sortBy from 'lodash/sortBy';
+import { Table } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { Table, Alert } from 'react-bootstrap';
+import asPage from '../../hoc/AsPage';
 import CandidateListRow from '../CandidateListRow';
 
 const VotingTable = ({ candidates, voteFor, loading }) => (
       <div className="VotingTable">
-            <Alert bsStyle="info">
+            <p className="directive">
                   Here you can vote for who is the most corrupt politician in
                   the world
-            </Alert>
+            </p>
             <Table>
                   <thead>
                         <tr>
@@ -43,4 +44,4 @@ VotingTable.propTypes = {
       candidates: PropTypes.array.isRequired
 };
 
-export default VotingTable;
+export default asPage(VotingTable);
