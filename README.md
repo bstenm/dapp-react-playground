@@ -3,6 +3,8 @@
 This app uses [Create React App](https://github.com/facebook/create-react-app) for scaffolding,
 [Rematch](https://rematch.gitbooks.io/rematch/) (a wrapper around [Redux](https://redux.js.org/)) for state management, [Formik](https://github.com/jaredpalmer/formik) for form management, [Jest](https://jestjs.io/) and [Enzyme](https://airbnb.io/enzyme/) for client side testing,  [Truffle](https://truffleframework.com/) as development framework for Ethereum, and [web3](https://github.com/ethereum/web3.js/) as Etherrum javascript api. The contracts are written in [Solidity](https://solidity.readthedocs.io/).
 
+The app also uses [IPFS](https://ipfs.io/) to upload attachments through the [INFURA](https://blog.infura.io/) service.
+
 #### Testing
 
 Testing the client side is done using [Jest](https://jestjs.io/) as test runner and [Enzyme](https://airbnb.io/enzyme/) as test utility.
