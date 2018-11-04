@@ -22,7 +22,7 @@ contract CorrTokenSale {
       /**
       * Constructor function
       */
-      function CorrTokenSale(CorrToken _tokenContract, uint256 _tokenPrice) public {
+      constructor(CorrToken _tokenContract, uint256 _tokenPrice) public {
             admin = msg.sender;
             tokenPrice = _tokenPrice;
             tokenContract = _tokenContract;
@@ -40,8 +40,9 @@ contract CorrTokenSale {
       * Transfer tokens to a buyer
       *
       * @param _numberOfTokens - number of tokens being purchased
+      * @return - true on success
       */
-      function buy(uint256 _numberOfTokens) public payable {
+      function buy(uint256 _numberOfTokens) public payable returns (bool) {
             // require the value corresponds to nb of tokens
             require(msg.value == mul(_numberOfTokens, tokenPrice));
 
@@ -55,7 +56,10 @@ contract CorrTokenSale {
             tokensSold += _numberOfTokens;
 
             // trigger sale event
-            Sale(msg.sender, msg.value);
+            emit Sale(msg.sender, msg.value);
+
+            // return true on success
+            return true;
       }
 
       /**
@@ -63,8 +67,9 @@ contract CorrTokenSale {
       *
       * @param _receiver - the address to receive the free tokens
       * @param _numberOfTokens - number of tokens being given away
+      * @return - true on success
       */
-      function reward (address _receiver, uint256 _numberOfTokens) public {
+      function reward(address _receiver, uint256 _numberOfTokens) public returns (bool) {
             // require we have enough tokens in the contract
             require(tokenContract.balanceOf(this) >= _numberOfTokens);
 
@@ -75,7 +80,10 @@ contract CorrTokenSale {
             tokensRewarded += _numberOfTokens;
 
             // trigger Reward event
-            Reward(_receiver, _numberOfTokens);
+            emit Reward(_receiver, _numberOfTokens);
+
+            // return true on success
+            return true;
       }
 
       /**
