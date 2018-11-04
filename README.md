@@ -35,10 +35,16 @@ Start a [ganache](https://truffleframework.com/ganache) instance
 > ganache-cli
 ```
 
-Start the app:
+Then migrate the contracts
+
+```
+> truffle migrate --reset
+```
+
+Then start the app:
 
 ```
 > yarn start
 ```
 
-Then pick an ethereum address from the ganache instance to log into the app.
+And pick an ethereum address from the ganache instance to log into the app.
